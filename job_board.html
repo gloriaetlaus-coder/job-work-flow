@@ -23,20 +23,28 @@
     text-align: center; color: #888; font-size: 12px; margin-bottom: 20px;
   }
 
-  /* 顶部导航 */
+  /* 顶部导航 — 悬停伸展，移开压缩成一条线 */
   .top-nav {
     display: flex;
     gap: 0;
     margin-bottom: 20px;
     background: #fff;
     border-radius: 12px;
-    padding: 6px;
+    padding: 0;
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     border: 1px solid #e8e8e8;
+    height: 4px;
+    overflow: hidden;
+    transition: height 0.3s ease, padding 0.3s ease;
+    position: relative;
+  }
+  .top-nav:hover {
+    height: auto;
+    padding: 6px;
   }
   .nav-tab {
     flex: 1;
-    padding: 14px 28px;
+    padding: 12px 28px;
     font-size: 16px;
     font-weight: 700;
     color: #999;
@@ -49,6 +57,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    white-space: nowrap;
   }
   .nav-tab.active {
     color: #fff;
@@ -59,6 +68,20 @@
   .nav-tab:hover:not(.active) {
     color: #555;
     background: #f5f6f8;
+  }
+  /* 压缩状态下的当前页指示 */
+  .nav-collapsed-indicator {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3370ff, #4d83ff);
+    border-radius: 12px 12px 0 0;
+    opacity: 1;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .top-nav:hover .nav-collapsed-indicator {
+    opacity: 0;
   }
 
   /* 页面切换 */
@@ -269,32 +292,18 @@
     background: #ddd;
     margin: 0 2px;
   }
-  .fmt-color-palette {
-    display: none;
-    position: absolute;
-    z-index: 100;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 6px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    gap: 4px;
-    flex-wrap: wrap;
-    width: 168px;
-  }
-  .fmt-color-palette.show {
-    display: flex;
-  }
   .fmt-color-swatch {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border-radius: 4px;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.15);
     transition: transform 0.1s;
+    display: inline-block;
   }
   .fmt-color-swatch:hover {
-    transform: scale(1.15);
+    transform: scale(1.2);
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
   }
   .script-tip {
     font-size: 12px;
@@ -617,6 +626,7 @@
 
   <!-- 顶部导航 -->
   <div class="top-nav">
+    <span class="nav-collapsed-indicator"></span>
     <button class="nav-tab active" data-page="job">🎯 职位搜索看板</button>
     <button class="nav-tab" data-page="script">📞 电话沟通话术</button>
     <button class="nav-tab" data-page="blacklist">🚫 黑名单公司</button>
@@ -1030,24 +1040,16 @@
         <span class="fmt-divider"></span>
         <button class="fmt-btn" data-cmd="insertUnorderedList" title="无序列表">• 列表</button>
         <span class="fmt-divider"></span>
-        <button class="fmt-btn" id="color-btn" title="文字颜色">颜色 ▾</button>
-        <span class="fmt-color-palette" id="color-palette">
-          <span class="fmt-color-swatch" style="background:#e74c3c" data-color="#e74c3c"></span>
-          <span class="fmt-color-swatch" style="background:#e67e22" data-color="#e67e22"></span>
-          <span class="fmt-color-swatch" style="background:#f1c40f" data-color="#b8860b"></span>
-          <span class="fmt-color-swatch" style="background:#27ae60" data-color="#27ae60"></span>
-          <span class="fmt-color-swatch" style="background:#2ecc71" data-color="#1abc9c"></span>
-          <span class="fmt-color-swatch" style="background:#3498db" data-color="#3498db"></span>
-          <span class="fmt-color-swatch" style="background:#9b59b6" data-color="#9b59b6"></span>
-          <span class="fmt-color-swatch" style="background:#34495e" data-color="#34495e"></span>
-          <span class="fmt-color-swatch" style="background:#e84393" data-color="#e84393"></span>
-          <span class="fmt-color-swatch" style="background:#636e72" data-color:#636e72"></span>
-          <span class="fmt-color-swatch" style="background:#2d3436" data-color="#2d3436"></span>
-          <span class="fmt-color-swatch" style="background:#d63031" data-color="#c0392b"></span>
-          <span class="fmt-color-swatch" style="background:#0984e3" data-color="#073b7d"></span>
-          <span class="fmt-color-swatch" style="background:#fd79a8" data-color:#b33951"></span>
-          <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit">✕</span>
-        </span>
+        <span class="fmt-color-swatch" style="background:#FF0033" data-color="#FF0033" title="红"></span>
+        <span class="fmt-color-swatch" style="background:#FF6600" data-color="#FF6600" title="橙"></span>
+        <span class="fmt-color-swatch" style="background:#FFCC00" data-color="#FFCC00" title="黄"></span>
+        <span class="fmt-color-swatch" style="background:#00CC00" data-color="#00CC00" title="绿"></span>
+        <span class="fmt-color-swatch" style="background:#00BFFF" data-color="#00BFFF" title="青"></span>
+        <span class="fmt-color-swatch" style="background:#0066FF" data-color="#0066FF" title="蓝"></span>
+        <span class="fmt-color-swatch" style="background:#9933FF" data-color="#9933FF" title="紫"></span>
+        <span class="fmt-color-swatch" style="background:#FF0099" data-color="#FF0099" title="粉"></span>
+        <span class="fmt-color-swatch" style="background:#333333" data-color="#333333" title="黑"></span>
+        <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit" title="清除颜色">✕</span>
         <span class="fmt-divider"></span>
         <button class="fmt-btn" data-cmd="removeFormat" title="清除格式">清除</button>
       </div>
@@ -1613,37 +1615,18 @@ document.querySelectorAll('.fmt-btn[data-cmd]').forEach(function(btn) {
   });
 });
 
-var colorBtn = document.getElementById('color-btn');
-var colorPalette = document.getElementById('color-palette');
-if (colorBtn) {
-  colorBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    colorPalette.classList.toggle('show');
-    if (colorPalette.classList.contains('show')) {
-      var rect = colorBtn.getBoundingClientRect();
-      colorPalette.style.left = rect.left + 'px';
-      colorPalette.style.top = (rect.bottom + 4) + 'px';
-      colorPalette.style.position = 'fixed';
-    }
-  });
-}
 document.querySelectorAll('.fmt-color-swatch').forEach(function(sw) {
   sw.addEventListener('mousedown', function(e) {
     e.preventDefault();
   });
   sw.addEventListener('click', function(e) {
-    e.stopPropagation();
     var color = sw.getAttribute('data-color');
     var block = getActiveScriptBlock();
     if (block) {
       document.execCommand('foreColor', false, color);
       try { localStorage.setItem('script_v5_' + block.id, block.innerHTML); } catch(e) {}
     }
-    colorPalette.classList.remove('show');
   });
-});
-document.addEventListener('click', function() {
-  if (colorPalette) colorPalette.classList.remove('show');
 });
 
 function updateFmtButtonStates() {
