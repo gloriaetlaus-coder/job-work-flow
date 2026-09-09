@@ -370,27 +370,31 @@
     white-space: nowrap;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    position: relative;
   }
   .column-header.cn .header-title {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
+    font-size: 15px;
+    font-weight: 700;
   }
   .column-header.cn .emoji {
     margin-right: 0;
+    font-size: 16px;
   }
   .column-header.cn .click-count {
-    font-size: 13px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    font-weight: 700;
     color: #333;
-    font-weight: 600;
-    flex-shrink: 0;
   }
   .column-header.cn .click-count strong {
     color: #ff3b30;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     margin: 0 3px;
   }
