@@ -369,7 +369,8 @@
   .cn-header-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
     white-space: nowrap;
   }
   .cn-header-title {
@@ -382,14 +383,25 @@
   }
   .column-header.cn .click-count {
     font-size: 13px;
-    color: #ff6b35;
+    color: #333;
     font-weight: 600;
   }
   .column-header.cn .click-count strong {
-    color: #ff6b35;
+    color: #ff3b30;
     font-size: 20px;
     font-weight: 800;
     margin: 0 3px;
+  }
+  @keyframes breatheFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+  .breathe-float {
+    animation: breatheFloat 2.5s ease-in-out infinite;
   }
   .click-counter-wrap {
     text-align: center;
