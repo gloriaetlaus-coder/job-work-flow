@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黄文艳 - 8年B端客户经验 | AI工具实操</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f5f5;
+    color: #222;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .resume {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px 55px;
+    border-radius: 6px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+    gap: 30px;
+  }
+  .header-avatar {
+    flex-shrink: 0;
+  }
+  .header-avatar img {
+    width: 110px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: top center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .header-main {
+    flex: 1;
+  }
+  .header-main h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+  }
+  .header-main .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.9;
+  }
+  .section { margin-bottom: 26px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2c3e50;
+    border-left: 3px solid #2c3e50;
+    padding-left: 10px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .summary-list { list-style: none; padding: 0; }
+  .summary-list li {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+  }
+  .summary-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #999;
+  }
+  .exp-item { margin-bottom: 20px; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .exp-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .exp-company { font-size: 13px; color: #666; }
+  .exp-date { font-size: 12px; color: #888; white-space: nowrap; }
+  .exp-desc { font-size: 13px; color: #444; margin-top: 4px; }
+  .exp-desc p { margin-bottom: 3px; }
+  .proj-item { margin-bottom: 18px; }
+  .proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .proj-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .proj-link { font-size: 12px; color: #2980b9; }
+  .proj-desc { font-size: 13px; color: #444; margin-top: 4px; }
+  .skills-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .skill-tag {
+    font-size: 12px;
+    background: #f0f3f5;
+    color: #2c3e50;
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+  .skills-group-title { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 6px; }
+  .edu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .edu-left { font-size: 14px; }
+  .edu-left .school { font-weight: 600; color: #1a1a1a; }
+  .edu-left .major { color: #666; font-size: 13px; }
+  .edu-date { font-size: 12px; color: #888; }
+  .cert-list { font-size: 13px; color: #555; }
+  .footer-note {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .resume { box-shadow: none; max-width: 100%; padding: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="resume">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-avatar">
+      <img src="avatar.jpg" alt="黄文艳">
+    </div>
+    <div class="header-main">
+      <h1>黄文艳</h1>
+      <div class="subtitle">8年B端客户合作经验 · AI工具落地实践</div>
+    </div>
+    <div class="header-right">
+      <div>17621058773</div>
+      <div>17621058773@163.com</div>
+      <div>上海</div>
+    </div>
+  </div>
+
+  <!-- 自我介绍 -->
+  <div class="section">
+    <div class="section-title">自我介绍</div>
+    <ul class="summary-list">
+      <li>8年B端品牌客户合作经验：长期作为对客窗口服务中大型品牌客户，覆盖快消、酒店、地产等行业，熟悉代理端与甲方的协作逻辑，具备客户需求沟通、方案推进与结果交付的全流程经验</li>
+      <li>以结果和信任为导向的合作风格：在合作周期内持续同步进展与风险，管理客户预期，保障合作稳定性；服务期间多次获得客户的正面反馈与合作认可</li>
+      <li>复杂项目推进与跨团队协调：在多方参与的项目中，主动识别关键卡点，协调内部创意、运营及外部媒体资源推动落地，确保项目按期交付</li>
+      <li>0代码背景下的AI工具落地能力：通过 v0、Replit、Google AI Studio、国内AI Agent等工具，独立完成2个可上线的网页项目并验证完整闭环，可快速理解产品逻辑并转化为可执行方案</li>
+      <li>数据思维与结构化表达：习惯以数据驱动方案优化，定期输出结构化复盘报告，辅助客户进行预算决策与后续合作判断</li>
+    </ul>
+  </div>
+
+  <!-- 工作经历 -->
+  <div class="section">
+    <div class="section-title">工作经历</div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">媒介主管</span>
+          <span class="exp-company"> · 恒沐（上海）广告有限公司</span>
+        </div>
+        <div class="exp-date">2021.01 – 2025.12</div>
+      </div>
+      <div class="exp-desc">
+        <p>作为主要对客窗口，长期负责多个品牌客户的年度合作规划与执行，涵盖需求对齐、方案制定、执行落地与复盘总结。</p>
+        <p>· 在合作周期内，持续同步项目进展、风险点与调整方案，进行客户预期管理，保障合作稳定性与信任关系</p>
+        <p>· 面对客户阶段性目标变化，主动提出策略与执行层调整建议，并协调内部创意、运营及外部媒体资源快速响应</p>
+        <p>· 统筹项目全流程管理，推动跨团队协作，确保项目按期、高质量交付</p>
+        <p>· 输出结构化数据复盘与结案报告，辅助客户进行预算决策与后续合作判断，支持长期合作延续</p>
+        <p>· 执行层面，熟悉社交媒体、信息流、搜索及效果广告平台的基础逻辑，能够在客户沟通中快速判断方案可行性与执行风险</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">媒介专员</span>
+          <span class="exp-company"> · 上海悦普网络科技有限公司</span>
+        </div>
+        <div class="exp-date">2020.04 – 2020.12</div>
+      </div>
+      <div class="exp-desc">
+        <p>· 支持多品牌客户在微博、微信、抖音、小红书等平台的合作项目执行，累计处理超 800 项投放需求</p>
+        <p>· 协助管理客户合作流程，包括需求梳理、执行跟进、合同与付款协调，保障项目执行透明度与交付稳定性</p>
+        <p>· 在多项目并行的环境中，保持对客户需求与内部执行节奏的平衡，确保项目持续推进</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">媒介执行</span>
+          <span class="exp-company"> · 阳光恒美融信息技术服务（上海）股份有限公司</span>
+        </div>
+        <div class="exp-date">2018.01 – 2020.01</div>
+      </div>
+      <div class="exp-desc">
+        <p>· 独立开发并维护 KOL / KOC / 明星供应商资源网络，累计沉淀优质资源超 2000 个，支持公司长期业务拓展</p>
+        <p>· 根据客户需求制定个性化合作报价，兼顾成本控制与执行效果，提升客户满意度与合作效率</p>
+        <p>· 承担对客沟通与内部协调职责，保障项目持续推进</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 客户项目经验 -->
+  <div class="section">
+    <div class="section-title">客户项目经验</div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">迪拜 DAMAC 房地产商 · 抖音生态整合增长</span>
+        </div>
+        <div class="exp-date">2025.10 – 2025.12</div>
+      </div>
+      <div class="exp-desc">
+        <p>在中国市场建立稳定的品牌曝光与高质量线索获取路径，验证抖音生态对海外地产项目的增长可行性。</p>
+        <p>· 作为项目主要对接人，负责客户需求拆解、阶段目标设定与执行节奏管理</p>
+        <p>· 基于抖音巨量信息流、Dou+、DMP 定向能力，设计从公域曝光、内容加热到线索转化的完整路径</p>
+        <p>· 运用 A/B 测试与数据监控机制，持续判断素材、定向与出价策略的有效性，及时调整执行方案</p>
+        <p>· 在执行过程中同步风险点与调整逻辑，进行客户预期管理，保障合作信任</p>
+        <p>· 项目周期内实现线索成本降低 25%，咨询转化率提升 15%</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">洲际酒店集团 · 内容营销与平台合作</span>
+        </div>
+        <div class="exp-date">2023.06 – 2025.12</div>
+      </div>
+      <div class="exp-desc">
+        <p>提升集团旗下多个单体酒店品牌，在小红书平台的长期内容声量与用户互动表现，服务品牌心智建设与业务转化。</p>
+        <p>· 长期负责平台内容策略与达人合作体系的搭建与维护，覆盖年度规划、执行节奏与复盘优化</p>
+        <p>· 基于用户画像与内容偏好分析，筛选并管理 KOL / KOC 资源，建立可持续合作机制</p>
+        <p>· 结合聚光投流工具，对优质内容进行加热放大，持续优化内容效率与转化表现</p>
+        <p>· 在多品牌并行环境中，平衡不同酒店的目标差异，进行合作节奏与资源优先级管理</p>
+        <p>· 爆款内容占比超过 70%，平台互动与品牌声量稳定提升，推动微信小程序预订转化</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div>
+          <span class="exp-title">法国依云矿泉水 · 全渠道媒介与效果合作</span>
+        </div>
+        <div class="exp-date">2021.04 – 2025.11</div>
+      </div>
+      <div class="exp-desc">
+        <p>在品牌建设与销售转化之间实现平衡，提升多渠道投放效率与长期 ROI 稳定性。</p>
+        <p>· 参与品牌年度千万级预算规划，协同客户制定阶段性投放目标与渠道组合策略</p>
+        <p>· 运用抖音星图、飞瓜、百度指数等工具进行竞品与人群分析，支持策略判断</p>
+        <p>· 在效果渠道侧，基于阿里 UD、京东京准通的执行与复盘数据，持续优化投放节奏与结构</p>
+        <p>· 通过周期性复盘，向客户提供可执行的策略调整建议，支持后续长期合作决策</p>
+        <p>· 电商侧综合 ROI 长期稳定在 3 左右，投放结构与执行效率持续优化</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI项目经历 -->
+  <div class="section">
+    <div class="section-title">AI项目实践</div>
+
+    <div class="proj-item">
+      <div class="proj-header">
+        <div class="proj-title">互动式网页应用 MVP（独立完成，已上线）</div>
+        <a class="proj-link" href="https://gloriaetlaus-coder.github.io/good-day-mvp/" target="_blank">gloriaetlaus-coder.github.io/good-day-mvp</a>
+      </div>
+      <div class="proj-desc">
+        <p>0代码背景下，使用AI编程工具从0到1独立完成的响应式网页应用，全流程包含需求定义、界面设计、开发调试与上线部署。</p>
+        <p>· 多端适配：确保手机端与电脑端界面一致性，完成响应式布局调试</p>
+        <p>· 功能实现：包含多选项交互入口与状态切换，中英双语界面</p>
+        <p>· 技术路径：全程使用AI编程工具完成，无任何付费成本</p>
+      </div>
+    </div>
+
+    <div class="proj-item">
+      <div class="proj-header">
+        <div class="proj-title">个人作品集网站（独立完成，已上线）</div>
+        <a class="proj-link" href="https://gloriaetlaus-coder.github.io/career/" target="_blank">gloriaetlaus-coder.github.io/career</a>
+      </div>
+      <div class="proj-desc">
+        <p>使用AI工具独立完成的个人作品展示网站，包含结构化的工作经历展示、个人介绍与联系方式模块。</p>
+        <p>· 独立完成页面设计、内容组织与上线部署全流程</p>
+        <p>· 使用GitHub Pages托管，零成本运行</p>
+      </div>
+    </div>
+
+    <div class="proj-item">
+      <div class="proj-header">
+        <div class="proj-title">AI工具探索与产品原型实践</div>
+      </div>
+      <div class="proj-desc">
+        <p>在国内外主流AI工具的免费额度内，系统性地尝试了产品原型设计与应用开发：</p>
+        <p>· 使用 v0（Vercel）完成APP产品原型设计，包含功能规划与交互逻辑设计；基于项目复杂度与个人维护成本的综合评估，主动选择将方向调整为更轻量化的网页应用，聚焦核心功能快速落地</p>
+        <p>· 尝试使用 Google AI Studio、Replit、国内AI Agent平台进行多轮产品开发实验</p>
+        <p>· 对以上工具的能力边界、适用场景与局限性建立了第一手使用判断</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 技能 -->
+  <div class="section">
+    <div class="section-title">技能</div>
+    <div class="skills-group-title">AI工具</div>
+    <div class="skills-row">
+      <span class="skill-tag">v0 (Vercel)</span>
+      <span class="skill-tag">Replit</span>
+      <span class="skill-tag">Google AI Studio</span>
+      <span class="skill-tag">Figma</span>
+      <span class="skill-tag">国内AI Agent平台</span>
+    </div>
+    <div class="skills-group-title" style="margin-top:10px;">核心能力</div>
+    <div class="skills-row">
+      <span class="skill-tag">B端客户沟通</span>
+      <span class="skill-tag">需求拆解</span>
+      <span class="skill-tag">项目推进与协调</span>
+      <span class="skill-tag">客户预期管理</span>
+      <span class="skill-tag">数据复盘与报告</span>
+      <span class="skill-tag">跨团队协作</span>
+    </div>
+    <div class="skills-group-title" style="margin-top:10px;">行业工具</div>
+    <div class="skills-row">
+      <span class="skill-tag">巨量引擎</span>
+      <span class="skill-tag">抖音星图</span>
+      <span class="skill-tag">小红书聚光</span>
+      <span class="skill-tag">飞瓜数据</span>
+      <span class="skill-tag">阿里UD</span>
+      <span class="skill-tag">京准通</span>
+      <span class="skill-tag">百度指数</span>
+    </div>
+  </div>
+
+  <!-- 教育经历 -->
+  <div class="section">
+    <div class="section-title">教育经历</div>
+    <div class="edu-item">
+      <div class="edu-left">
+        <span class="school">华东师范大学</span> · <span class="major">法学（本科）</span>
+      </div>
+      <div class="edu-date">2019 – 2021</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-left">
+        <span class="school">常州工程职业技术学院</span> · <span class="major">经济管理（大专）</span>
+      </div>
+      <div class="edu-date">2014 – 2017</div>
+    </div>
+  </div>
+
+  <!-- 证书 -->
+  <div class="section">
+    <div class="section-title">证书与语言</div>
+    <div class="cert-list">
+      大学英语四级 · 计算机一级 · 会计从业资格证 · 普通话二级甲等 · 高等学校英语应用能力B级 · 驾驶证C1
+    </div>
+  </div>
+
+  <div class="footer-note">
+    通用版 · 可根据具体JD调整方向与措辞
+  </div>
+
+</div>
+</body>
+</html>

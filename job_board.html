@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>找工work flow</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6f8;
+    color: #222;
+    line-height: 1.5;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  .page-title {
+    text-align: center; margin-bottom: 4px;
+    font-size: 20px; font-weight: 700; color: #1a1a1a;
+  }
+  .page-subtitle {
+    text-align: center; color: #888; font-size: 12px; margin-bottom: 20px;
+  }
+
+  /* 顶部导航 */
+  .top-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e8e8e8;
+  }
+  .nav-tab {
+    flex: 1;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #999;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: none;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .nav-tab.active {
+    color: #fff;
+    background: linear-gradient(135deg, #3370ff, #4d83ff);
+    border-color: #3370ff;
+    box-shadow: 0 4px 12px rgba(51,112,255,0.3);
+  }
+  .nav-tab:hover:not(.active) {
+    color: #555;
+    background: #f5f6f8;
+  }
+
+  /* 页面切换 */
+  .page-view { display: none; }
+  .page-view.active { display: block; }
+
+  /* 黑名单页面 */
+  .blacklist-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .blacklist-header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 32px 24px;
+    text-align: center;
+    border-radius: 12px 12px 0 0;
+  }
+  .blacklist-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .blacklist-header p { font-size: 13px; color: #999; }
+  .blacklist-body { padding: 20px 16px 40px; }
+  .bl-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ccc;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .bl-card.red { border-left-color: #e74c3c; }
+  .bl-card.orange { border-left-color: #f39c12; }
+  .bl-card.yellow { border-left-color: #f1c40f; }
+  .bl-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .bl-card h2 { font-size: 16px; font-weight: 600; color: #222; }
+  .bl-badge {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .bl-badge.red { background: #fdecea; color: #e74c3c; }
+  .bl-badge.orange { background: #fef5e7; color: #d68910; }
+  .bl-badge.yellow { background: #fef9e7; color: #b7950b; }
+  .bl-card p { font-size: 13px; color: #666; line-height: 1.7; }
+  .bl-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .bl-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: #f0f0f0;
+    color: #888;
+    border-radius: 4px;
+  }
+  .bl-section-title {
+    font-size: 14px;
+    color: #999;
+    margin: 20px 4px 10px;
+    font-weight: 500;
+  }
+  .bl-footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  /* 话术页面 */
+  .script-container { max-width: 1400px; margin: 0 auto; }
+  .script-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .script-column {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .script-column-header {
+    padding: 12px 20px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .script-column-header.cn { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .script-column-header.en { background: linear-gradient(135deg, #0a66c2, #084d94); }
+  .script-column-body {
+    background: #fff;
+    padding: 20px;
+  }
+  .script-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .script-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .script-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .script-section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: #3370ff;
+    color: #fff;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .script-column-header.cn ~ .script-column-body .script-section-num { background: #e74c3c; }
+  .script-column-header.en ~ .script-column-body .script-section-num { background: #0a66c2; }
+  .script-logic {
+    font-size: 12px;
+    font-weight: 400;
+    color: #e67e22;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .script-template-label { display: none; }
+  .translate-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 14px;
+    color: #999;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .translate-btn:hover { background: #e74c3c; color: #fff; border-color: #e74c3c; }
+  .translate-btn.translating { background: #f5f5f5; color: #aaa; cursor: wait; }
+  .script-block {
+    background: #f8f9fa;
+    border-left: 3px solid #e74c3c;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .script-column-header.en ~ .script-column-body .script-block {
+    border-left-color: #0a66c2;
+  }
+  .script-block strong { color: #1a1a1a; }
+  .script-block[contenteditable] {
+    cursor: text;
+    outline: none;
+  }
+  .script-block u { text-decoration: underline; }
+  .script-block s { text-decoration: line-through; }
+  .script-block i { font-style: italic; }
+  .script-block span[style*="color"] { font-weight: 600; }
+
+  /* 话术格式化工具栏 */
+  .script-toolbar {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+    padding: 4px 0;
+  }
+  .fmt-btn {
+    padding: 3px 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+    transition: all 0.15s;
+    user-select: none;
+    min-width: 28px;
+    text-align: center;
+  }
+  .fmt-btn:hover {
+    background: #f0f0f0;
+    border-color: #bbb;
+  }
+  .fmt-btn.active {
+    background: #3370ff;
+    color: #fff;
+    border-color: #3370ff;
+  }
+  .fmt-divider {
+    width: 1px;
+    height: 20px;
+    background: #ddd;
+    margin: 0 2px;
+  }
+  .fmt-color-palette {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    gap: 4px;
+    flex-wrap: wrap;
+    width: 168px;
+  }
+  .fmt-color-palette.show {
+    display: flex;
+  }
+  .fmt-color-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+  }
+  .fmt-color-swatch:hover {
+    transform: scale(1.15);
+  }
+  .script-tip {
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .script-columns { grid-template-columns: 1fr; }
+  }
+
+  /* 平台切换 tabs */
+  .platform-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 4px;
+    background: #f0f0f0;
+    border-radius: 10px;
+  }
+  .ptab {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.5;
+  }
+  .ptab.active {
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transform: scale(1.02);
+  }
+  .ptab:hover { opacity: 0.8; }
+
+  /* 两栏布局 */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .column { min-width: 0; }
+
+  .column-header {
+    font-size: 15px; font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .column-header.cn { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .column-header.en { background: linear-gradient(135deg, #0a66c2, #084d94); }
+  .column-header .emoji { font-size: 16px; }
+
+  .column-body {
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+
+  /* 梯队 - 大色块 */
+  .tier {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .tier:last-child { margin-bottom: 0; }
+  .tier-1 { background: #fff3eb; border-left: 4px solid #ff6b35; }
+  .tier-2 { background: #fff6f0; border-left: 4px solid #ff8559; }
+  .tier-3 { background: #fff9f5; border-left: 4px solid #ffa080; }
+  .tier-4 { background: #fffcfa; border-left: 4px solid #ffb8a0; }
+
+  .tier-title {
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tier-1 .tier-title { color: #cc4400; }
+  .tier-2 .tier-title { color: #d95500; }
+  .tier-3 .tier-title { color: #e66700; }
+  .tier-4 .tier-title { color: #e67733; }
+
+  .tier-badge {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .tier-1 .tier-badge { background: #ff6b35; }
+  .tier-2 .tier-badge { background: #ff8559; }
+  .tier-3 .tier-badge { background: #ffa080; }
+  .tier-4 .tier-badge { background: #ffb8a0; }
+
+  .tier-desc { font-size: 11px; font-weight: 400; opacity: 0.7; margin-left: 4px; }
+
+  /* 平台组 */
+  .platform-group {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .platform-group:last-child {
+    margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+  }
+  .platform-name {
+    font-size: 12px; font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  .platform-name .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* 标签 */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #444;
+    font-size: 12px;
+    transition: all 0.15s;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+  .tag-btn:hover {
+    background: #e8f0fe;
+    border-color: #4a90e2;
+    color: #1a73e8;
+  }
+  .tag-btn:active { transform: scale(0.96); }
+
+  /* 已访问的标签 - JS动态设置背景色为当前tab色 */
+  .tag-btn.clicked {
+    color: #fff !important;
+    opacity: 1;
+  }
+
+  /* 国际平台入口 */
+  .intl-platforms {
+    margin-top: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .intl-header {
+    background: linear-gradient(135deg, #6c5ce7, #a366ff);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .intl-badge {
+    margin-left: auto;
+    font-size: 11px;
+    background: rgba(255,255,255,0.25);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .intl-body {
+    background: #fff;
+    padding: 16px;
+  }
+  .intl-group { margin-bottom: 20px; }
+  .intl-group:last-child { margin-bottom: 0; }
+  .intl-group-title {
+    font-size: 14px; font-weight: 700;
+    color: #6c5ce7;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #eee;
+  }
+  .intl-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .intl-card {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .intl-card-link {
+    display: block;
+    font-size: 14px; font-weight: 700;
+    color: #6c5ce7;
+    text-decoration: none;
+    margin-bottom: 4px;
+  }
+  .intl-card-link:hover { text-decoration: underline; }
+  .intl-desc {
+    font-size: 11px; color: #888;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .intl-card .tags { gap: 4px; }
+  .intl-card .tag-btn { font-size: 11px; padding: 3px 8px; }
+
+  @media (max-width: 900px) {
+    .intl-cards { grid-template-columns: 1fr; }
+  }
+
+  /* 飞书追踪表入口 - 第5版块 */
+  .feishu-tracker {
+    margin-top: 14px;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 2px solid #3370ff;
+    background: linear-gradient(135deg, #3370ff10, #4d83ff08);
+    transition: all 0.3s;
+  }
+  .feishu-tracker:hover {
+    border-color: #4d83ff;
+    box-shadow: 0 4px 16px rgba(51,112,255,0.2);
+    transform: translateY(-1px);
+  }
+  .feishu-tracker-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 700;
+    color: #3370ff;
+    margin-bottom: 8px;
+  }
+  .feishu-tracker-badge {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: #3370ff;
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feishu-tracker-desc {
+    font-size: 11px; color: #888;
+    margin-bottom: 8px;
+  }
+  .feishu-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #3370ff, #4d83ff);
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .feishu-link:hover { opacity: 0.9; }
+  .feishu-icon { font-size: 16px; }
+  .feishu-arrow { margin-left: auto; font-size: 14px; }
+
+  /* 提示 */
+  .tip-box {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #fff8e6;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #b8860b;
+    line-height: 1.5;
+  }
+  .tip-box strong { color: #8b6914; }
+
+  /* 底部贴士 */
+  .tips-footer {
+    margin-top: 20px;
+    background: #f0f7ff;
+    border-radius: 10px;
+    padding: 14px 20px;
+  }
+  .tips-footer h3 { font-size: 13px; color: #1a73e8; margin-bottom: 8px; }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px 20px;
+    padding-left: 18px;
+    font-size: 12px;
+    color: #555;
+  }
+  .tips-grid li { margin-bottom: 2px; }
+
+  .footer {
+    text-align: center;
+    color: #bbb;
+    font-size: 11px;
+    margin-top: 16px;
+  }
+
+  /* 移动端：上下排列 */
+  @media (max-width: 900px) {
+    .columns { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr 1fr; }
+    body { padding: 12px; }
+  }
+  @media (max-width: 500px) {
+    .tips-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 顶部导航 -->
+  <div class="top-nav">
+    <button class="nav-tab active" data-page="job">🎯 职位搜索看板</button>
+    <button class="nav-tab" data-page="script">📞 电话沟通话术</button>
+    <button class="nav-tab" data-page="blacklist">🚫 黑名单公司</button>
+  </div>
+
+  <!-- ============ 职位看板页面 ============ -->
+  <div class="page-view active" id="page-job">
+
+  <div class="columns">
+
+    <!-- ============ 国内 ============ -->
+    <div class="column">
+      <div class="column-header cn">
+        <span class="emoji">🇨🇳</span>
+        国内招聘 · 上海
+      </div>
+      <div class="column-body">
+
+        <!-- 平台切换 -->
+        <div class="platform-tabs">
+          <button class="ptab active" data-pf="liepin" style="background:#ff6b35;">猎聘</button>
+          <button class="ptab" data-pf="51job" style="background:#2d8cf0;">51JOB</button>
+          <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
+        </div>
+
+        <!-- 第1梯队 -->
+        <div class="tier tier-1">
+          <div class="tier-title">
+            <span class="tier-badge">1</span>
+            核心目标 · AI & SaaS 客户成功/运营
+            <span class="tier-desc">优先投</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=AI客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" target="_blank">AI客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" target="_blank">AI产品运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" target="_blank">AI解决方案顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" target="_blank">AI实施顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" target="_blank">SaaS客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" target="_blank">SaaS实施顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" target="_blank">SaaS产品运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" target="_blank">客户成功专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户运营&city=020" target="_blank">客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=解决方案助理" data-boss="https://www.zhipin.com/web/geek/job?query=解决方案助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" target="_blank">解决方案助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=售前顾问" data-boss="https://www.zhipin.com/web/geek/job?query=售前顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" target="_blank">售前顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=交付运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=交付运营" data-boss="https://www.zhipin.com/web/geek/job?query=交付运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=交付运营&city=020" target="_blank">交付运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=低代码实施" data-boss="https://www.zhipin.com/web/geek/job?query=低代码实施&city=101020100" href="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" target="_blank">低代码实施</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=无代码搭建" data-boss="https://www.zhipin.com/web/geek/job?query=无代码搭建&city=101020100" href="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" target="_blank">无代码搭建</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=产品运营&city=020" target="_blank">产品运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品经理" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品经理&city=020" target="_blank">AI产品经理</a>
+          </div>
+        </div>
+
+        <!-- 第2梯队 -->
+        <div class="tier tier-2">
+          <div class="tier-title">
+            <span class="tier-badge">2</span>
+            备选方向 · 泛 To B 客户/项目/运营
+            <span class="tier-desc">补充投</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户经理&city=020" target="_blank">B端客户经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=大客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=大客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=大客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=大客户经理&city=020" target="_blank">大客户经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户关系经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户关系经理" data-boss="https://www.zhipin.com/web/geek/job?query=客户关系经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户关系经理&city=020" target="_blank">客户关系经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功经理" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功经理&city=020" target="_blank">客户成功经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目协调员" data-boss="https://www.zhipin.com/web/geek/job?query=项目协调员&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" target="_blank">项目协调员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目统筹&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目统筹" data-boss="https://www.zhipin.com/web/geek/job?query=项目统筹&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目统筹&city=020" target="_blank">项目统筹</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道经理" data-boss="https://www.zhipin.com/web/geek/job?query=渠道经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道经理&city=020" target="_blank">渠道经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道合作伙伴经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道合作伙伴经理" data-boss="https://www.zhipin.com/web/geek/job?query=渠道合作伙伴经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道合作伙伴经理&city=020" target="_blank">渠道合作伙伴经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=商务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务专员&city=020" target="_blank">商务专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务运营" data-boss="https://www.zhipin.com/web/geek/job?query=商务运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务运营&city=020" target="_blank">商务运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户服务主管&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户服务主管" data-boss="https://www.zhipin.com/web/geek/job?query=客户服务主管&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户服务主管&city=020" target="_blank">客户服务主管</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户运营" data-boss="https://www.zhipin.com/web/geek/job?query=用户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户运营&city=020" target="_blank">用户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户研究助理" data-boss="https://www.zhipin.com/web/geek/job?query=用户研究助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" target="_blank">用户研究助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识工程师" data-boss="https://www.zhipin.com/web/geek/job?query=知识工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" target="_blank">知识工程师</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识库管理" data-boss="https://www.zhipin.com/web/geek/job?query=知识库管理&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" target="_blank">知识库管理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用企划" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用企划&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" target="_blank">AI应用企划</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI提示词工程师" data-boss="https://www.zhipin.com/web/geek/job?query=AI提示词工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" target="_blank">AI提示词工程师</a>
+          </div>
+        </div>
+
+        <!-- 第3梯队 -->
+        <div class="tier tier-3">
+          <div class="tier-title">
+            <span class="tier-badge">3</span>
+            Remote · 远程岗位
+            <span class="tier-desc">额外机会</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户成功&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" target="_blank">远程客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目协调" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目协调&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" target="_blank">远程项目协调</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" target="_blank">远程客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程运营专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" target="_blank">远程运营专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户服务" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户服务&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" target="_blank">远程客户服务</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目助理&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" target="_blank">远程项目助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=线上客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=线上客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" target="_blank">线上客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户对接&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户对接" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户对接&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户对接&city=000" target="_blank">远程客户对接</a>
+          </div>
+        </div>
+
+        <!-- 第4梯队 -->
+        <div class="tier tier-4">
+          <div class="tier-title">
+            <span class="tier-badge">4</span>
+            出海 · 海外/跨境/国际
+            <span class="tier-desc">拓展机会</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外运营" data-boss="https://www.zhipin.com/web/geek/job?query=海外运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外运营&city=020" target="_blank">海外运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=海外客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" target="_blank">海外客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外市场&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外市场" data-boss="https://www.zhipin.com/web/geek/job?query=海外市场&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外市场&city=020" target="_blank">海外市场</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外商务&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外商务" data-boss="https://www.zhipin.com/web/geek/job?query=海外商务&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外商务&city=020" target="_blank">海外商务</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外销售&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外销售" data-boss="https://www.zhipin.com/web/geek/job?query=海外销售&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外销售&city=020" target="_blank">海外销售</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外项目&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外项目" data-boss="https://www.zhipin.com/web/geek/job?query=海外项目&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外项目&city=020" target="_blank">海外项目</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客服&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客服" data-boss="https://www.zhipin.com/web/geek/job?query=海外客服&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客服&city=020" target="_blank">海外客服</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=跨境运营" data-boss="https://www.zhipin.com/web/geek/job?query=跨境运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" target="_blank">跨境运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" target="_blank">国际客户经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外业务拓展" data-boss="https://www.zhipin.com/web/geek/job?query=海外业务拓展&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" target="_blank">海外业务拓展</a>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <strong>💡 筛选技巧：</strong>
+          猎聘看公司规模和行业标签；Boss直聘进去后点"公司行业"→ 选互联网/计算机软件/企业服务/AI；排除保险/银行/信托/人力资源/房地产中介
+        </div>
+
+        <!-- 飞书投递追踪表 - 第5版块 -->
+        <div class="feishu-tracker">
+          <div class="feishu-tracker-title">
+            <span class="feishu-tracker-badge">5</span>
+            投递追踪表
+            <span class="tier-desc">记录每一次投递</span>
+          </div>
+          <p class="feishu-tracker-desc">在飞书多维表格中追踪投递进度、面试状态和公司反馈</p>
+          <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank">
+            <span class="feishu-icon">📊</span>
+            打开求职投递追踪表
+            <span class="feishu-arrow">→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ 国外 ============ -->
+    <div class="column">
+      <div class="column-header en">
+        <span class="emoji">🌍</span>
+        国外招聘 · Shanghai / Remote
+      </div>
+      <div class="column-body">
+
+        <!-- 平台切换 -->
+        <div class="platform-tabs">
+          <button class="ptab active en-ptab" data-pf="linkedin" style="background:#0a66c2;">LinkedIn</button>
+          <button class="ptab en-ptab" data-pf="indeed" style="background:#2164f3;">Indeed</button>
+          <button class="ptab en-ptab" data-pf="glassdoor" style="background:#0caa41;">Glassdoor</button>
+        </div>
+
+        <!-- 第1梯队 -->
+        <div class="tier tier-1">
+          <div class="tier-title">
+            <span class="tier-badge">1</span>
+            核心目标 · AI & SaaS Customer Success/Ops
+            <span class="tier-desc">优先投</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Product Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Solutions Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Implementation+Specialist+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Implementation Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Customer+Success+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Implementation+Specialist+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Implementation</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Product+Operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Product Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Success+Associate+-insurance+-sales+-real+estate&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Associate-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Success Associate</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Solutions Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Pre-sales+Consultant+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Pre-sales-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Pre-sales Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Product Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Delivery+Operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Delivery-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Delivery Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=No-Code%20Builder%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=No-Code+Builder+-developer&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/No-Code-Builder-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=No-Code%20Builder%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">No-Code Builder</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Low-Code%20Solution%20Architect%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Low-Code+Solution+Architect+-developer&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Low-Code-Solution-Architect-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Low-Code%20Solution%20Architect%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Low-Code Solution Architect</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Account Manager</a>
+          </div>
+        </div>
+
+        <!-- 第2梯队 -->
+        <div class="tier tier-2">
+          <div class="tier-title">
+            <span class="tier-badge">2</span>
+            备选方向 · B2B Customer/Project/Ops
+            <span class="tier-desc">补充投</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=B2B+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/B2B-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">B2B Account Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Key+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Key-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Key Account Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Partner%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Client+Partner+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Partner-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Partner%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Client Partner</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Relations%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Relations+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Relations-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Relations%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Relations Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Project+Coordinator+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Program%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Program+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Program-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Program%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Program Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Channel%20Partner%20Manager%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Channel+Partner+Manager+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Channel-Partner-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Channel%20Partner%20Manager%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Channel Partner Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Analyst%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Analyst+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Analyst-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Analyst%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Analyst</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Experience%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Experience+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Experience-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Experience%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Experience Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=User%20Research%20Assistant&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=User+Research+Assistant&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/User-Research-Assistant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=User%20Research%20Assistant&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">User Research Assistant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Behavioral%20Product%20Analyst&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Behavioral+Product+Analyst&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Behavioral-Product-Analyst-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Behavioral%20Product%20Analyst&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Behavioral Product Analyst</a>
+          </div>
+        </div>
+
+        <!-- 第3梯队 -->
+        <div class="tier tier-3">
+          <div class="tier-title">
+            <span class="tier-badge">3</span>
+            Remote · 远程岗位
+            <span class="tier-desc">额外机会</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20NOT%20insurance%20NOT%20sales%20NOT%20real%20estate&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+success+AI+remote+-insurance+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20NOT%20insurance%20NOT%20sales%20NOT%20real%20estate&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Success (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Success%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=client+success+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Success%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Client Success (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=AI+customer+success+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">AI Customer Success (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=project+coordinator+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Project Coordinator (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+operations+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Operations (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Implementation%20Specialist%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=implementation+specialist+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Implementation%20Specialist%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Implementation Specialist (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Onboarding%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+onboarding+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Onboarding-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Onboarding%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Onboarding (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Operations%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=operations+coordinator+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Operations-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Operations%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Operations Coordinator (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+success+associate+remote+-insurance+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Associate-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Success Associate (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=product+operations+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Product Operations (Remote)</a>
+          </div>
+        </div>
+
+        <!-- 第4梯队 -->
+        <div class="tier tier-4">
+          <div class="tier-title">
+            <span class="tier-badge">4</span>
+            出海 · Overseas/Cross-border/International
+            <span class="tier-desc">拓展机会</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=overseas+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=global+customer+success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=international+account+manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Account Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=cross-border+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Cross-border-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Cross-border Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Business%20Development%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=global+business+development+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Business-Development-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Business%20Development%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Business Development</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=international+sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Sales</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Export%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=export+sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Export-Sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Export%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Export Sales</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Regional%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=regional+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Regional-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Regional%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Regional Operations</a>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <strong>💡 LinkedIn筛选技巧：</strong>
+          左侧 Experience Level → Entry level / Associate；Industry → Software / IT / Internet；排除 Insurance, Financial Services
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ============ 国际招聘平台入口 ============ -->
+  <div class="intl-platforms">
+    <div class="intl-header">
+      <span class="emoji">🌏</span>
+      国际招聘平台 · 额外入口
+      <span class="intl-badge">补充海投</span>
+    </div>
+    <div class="intl-body">
+
+      <!-- 全球/泛行业 -->
+      <div class="intl-group">
+        <div class="intl-group-title">🧭 全球/泛行业平台</div>
+        <div class="intl-cards">
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://www.ziprecruiter.com/search?search=customer+success&location=Shanghai" target="_blank">ZipRecruiter</a>
+            <p class="intl-desc">全球主流职位聚合平台，AI匹配职位</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://www.ziprecruiter.com/search?search=customer+success+manager&location=Shanghai" target="_blank">Customer Success Manager</a>
+              <a class="tag-btn" href="https://www.ziprecruiter.com/search?search=AI+product+operations&location=Shanghai" target="_blank">AI Product Operations</a>
+              <a class="tag-btn" href="https://www.ziprecruiter.com/search?search=project+coordinator&location=Shanghai" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" href="https://www.ziprecruiter.com/search?search=solutions+consultant&location=Shanghai" target="_blank">Solutions Consultant</a>
+              <a class="tag-btn" href="https://www.ziprecruiter.com/search?search=account+manager+SaaS&location=Shanghai" target="_blank">SaaS Account Manager</a>
+            </div>
+          </div>
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://www.monster.com/jobs/search?q=customer+success&where=Shanghai" target="_blank">Monster</a>
+            <p class="intl-desc">老牌全球招聘网站，覆盖50+国家</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://www.monster.com/jobs/search?q=customer+success&where=Shanghai" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://www.monster.com/jobs/search?q=account+manager&where=Shanghai" target="_blank">Account Manager</a>
+              <a class="tag-btn" href="https://www.monster.com/jobs/search?q=project+coordinator&where=Shanghai" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" href="https://www.monster.com/jobs/search?q=business+operations&where=Shanghai" target="_blank">Business Operations</a>
+              <a class="tag-btn" href="https://www.monster.com/jobs/search?q=product+operations&where=Shanghai" target="_blank">Product Operations</a>
+            </div>
+          </div>
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://www.cake.me/search?keyword=customer+success&location=Shanghai" target="_blank">Cake</a>
+            <p class="intl-desc">亚洲跨国企业/科技行业，支持中英文简历</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://www.cake.me/search?keyword=customer+success&location=Shanghai" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://www.cake.me/search?keyword=product+operations&location=Shanghai" target="_blank">Product Operations</a>
+              <a class="tag-btn" href="https://www.cake.me/search?keyword=project+coordinator&location=Shanghai" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" href="https://www.cake.me/search?keyword=account+manager&location=Shanghai" target="_blank">Account Manager</a>
+              <a class="tag-btn" href="https://www.cake.me/search?keyword=AI+operations&location=Shanghai" target="_blank">AI Operations</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 远程工作专站 -->
+      <div class="intl-group">
+        <div class="intl-group-title">🚀 远程工作专站</div>
+        <div class="intl-cards">
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://weworkremotely.com/categories/remote-customer-support-jobs" target="_blank">We Work Remotely</a>
+            <p class="intl-desc">老牌远程平台，Google/Amazon等科技公司发布</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://weworkremotely.com/categories/remote-customer-support-jobs" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://weworkremotely.com/categories/remote-customer-support-jobs#listings" target="_blank">Customer Support</a>
+              <a class="tag-btn" href="https://weworkremotely.com/categories/remote-product-jobs" target="_blank">Product</a>
+              <a class="tag-btn" href="https://weworkremotely.com/categories/remote-operations-jobs" target="_blank">Operations</a>
+              <a class="tag-btn" href="https://weworkremotely.com/categories/remote-project-manager-jobs" target="_blank">Project Manager</a>
+            </div>
+          </div>
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://remoteok.com/remote-customer-success-jobs" target="_blank">RemoteOK</a>
+            <p class="intl-desc">免费浏览远程岗位，按行业/地点/薪资筛选</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://remoteok.com/remote-customer-success-jobs" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://remoteok.com/remote-customer-support-jobs" target="_blank">Customer Support</a>
+              <a class="tag-btn" href="https://remoteok.com/remote-operations-jobs" target="_blank">Operations</a>
+              <a class="tag-btn" href="https://remoteok.com/remote-project-manager-jobs" target="_blank">Project Manager</a>
+              <a class="tag-btn" href="https://remoteok.com/remote-product-manager-jobs" target="_blank">Product</a>
+            </div>
+          </div>
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://remotive.com/remote-jobs?q=customer+success" target="_blank">Remotive</a>
+            <p class="intl-desc">更新频繁的远程职位板，支持订阅推送</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://remotive.com/remote-jobs?q=customer+success" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://remotive.com/remote-jobs?q=account+manager" target="_blank">Account Manager</a>
+              <a class="tag-btn" href="https://remotive.com/remote-jobs?q=operations" target="_blank">Operations</a>
+              <a class="tag-btn" href="https://remotive.com/remote-jobs?q=project+coordinator" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" href="https://remotive.com/remote-jobs?q=product+operations" target="_blank">Product Operations</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 垂直/特定领域 -->
+      <div class="intl-group">
+        <div class="intl-group-title">🎯 垂直/特定领域平台</div>
+        <div class="intl-cards">
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://wellfound.com/jobs?q=customer+success&location=Shanghai" target="_blank">Wellfound (原AngelList)</a>
+            <p class="intl-desc">专注创业公司和科技岗，AI/SaaS初创公司首选</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://wellfound.com/jobs?q=customer+success&location=Shanghai" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://wellfound.com/jobs?q=product+operations&location=Shanghai" target="_blank">Product Operations</a>
+              <a class="tag-btn" href="https://wellfound.com/jobs?q=account+manager&location=Shanghai" target="_blank">Account Manager</a>
+              <a class="tag-btn" href="https://wellfound.com/jobs?q=operations&location=Shanghai" target="_blank">Operations</a>
+              <a class="tag-btn" href="https://wellfound.com/jobs?q=AI&location=Shanghai" target="_blank">AI</a>
+              <a class="tag-btn" href="https://wellfound.com/role/solutions-consultant" target="_blank">Solutions Consultant</a>
+            </div>
+          </div>
+          <div class="intl-card">
+            <a class="intl-card-link" href="https://daijob.com/en/search/list?keyword=customer+success" target="_blank">Daijob.com</a>
+            <p class="intl-desc">日英双语人才平台，日企外企资源集中</p>
+            <div class="tags">
+              <a class="tag-btn" href="https://daijob.com/en/search/list?keyword=customer+success" target="_blank">Customer Success</a>
+              <a class="tag-btn" href="https://daijob.com/en/search/list?keyword=account+manager" target="_blank">Account Manager</a>
+              <a class="tag-btn" href="https://daijob.com/en/search/list?keyword=project+coordinator" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" href="https://daijob.com/en/search/list?keyword=operations" target="_blank">Operations</a>
+              <a class="tag-btn" href="https://daijob.com/en/search/list?keyword=business+development" target="_blank">Business Development</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 底部贴士 -->
+  <div class="tips-footer">
+    <h3>📌 高效投递小贴士</h3>
+    <ul class="tips-grid">
+      <li><strong>每天15分钟</strong>：从第1梯队往下扫，优先投核心目标</li>
+      <li><strong>优先投新发布</strong>：3天内发布的命中率最高</li>
+      <li><strong>Boss必做行业筛选</strong>：选互联网/软件/企业服务/AI</li>
+      <li><strong>公司先查再投</strong>：确认是真科技/SaaS公司</li>
+      <li><strong>LinkedIn主页</strong>：追债动态设为仅好友可见</li>
+      <li><strong>避坑词</strong>：底薪+高提成/开单/陌拜/地推/狼性 → pass</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    找工work flow · 点标签直接跳转
+  </div>
+
+  </div><!-- /page-job -->
+
+  <!-- ============ 电话沟通话术页面 ============ -->
+  <div class="page-view" id="page-script">
+    <div class="script-container">
+
+      <!-- 格式化工具栏 -->
+      <div class="script-toolbar">
+        <button class="fmt-btn" data-cmd="bold" title="加粗"><b>B</b></button>
+        <button class="fmt-btn" data-cmd="underline" title="下划线"><u>U</u></button>
+        <button class="fmt-btn" data-cmd="strikeThrough" title="删除线"><s>S</s></button>
+        <button class="fmt-btn" data-cmd="italic" title="斜体"><i>I</i></button>
+        <span class="fmt-divider"></span>
+        <button class="fmt-btn" data-cmd="insertUnorderedList" title="无序列表">• 列表</button>
+        <span class="fmt-divider"></span>
+        <button class="fmt-btn" id="color-btn" title="文字颜色">颜色 ▾</button>
+        <span class="fmt-color-palette" id="color-palette">
+          <span class="fmt-color-swatch" style="background:#e74c3c" data-color="#e74c3c"></span>
+          <span class="fmt-color-swatch" style="background:#e67e22" data-color="#e67e22"></span>
+          <span class="fmt-color-swatch" style="background:#f1c40f" data-color="#b8860b"></span>
+          <span class="fmt-color-swatch" style="background:#27ae60" data-color="#27ae60"></span>
+          <span class="fmt-color-swatch" style="background:#2ecc71" data-color="#1abc9c"></span>
+          <span class="fmt-color-swatch" style="background:#3498db" data-color="#3498db"></span>
+          <span class="fmt-color-swatch" style="background:#9b59b6" data-color="#9b59b6"></span>
+          <span class="fmt-color-swatch" style="background:#34495e" data-color="#34495e"></span>
+          <span class="fmt-color-swatch" style="background:#e84393" data-color="#e84393"></span>
+          <span class="fmt-color-swatch" style="background:#636e72" data-color:#636e72"></span>
+          <span class="fmt-color-swatch" style="background:#2d3436" data-color="#2d3436"></span>
+          <span class="fmt-color-swatch" style="background:#d63031" data-color="#c0392b"></span>
+          <span class="fmt-color-swatch" style="background:#0984e3" data-color="#073b7d"></span>
+          <span class="fmt-color-swatch" style="background:#fd79a8" data-color:#b33951"></span>
+          <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit">✕</span>
+        </span>
+        <span class="fmt-divider"></span>
+        <button class="fmt-btn" data-cmd="removeFormat" title="清除格式">清除</button>
+      </div>
+
+      <div class="script-columns">
+
+        <!-- 中文话术 -->
+        <div class="script-column">
+          <div class="script-column-header cn">
+            <span>🇨🇳</span>
+            中文话术
+          </div>
+          <div class="script-column-body">
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">1</span>
+                "请简单做个自我介绍"
+                <span class="script-logic">3句话说清你是谁、做过什么、想干什么</span>
+                <button class="translate-btn" data-cn="script1-cn" data-en="script1-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script1-cn">您好，我是黄文艳。过去8年我主要负责对接客户和统筹项目。服务过戴森、依云、洲际酒店等品牌。我的核心工作是跨部门沟通和跟进落地，擅长把复杂的客户需求，从方案制定一直推进到最终的交付和复盘。<br><br>今年gap期间因为个人兴趣，自学研究了大部分主流AI工具，用过国外的claude、chatgpt、各种ai buider和国内agent等，在零代码背景下，vibe coding跑通过网站、小工具和工作台，这也让我对当前AI的实操逻辑有比较深的理解，这也是我0-1能力的充分证明。<br><br>我之所以对这个岗位感兴趣，是因为目前在尝试职业能力上的升级，与其在原来的行业里做重复的事，我更希望能带着过去积累的能力，投身到新的行业趋势里来。在过去的工作过程中，我形成了一套成熟的方法论和做事体系，可以用最短的时间熟悉产品，并且用落地的思维去推进业务。我希望在这个行业里长期发展，跟公司一起成长。</div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">2</span>
+                "你的经验跟我们公司的xx岗位不一样？"
+                <span class="script-logic">承认差异，但核心能力互通</span>
+                <button class="translate-btn" data-cn="script2-cn" data-en="script2-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script2-cn">
+                工作内容确实有差异。但我过去8年沉淀的核心能力，其实跟贵司是互通的。我以前对接的客户，像依云、洲际，很多甲方的流程都非常繁琐，内部部门也很多。<br>
+                我作为项目的总接口人，负责拉通各方、控制进度、排除风险。这其实和贵司在给大客户做项目交付、做客户成功时的底层逻辑是一样的。<br>
+                我唯一需要去适应和补足的，是咱们具体产品里的专业术语和行业知识。通常来说，给我两周时间，我就可以把产品逻辑吃透，并把它翻译成客户听得懂的价值。
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">3</span>
+                "你为什么从上一份工作离职？"
+                <span class="script-logic">用"个人发展"导向，引出转型AI叙事</span>
+                <button class="translate-btn" data-cn="script3-cn" data-en="script3-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script3-cn">
+                跟前公司的合同自然到期了。其实很感谢前老板，很爽快的给了我补偿金，让我有了一定的经济底气，能沉下心来去学习和思考真正想做什么，所以我也很珍惜这段时间，最终确定了自己要转型的想法。<br>
+                因为我基本一毕业就一直在这类行业工作，可以说所有的工作流程非常熟悉了。今年对这个xx方向很感兴趣，所以想往这个赛道转型，想找一个能让我把以往经验和新业务结合的岗位。
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">4</span>
+                "你对这个岗位/我们公司了解多少？"
+                <span class="script-logic">查公司主营业务，嵌进岗位关键词</span>
+                <button class="translate-btn" data-cn="script4-cn" data-en="script4-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script4-cn">
+                我了解过咱们公司主要做xx，这个岗位需要xx。我之前在B端做了8年客户对接，从需求收集到交付跟进全链路都做过，今年也在用AI工具做项目落地，觉得个人经验和贵司的需求挺匹配的。
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">5</span>
+                "你的期望薪资是多少？"
+                <span class="script-logic">给区间不给死数，留谈判空间</span>
+                <button class="translate-btn" data-cn="script5-cn" data-en="script5-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script5-cn">
+                因为目前在做转型，所以我的基础期望薪资会在<strong>13-16K</strong>之间，具体可以根据岗位的实际职责和团队情况来谈，我更看重的是这个岗位的发展空间和机会。
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">6</span>
+                "你有什么问题想问我们的吗？"
+                <span class="script-logic">问业务相关问题，展现思考深度</span>
+                <button class="translate-btn" data-cn="script6-cn" data-en="script6-en">✓</button>
+              </div>
+              <div class="script-block" contenteditable="true" id="script6-cn">
+                想问一下这个岗位日常主要对接哪些部门？<br>
+                团队目前在做哪些尝试？<br>
+                我如果加入的话，前三个月的主要目标是什么？<br>
+                团队目前的工作节奏大概是怎样的？<br>
+                公司盈利情况/试用期考核+五险一金标准+团队配置+晋升机制？<br>
+                公司目前处于的这个阶段，对xx部门的核心考核指标和未来一年的业务增长预期是什么？<br>
+                这个岗位所支持的品牌或产品线，在公司内部属于哪一类业务？（核心成熟业务/新兴增长业务）<br>
+                公司对这块业务的资源投入和长期规划是怎样的？<br>
+                可以描述一下一个典型的项目从提报、审批到执行的跨部门协作流程吗？（这能听出流程是否高效）。
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 英文话术 -->
+        <div class="script-column">
+          <div class="script-column-header en">
+            <span>🌍</span>
+            English Scripts
+          </div>
+          <div class="script-column-body">
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">1</span>
+                "Tell me about yourself."
+                <span class="script-logic">3 sentences: who you are, what you've done, what you want</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script1-en">Hello, I'm Huang Wenyan. Over the past 8 years, I've been mainly responsible for client management and project coordination. I've served brands like Dyson, Evian, and InterContinental Hotels. My core work is cross-department communication and driving execution — I'm good at taking complex client requirements from solution design all the way through to final delivery and retrospective.<br><br>During my gap period this year, driven by personal interest, I self-studied most of the mainstream AI tools — including Claude, ChatGPT, various AI builders, and domestic AI agents. With a zero-code background, I used vibe coding to build websites, small tools, and workbenches. This gave me a fairly deep understanding of the practical logic behind current AI, and it's also strong proof of my 0-to-1 capability.<br><br>The reason I'm interested in this role is that I'm currently looking to upgrade my professional skills. Rather than continuing to do repetitive work in my original industry, I'd rather bring my accumulated capabilities into new industry trends. Over the course of my past work, I've developed a mature methodology and way of working — I can get familiar with a product in the shortest possible time and drive business with a practical, execution-oriented mindset. I hope to grow long-term in this industry and grow together with the company.</div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">2</span>
+                "Your experience doesn't match our company's XX role?"
+                <span class="script-logic">Acknowledge difference, pivot to transferable skills</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script2-en">
+                The work content does differ. But the core capabilities I've built over the past 8 years are actually transferable to your company. The clients I worked with — like Evian and InterContinental — many of them had very complex processes and many internal departments.<br>
+                As the project's main point of contact, I was responsible for aligning all parties, controlling timelines, and eliminating risks. This shares the same underlying logic as your company's project delivery and customer success work with large clients.<br>
+                The only thing I need to adapt to and fill in is the specific terminology and industry knowledge around your product. Typically, give me two weeks, and I can fully grasp the product logic and translate it into value that customers understand.
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">3</span>
+                "Why did you leave your last job?"
+                <span class="script-logic">Frame it as growth-oriented</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script3-en">
+                My contract with my previous company naturally expired. I'm actually very grateful to my former boss — he straightforwardly gave me a severance package, which gave me the financial cushion to settle down and learn and think about what I really want to do. So I really value this period, and ultimately made the decision to transition.<br>
+                I've basically been working in this type of industry since graduation, so I can say I'm very familiar with all the workflows. This year I became very interested in the XX direction, so I want to transition into this track and find a role where I can combine my past experience with new business.
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">4</span>
+                "What do you know about this role / our company?"
+                <span class="script-logic">Research company, embed JD keywords</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script4-en">
+                I've looked into your company — you mainly do XX, and this role requires XX. I've done 8 years of B2B client work, covering the full chain from requirement gathering to delivery follow-up. This year I've also been using AI tools for project implementation, and I think my personal experience aligns well with your needs.
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">5</span>
+                "What are your salary expectations?"
+                <span class="script-logic">Give a range, not a fixed number</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script5-en">
+                Since I'm currently transitioning, my base salary expectation is in the <strong>13-16K</strong> range. It's negotiable based on the actual scope of the role and the team situation. What I value more is the development space and opportunities this role offers.
+              </div>
+            </div>
+
+            <div class="script-section">
+              <div class="script-section-title">
+                <span class="script-section-num">6</span>
+                "Do you have any questions for us?"
+                <span class="script-logic">Ask business-related questions to show depth</span>
+              </div>
+              <div class="script-block" contenteditable="true" id="script6-en">
+                Which departments does this role primarily work with on a daily basis?<br>
+                What initiatives is the team currently working on?<br>
+                If I join, what would be the main goals for the first three months?<br>
+                What's the current work pace of the team like?<br>
+                Company profitability / probation assessment + social insurance standards + team configuration + promotion mechanism?<br>
+                At the company's current stage, what are the core KPIs and one-year business growth expectations for the XX department?<br>
+                Which category does the brand or product line this role supports fall under within the company? (Core mature business / emerging growth business)<br>
+                What's the company's resource investment and long-term planning for this business area?<br>
+                Could you describe a typical cross-department project workflow from proposal, approval, to execution? (This can reveal whether the process is efficient.)
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-script -->
+
+  <!-- ============ 黑名单公司页面 ============ -->
+  <div class="page-view" id="page-blacklist">
+    <div class="blacklist-container">
+      <div class="blacklist-body">
+
+        <div class="bl-section-title">🔴 高风险（不建议投）</div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>上海鲸燊信息服务</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>2026年3月成立，注册资本仅50万，纯小微企业。经营范围含信贷逾期催收，岗位"高中+经验不限"却开12-20K高薪，极大可能是"职业骗薪"或信贷催收皮包公司。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">职业骗薪</span>
+            <span class="bl-tag">信贷催收</span>
+            <span class="bl-tag">高薪低门槛</span>
+            <span class="bl-tag">刚成立</span>
+          </div>
+        </div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>上海屹明网络科技</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>社保缴纳人数为0，无实际用工体系，极大概率是空壳公司。以"包住宿、底薪1.1W"为诱饵的B端大客户销售，"包住宿"是典型招聘陷阱，入职后可能变相收费或被逼走。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">空壳公司</span>
+            <span class="bl-tag">社保0人</span>
+            <span class="bl-tag">包住宿陷阱</span>
+          </div>
+        </div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>上海耘义信息咨询服务有限公司</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>2025年成立，自然人独资，参保人数0，实缴资本0，微型企业却谎称"100-499人"。高薪低门槛招聘"客户成功"，疑似"招转培"套路诈骗，与鸣荏为同一团伙马甲。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">招转培</span>
+            <span class="bl-tag">社保0人</span>
+            <span class="bl-tag">空壳公司</span>
+            <span class="bl-tag">虚假宣传</span>
+          </div>
+        </div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>上海鸣荏信息咨询有限公司</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>2024年底成立，自然人独资，参保人数0，实缴资本0。与耘义同一法人（李加加）、同一注册地址、同一电话、同一招聘话术，曾用名"上海瓴凤信息咨询"，典型马甲公司。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">马甲公司</span>
+            <span class="bl-tag">社保0人</span>
+            <span class="bl-tag">招转培</span>
+            <span class="bl-tag">频繁更名</span>
+          </div>
+        </div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>珍岛集团</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>旗下2家子公司曾登央视"3·15"晚会，被曝网络水军刷评、伪造口碑。强制加班无加班费、克扣培训工资、PUA新人、职场性骚扰等问题被大量离职员工曝光。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">315曝光</span>
+            <span class="bl-tag">强制加班</span>
+            <span class="bl-tag">PUA</span>
+            <span class="bl-tag">职场骚扰</span>
+          </div>
+        </div>
+
+        <div class="bl-card red">
+          <div class="bl-card-top">
+            <h2>上海福启鑫汇信息科技有限公司</h2>
+            <span class="bl-badge red">高风险</span>
+          </div>
+          <p>2025年成立的初创公司，社保缴纳仅2人。"1-3年经验、学历不限"的"AI大客户销售"岗位，疑似打着AI幌子的电话销售，招聘极不稳定。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">初创不稳</span>
+            <span class="bl-tag">疑似电销</span>
+            <span class="bl-tag">社保仅2人</span>
+          </div>
+        </div>
+
+        <div class="bl-section-title">🟡 谨慎对待</div>
+
+        <div class="bl-card orange">
+          <div class="bl-card-top">
+            <h2>上海更赢信息技术有限公司</h2>
+            <span class="bl-badge orange">注意</span>
+          </div>
+          <p>公司本身正规（2018年成立，实缴1.5亿，53人参保，贝壳系背景），但有1552个开庭公告，房地产相关诉讼多，代理业务存在较大经济纠纷和裁员风险。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">大量诉讼</span>
+            <span class="bl-tag">裁员风险</span>
+            <span class="bl-tag">房产纠纷</span>
+          </div>
+        </div>
+
+        <div class="bl-card orange">
+          <div class="bl-card-top">
+            <h2>微盟</h2>
+            <span class="bl-badge orange">注意</span>
+          </div>
+          <p>上市公司，规模大（1000-9999人），但有行政处罚记录。入职后可能面临较大内部压力和加班文化，需做好心理准备。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">行政处罚</span>
+            <span class="bl-tag">加班文化</span>
+            <span class="bl-tag">压力大</span>
+          </div>
+        </div>
+
+        <div class="bl-card yellow">
+          <div class="bl-card-top">
+            <h2>ME CAMP</h2>
+            <span class="bl-badge yellow">谨慎</span>
+          </div>
+          <p>搜索不到详细工商或招聘信息，信息几乎为零，无法判断，建议绕开。</p>
+          <div class="bl-tags">
+            <span class="bl-tag">信息缺失</span>
+            <span class="bl-tag">无法核实</span>
+          </div>
+        </div>
+
+        <div class="bl-footer">
+          共 9 家公司 · 更新于 2026-09-08
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// 顶部导航切换
+document.querySelectorAll('.nav-tab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var page = btn.getAttribute('data-page');
+    document.querySelectorAll('.nav-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.page-view').forEach(function(v) { v.classList.remove('active'); });
+    document.getElementById('page-' + page).classList.add('active');
+  });
+});
+
+// 颜色方案：每个平台4个梯队从深到浅
+var colorSchemes = {
+  liepin: [
+    { border:'#ff6b35', bg:'#fff3eb', title:'#cc4400', badge:'#ff6b35' },
+    { border:'#ff8559', bg:'#fff6f0', title:'#d95500', badge:'#ff8559' },
+    { border:'#ffa080', bg:'#fff9f5', title:'#e66700', badge:'#ffa080' },
+    { border:'#ffb8a0', bg:'#fffcfa', title:'#e67733', badge:'#ffb8a0' }
+  ],
+  '51job': [
+    { border:'#2d8cf0', bg:'#ebf5ff', title:'#1466c0', badge:'#2d8cf0' },
+    { border:'#5ba0f5', bg:'#f0f8ff', title:'#2580d0', badge:'#5ba0f5' },
+    { border:'#80b8f8', bg:'#f5faff', title:'#3590d8', badge:'#80b8f8' },
+    { border:'#a0ccfb', bg:'#fafdff', title:'#4598df', badge:'#a0ccfb' }
+  ],
+  boss: [
+    { border:'#14c57d', bg:'#eafaf1', title:'#0a8a55', badge:'#14c57d' },
+    { border:'#3ad595', bg:'#f0fbf5', title:'#1a9565', badge:'#3ad595' },
+    { border:'#6bdfb0', bg:'#f5fcf8', title:'#2aa075', badge:'#6bdfb0' },
+    { border:'#95e9c5', bg:'#fafdfb', title:'#3aab85', badge:'#95e9c5' }
+  ],
+  linkedin: [
+    { border:'#0a66c2', bg:'#ebf3fc', title:'#084d94', badge:'#0a66c2' },
+    { border:'#3d85d0', bg:'#f0f7fd', title:'#0955a0', badge:'#3d85d0' },
+    { border:'#6ba3dc', bg:'#f5fafd', title:'#0a5dac', badge:'#6ba3dc' },
+    { border:'#98c2e8', bg:'#fafcfe', title:'#0b65b8', badge:'#98c2e8' }
+  ],
+  indeed: [
+    { border:'#2164f3', bg:'#eef2fe', title:'#1640c0', badge:'#2164f3' },
+    { border:'#4d80f5', bg:'#f2f5fe', title:'#1d4dcc', badge:'#4d80f5' },
+    { border:'#7a9bf7', bg:'#f6f9fe', title:'#245ad8', badge:'#7a9bf7' },
+    { border:'#a7b6f9', bg:'#fafbfd', title:'#2b68e4', badge:'#a7b6f9' }
+  ],
+  glassdoor: [
+    { border:'#0caa41', bg:'#eafaf0', title:'#087a2e', badge:'#0caa41' },
+    { border:'#3dc068', bg:'#f0fbf5', title:'#098a38', badge:'#3dc068' },
+    { border:'#6bd58f', bg:'#f5fcf8', title:'#0a9a42', badge:'#6bd58f' },
+    { border:'#95e0b5', bg:'#fafdfb', title:'#0baa4c', badge:'#95e0b5' }
+  ]
+};
+
+function applyTierColors(column, pf) {
+  var scheme = colorSchemes[pf];
+  if (!scheme) return;
+  var tiers = column.querySelectorAll('.tier');
+  tiers.forEach(function(tier, i) {
+    if (i >= 4) return;
+    var c = scheme[i];
+    tier.style.background = c.bg;
+    tier.style.borderLeftColor = c.border;
+    var title = tier.querySelector('.tier-title');
+    if (title) title.style.color = c.title;
+    var badge = tier.querySelector('.tier-badge');
+    if (badge) badge.style.background = c.badge;
+  });
+}
+
+document.querySelectorAll('.ptab').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var pf = btn.getAttribute('data-pf');
+    var parent = btn.parentElement;
+    parent.querySelectorAll('.ptab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var column = parent.closest('.column');
+    if (pf === 'liepin' || pf === '51job' || pf === 'boss') {
+      column.querySelectorAll('.tag-btn[data-liepin]').forEach(function(tag) {
+        var url = tag.getAttribute('data-' + pf);
+        if (url) tag.setAttribute('href', url);
+      });
+    } else {
+      column.querySelectorAll('.tag-btn[data-linkedin]').forEach(function(tag) {
+        var url = tag.getAttribute('data-' + pf);
+        if (url) tag.setAttribute('href', url);
+      });
+    }
+    applyTierColors(column, pf);
+    // 更新已点击标签的颜色为当前tab色
+    var mainColor = colorSchemes[pf] ? colorSchemes[pf][0].badge : '#999';
+    column.querySelectorAll('.tag-btn.clicked').forEach(function(tag) {
+      tag.style.background = mainColor;
+      tag.style.borderColor = mainColor;
+    });
+  });
+});
+
+// 点击标签后标记为已点击，颜色随tab切换，并持久化到localStorage
+var clickedTags = {};
+try { clickedTags = JSON.parse(localStorage.getItem('clickedTags') || '{}'); } catch(e) { clickedTags = {}; }
+
+function getTagKey(tag) {
+  var text = tag.textContent.trim();
+  var isIntl = tag.closest('.intl-card') ? true : false;
+  var colType = isIntl ? 'intl' : 'cn';
+  return colType + '::' + text;
+}
+
+function applyClickedStyle(tag, mainColor) {
+  tag.classList.add('clicked');
+  if (mainColor) {
+    tag.style.background = mainColor;
+    tag.style.borderColor = mainColor;
+  }
+}
+
+document.querySelectorAll('.tag-btn').forEach(function(tag) {
+  tag.addEventListener('click', function() {
+    tag.classList.add('clicked');
+    var column = tag.closest('.column');
+    if (column) {
+      var activeTab = column.querySelector('.ptab.active');
+      if (activeTab) {
+        var pf = activeTab.getAttribute('data-pf');
+        var mainColor = colorSchemes[pf] ? colorSchemes[pf][0].badge : '#999';
+        tag.style.background = mainColor;
+        tag.style.borderColor = mainColor;
+      }
+    } else {
+      // 国际平台标签，无tab切换，用默认色
+      tag.style.background = '#0a66c2';
+      tag.style.borderColor = '#0a66c2';
+    }
+    var key = getTagKey(tag);
+    clickedTags[key] = true;
+    try { localStorage.setItem('clickedTags', JSON.stringify(clickedTags)); } catch(e) {}
+  });
+});
+
+// 页面加载时恢复已点击状态
+document.querySelectorAll('.tag-btn').forEach(function(tag) {
+  var key = getTagKey(tag);
+  if (clickedTags[key]) {
+    var column = tag.closest('.column');
+    if (column) {
+      var activeTab = column.querySelector('.ptab.active');
+      if (activeTab) {
+        var pf = activeTab.getAttribute('data-pf');
+        var mainColor = colorSchemes[pf] ? colorSchemes[pf][0].badge : '#999';
+        applyClickedStyle(tag, mainColor);
+      } else {
+        applyClickedStyle(tag, null);
+      }
+    } else {
+      // 国际平台标签，无tab切换，用默认色
+      applyClickedStyle(tag, '#0a66c2');
+    }
+  }
+});
+
+// 话术自动保存与恢复（localStorage）
+// 版本升级到v5：清除所有旧缓存（中英文），让HTML最新默认值生效
+['script1-cn','script2-cn','script3-cn','script4-cn','script5-cn','script6-cn',
+ 'script1-en','script2-en','script3-en','script4-en','script5-en','script6-en'].forEach(function(eid) {
+  try { localStorage.removeItem('script_v2_' + eid); } catch(e) {}
+  try { localStorage.removeItem('script_v3_' + eid); } catch(e) {}
+  try { localStorage.removeItem('script_v4_' + eid); } catch(e) {}
+});
+var scriptBlocks = document.querySelectorAll('.script-block[contenteditable="true"]');
+scriptBlocks.forEach(function(block) {
+  var id = block.id;
+  if (!id) return;
+  // 所有话术都从v5缓存恢复，无缓存则使用HTML默认值
+  var saved = null;
+  try { saved = localStorage.getItem('script_v5_' + id); } catch(e) {}
+  if (saved !== null && saved !== '') {
+    block.innerHTML = saved;
+  }
+  // 粘贴时自动清洗格式，只保留纯文本
+  block.addEventListener('paste', function(e) {
+    e.preventDefault();
+    var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    // 插入纯文本，保留换行
+    var lines = text.split(/\r?\n/);
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < lines.length; i++) {
+      if (i > 0) frag.appendChild(document.createElement('br'));
+      frag.appendChild(document.createTextNode(lines[i]));
+    }
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+      var range = sel.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(frag);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    block.dispatchEvent(new Event('input'));
+  });
+  // 监听编辑并自动保存
+  var saveTimer = null;
+  block.addEventListener('input', function() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function() {
+      try { localStorage.setItem('script_v5_' + id, block.innerHTML); } catch(e) {}
+    }, 300);
+  });
+});
+
+// 话术格式化工具栏
+function getActiveScriptBlock() {
+  var sel = window.getSelection();
+  if (!sel.rangeCount) return null;
+  var node = sel.anchorNode;
+  while (node) {
+    if (node.nodeType === 1 && node.classList && node.classList.contains('script-block') && node.isContentEditable) {
+      return node;
+    }
+    node = node.parentNode;
+  }
+  return null;
+}
+
+document.querySelectorAll('.fmt-btn[data-cmd]').forEach(function(btn) {
+  btn.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+  });
+  btn.addEventListener('click', function() {
+    var cmd = btn.getAttribute('data-cmd');
+    document.execCommand(cmd, false, null);
+    var block = getActiveScriptBlock();
+    if (block) {
+      try { localStorage.setItem('script_v5_' + block.id, block.innerHTML); } catch(e) {}
+    }
+    updateFmtButtonStates();
+  });
+});
+
+var colorBtn = document.getElementById('color-btn');
+var colorPalette = document.getElementById('color-palette');
+if (colorBtn) {
+  colorBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    colorPalette.classList.toggle('show');
+    if (colorPalette.classList.contains('show')) {
+      var rect = colorBtn.getBoundingClientRect();
+      colorPalette.style.left = rect.left + 'px';
+      colorPalette.style.top = (rect.bottom + 4) + 'px';
+      colorPalette.style.position = 'fixed';
+    }
+  });
+}
+document.querySelectorAll('.fmt-color-swatch').forEach(function(sw) {
+  sw.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+  });
+  sw.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var color = sw.getAttribute('data-color');
+    var block = getActiveScriptBlock();
+    if (block) {
+      document.execCommand('foreColor', false, color);
+      try { localStorage.setItem('script_v5_' + block.id, block.innerHTML); } catch(e) {}
+    }
+    colorPalette.classList.remove('show');
+  });
+});
+document.addEventListener('click', function() {
+  if (colorPalette) colorPalette.classList.remove('show');
+});
+
+function updateFmtButtonStates() {
+  var cmds = ['bold', 'underline', 'strikeThrough', 'italic'];
+  cmds.forEach(function(cmd) {
+    var btn = document.querySelector('.fmt-btn[data-cmd="' + cmd + '"]');
+    if (btn) {
+      try {
+        if (document.queryCommandState(cmd)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      } catch(e) {}
+    }
+  });
+}
+document.querySelectorAll('.script-block[contenteditable="true"]').forEach(function(block) {
+  block.addEventListener('keyup', updateFmtButtonStates);
+  block.addEventListener('mouseup', updateFmtButtonStates);
+});
+
+// 翻译按钮：点击后将对应中文翻译到英文（百度翻译JSONP）
+document.querySelectorAll('.translate-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var cnId = btn.getAttribute('data-cn');
+    var enId = btn.getAttribute('data-en');
+    var cnBlock = document.getElementById(cnId);
+    var enBlock = document.getElementById(enId);
+    if (!cnBlock || !enBlock) return;
+    var text = cnBlock.innerText.trim();
+    if (!text) return;
+    btn.classList.add('translating');
+    btn.textContent = '...';
+    var cbName = 'bd_tr_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    var s = document.createElement('script');
+    window[cbName] = function(data) {
+      if (data && data.data) {
+        var translated = data.data.map(function(d) { return d.dst; }).join('');
+        enBlock.innerText = translated;
+        try { localStorage.setItem('script_v5_' + enId, enBlock.innerHTML); } catch(e) {}
+      }
+      btn.classList.remove('translating');
+      btn.textContent = '✓';
+      delete window[cbName];
+      if (s.parentNode) s.parentNode.removeChild(s);
+    };
+    s.onerror = function() {
+      btn.classList.remove('translating');
+      btn.textContent = '✓';
+      delete window[cbName];
+      if (s.parentNode) s.parentNode.removeChild(s);
+    };
+    s.src = 'https://fanyi.baidu.com/transapi?from=zh&to=en&query=' + encodeURIComponent(text) + '&callback=' + cbName;
+    document.body.appendChild(s);
+  });
+});
+
+// 页面加载时应用默认激活tab的颜色
+document.querySelectorAll('.column').forEach(function(column) {
+  var activeTab = column.querySelector('.ptab.active');
+  if (activeTab) {
+    applyTierColors(column, activeTab.getAttribute('data-pf'));
+  }
+});
+</script>
+</body>
+</html>
