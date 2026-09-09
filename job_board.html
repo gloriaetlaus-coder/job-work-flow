@@ -2180,6 +2180,32 @@ document.querySelectorAll('.column').forEach(function(column) {
     li.setAttribute('data-id', task.id);
     li.setAttribute('data-day', dayKey);
 
+    // 复选框
+    var check = document.createElement('div');
+    check.className = 'task-check';
+    check.onclick = function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      var dk = li.getAttribute('data-day');
+      var taskId = li.getAttribute('data-id');
+      var tasks = getTasks(dk);
+      var newDone = false;
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === taskId) {
+          tasks[i].done = !tasks[i].done;
+          newDone = tasks[i].done;
+          break;
+        }
+      }
+      saveTasks(dk, tasks);
+      if (newDone) {
+        li.classList.add('done');
+      } else {
+        li.classList.remove('done');
+      }
+    };
+    li.appendChild(check);
+
     var text = document.createElement('div');
     text.className = 'task-text';
     text.setAttribute('contenteditable', 'true');
@@ -2258,28 +2284,6 @@ document.querySelectorAll('.column').forEach(function(column) {
       }
     });
 
-    // 双击切换完成状态
-    text.addEventListener('dblclick', function(e) {
-      e.preventDefault();
-      var dk = li.getAttribute('data-day');
-      var taskId = li.getAttribute('data-id');
-      var tasks = getTasks(dk);
-      var newDone = false;
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === taskId) {
-          tasks[i].done = !tasks[i].done;
-          newDone = tasks[i].done;
-          break;
-        }
-      }
-      saveTasks(dk, tasks);
-      if (newDone) {
-        li.classList.add('done');
-      } else {
-        li.classList.remove('done');
-      }
-    });
-
     li.appendChild(text);
 
     // 删除按钮
@@ -2328,7 +2332,10 @@ document.querySelectorAll('.column').forEach(function(column) {
       var dayKey = getDayKey(d);
       var isToday = isSameDay(d, today);
       var tasks = getTasks(dayKey);
-      if (tasks.length === 0) tasks = [{ id: genId(), text: '', done: false }];
+      if (tasks.length === 0) {
+        tasks = [{ id: genId(), text: '', done: false }];
+        saveTasks(dayKey, tasks);
+      }
 
       var dayEl = document.createElement('div');
       dayEl.className = 'week-day' + (isToday ? ' week-day-today' : '');
