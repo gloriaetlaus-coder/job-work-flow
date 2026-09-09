@@ -456,6 +456,193 @@
     opacity: 1;
   }
 
+  /* 周时间轴 - 苹果提醒事项风格 */
+  .week-timeline {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e8e8e8;
+    min-height: 400px;
+  }
+  .week-timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .week-timeline-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .week-timeline-date {
+    font-size: 12px;
+    color: #999;
+    font-weight: 400;
+  }
+  .week-day {
+    margin-bottom: 10px;
+  }
+  .week-day-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .week-day-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff6b35;
+    min-width: 36px;
+  }
+  .week-day-date {
+    font-size: 11px;
+    color: #bbb;
+  }
+  .week-day-today .week-day-name {
+    color: #ff3b30;
+    font-weight: 700;
+  }
+  .week-day-today .week-day-name::after {
+    content: " 今天";
+    font-size: 10px;
+    background: #ff3b30;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 8px;
+    margin-left: 2px;
+    vertical-align: middle;
+  }
+  .week-tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+    border-left: 2px solid #f0f0f0;
+  }
+  .week-task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 4px 0 4px 6px;
+    position: relative;
+  }
+  .week-task-item::before {
+    content: "";
+    position: absolute;
+    left: -11px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #ff6b35;
+  }
+  .week-task-item.done::before {
+    background: #34c759;
+    border-color: #34c759;
+  }
+  .task-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .task-checkbox.checked {
+    background: #34c759;
+    border-color: #34c759;
+  }
+  .task-checkbox.checked::after {
+    content: "✓";
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .task-text {
+    flex: 1;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5;
+    outline: none;
+    min-height: 20px;
+    word-break: break-word;
+  }
+  .task-text[contenteditable="true"]:empty::before {
+    content: "添加事项...";
+    color: #ccc;
+  }
+  .week-task-item.done .task-text {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  .task-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .task-add-btn:hover {
+    background: #f5f5f5;
+    color: #ff6b35;
+  }
+  .task-delete {
+    opacity: 0;
+    font-size: 12px;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .week-task-item:hover .task-delete {
+    opacity: 1;
+  }
+  .task-delete:hover {
+    color: #ff3b30;
+  }
+
+  /* 布局调整：左列国内+国外，右列时间轴 */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+  }
+  .columns-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+  .columns-right {
+    min-width: 0;
+  }
+  @media (max-width: 900px) {
+    .columns {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 国际平台入口 */
   /* 国际平台入口 */
   .intl-platforms {
     margin-top: 24px;
@@ -637,6 +824,8 @@
 
   <div class="columns">
 
+    <div class="columns-left">
+
     <!-- ============ 国内 ============ -->
     <div class="column">
       <div class="column-header cn">
@@ -747,10 +936,6 @@
           </div>
         </div>
 
-        <div class="tip-box">
-          <strong>💡 筛选技巧：</strong>
-          猎聘看公司规模和行业标签；Boss直聘进去后点"公司行业"→ 选互联网/计算机软件/企业服务/AI；排除保险/银行/信托/人力资源/房地产中介
-        </div>
 
         <!-- 飞书投递追踪表 - 第5版块 -->
         <div class="feishu-tracker">
@@ -770,6 +955,7 @@
       </div>
     </div>
 
+
     <!-- ============ 国外 ============ -->
     <div class="column">
       <div class="column-header en">
@@ -780,9 +966,9 @@
 
         <!-- 平台切换 -->
         <div class="platform-tabs">
-          <button class="ptab active en-ptab" data-pf="linkedin" style="background:#0a66c2;">LinkedIn</button>
-          <button class="ptab en-ptab" data-pf="indeed" style="background:#2164f3;">Indeed</button>
-          <button class="ptab en-ptab" data-pf="glassdoor" style="background:#0caa41;">Glassdoor</button>
+          <button class="ptab active en-ptab" data-pf="linkedin" style="background:#0a66c2;">LinkedIn · 可选外企</button>
+          <button class="ptab en-ptab" data-pf="indeed" style="background:#2164f3;">Indeed · 可选外企</button>
+          <button class="ptab en-ptab" data-pf="glassdoor" style="background:#0caa41;">Glassdoor · 可选外企</button>
         </div>
 
         <!-- 第1梯队 -->
@@ -875,14 +1061,21 @@
           </div>
         </div>
 
-        <div class="tip-box">
-          <strong>💡 LinkedIn筛选技巧：</strong>
-          左侧 Experience Level → Entry level / Associate；Industry → Software / IT / Internet；排除 Insurance, Financial Services
-        </div>
 
       </div>
     </div>
 
+
+    </div>
+    <div class="columns-right">
+      <div class="week-timeline">
+        <div class="week-timeline-header">
+          <div class="week-timeline-title">📅 本周计划</div>
+          <div class="week-timeline-date" id="week-range-date"></div>
+        </div>
+        <div id="week-timeline-body"></div>
+      </div>
+    </div>
   </div>
 
 
@@ -1008,18 +1201,6 @@
     </div>
   </div>
 
-  <!-- 底部贴士 -->
-  <div class="tips-footer">
-    <h3>📌 高效投递小贴士</h3>
-    <ul class="tips-grid">
-      <li><strong>每天15分钟</strong>：从第1梯队往下扫，优先投核心目标</li>
-      <li><strong>优先投新发布</strong>：3天内发布的命中率最高</li>
-      <li><strong>Boss必做行业筛选</strong>：选互联网/软件/企业服务/AI</li>
-      <li><strong>公司先查再投</strong>：确认是真科技/SaaS公司</li>
-      <li><strong>LinkedIn主页</strong>：追债动态设为仅好友可见</li>
-      <li><strong>避坑词</strong>：底薪+高提成/开单/陌拜/地推/狼性 → pass</li>
-    </ul>
-  </div>
 
   <div class="footer">
     找工work flow · 点标签直接跳转
@@ -1692,6 +1873,196 @@ document.querySelectorAll('.column').forEach(function(column) {
     applyTierColors(column, activeTab.getAttribute('data-pf'));
   }
 });
+
+// ===== 周时间轴 - 苹果提醒事项风格 =====
+(function() {
+  var dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
+  function getWeekDates() {
+    var now = new Date();
+    var day = now.getDay();
+    var diff = day === 0 ? 6 : day - 1;
+    var monday = new Date(now);
+    monday.setDate(now.getDate() - diff);
+    monday.setHours(0, 0, 0, 0);
+    var dates = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      dates.push(d);
+    }
+    return dates;
+  }
+
+  function formatDate(d) {
+    var m = d.getMonth() + 1;
+    var day = d.getDate();
+    return m + '月' + day + '日';
+  }
+
+  function isSameDay(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getDate() === d2.getDate();
+  }
+
+  function getWeekKey() {
+    var dates = getWeekDates();
+    var first = dates[0];
+    return 'week_' + first.getFullYear() + '_' + (first.getMonth()+1) + '_' + first.getDate();
+  }
+
+  function loadTasks(dayKey) {
+    try {
+      var data = JSON.parse(localStorage.getItem('timeline_' + getWeekKey()) || '{}');
+      return data[dayKey] || [];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function saveTask(dayKey, tasks) {
+    try {
+      var key = 'timeline_' + getWeekKey();
+      var data = JSON.parse(localStorage.getItem(key) || '{}');
+      data[dayKey] = tasks;
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  function renderTimeline() {
+    var dates = getWeekDates();
+    var today = new Date();
+    var body = document.getElementById('week-timeline-body');
+    var dateRange = document.getElementById('week-range-date');
+    if (!body) return;
+
+    if (dateRange) {
+      dateRange.textContent = formatDate(dates[0]) + ' - ' + formatDate(dates[6]);
+    }
+
+    body.innerHTML = '';
+
+    for (var i = 0; i < 7; i++) {
+      var d = dates[i];
+      var dayKey = 'day' + i;
+      var isToday = isSameDay(d, today);
+      var tasks = loadTasks(dayKey);
+      if (tasks.length === 0) tasks = [{ text: '', done: false }];
+
+      var dayEl = document.createElement('div');
+      dayEl.className = 'week-day' + (isToday ? ' week-day-today' : '');
+
+      var header = document.createElement('div');
+      header.className = 'week-day-header';
+      header.innerHTML = '<span class="week-day-name">' + dayNames[i] + '</span>' +
+                         '<span class="week-day-date">' + formatDate(d) + '</span>';
+      dayEl.appendChild(header);
+
+      var ul = document.createElement('ul');
+      ul.className = 'week-tasks';
+      ul.setAttribute('data-day', dayKey);
+
+      for (var j = 0; j < tasks.length; j++) {
+        ul.appendChild(createTaskEl(tasks[j], dayKey, j));
+      }
+      dayEl.appendChild(ul);
+
+      var addBtn = document.createElement('div');
+      addBtn.className = 'task-add-btn';
+      addBtn.textContent = '+ 添加事项';
+      addBtn.onclick = function(dk) {
+        return function() {
+          var newTask = { text: '', done: false };
+          var t = loadTasks(dk);
+          t.push(newTask);
+          saveTask(dk, t);
+          renderTimeline();
+          setTimeout(function() {
+            var items = document.querySelectorAll('.week-tasks[data-day="' + dk + '"] .task-text[contenteditable="true"]');
+            var last = items[items.length - 1];
+            if (last) last.focus();
+          }, 50);
+        };
+      }(dayKey);
+      dayEl.appendChild(addBtn);
+
+      body.appendChild(dayEl);
+    }
+  }
+
+  function createTaskEl(task, dayKey, index) {
+    var li = document.createElement('li');
+    li.className = 'week-task-item' + (task.done ? ' done' : '');
+
+    var checkbox = document.createElement('div');
+    checkbox.className = 'task-checkbox' + (task.done ? ' checked' : '');
+    checkbox.onclick = function() {
+      var t = loadTasks(dayKey);
+      t[index].done = !t[index].done;
+      saveTask(dayKey, t);
+      renderTimeline();
+    };
+    li.appendChild(checkbox);
+
+    var text = document.createElement('div');
+    text.className = 'task-text';
+    text.setAttribute('contenteditable', 'true');
+    text.textContent = task.text;
+    text.addEventListener('input', function() {
+      var t = loadTasks(dayKey);
+      t[index].text = text.textContent;
+      saveTask(dayKey, t);
+    });
+    text.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var t = loadTasks(dayKey);
+        t.splice(index + 1, 0, { text: '', done: false });
+        saveTask(dayKey, t);
+        renderTimeline();
+        setTimeout(function() {
+          var items = document.querySelectorAll('.week-tasks[data-day="' + dayKey + '"] .task-text[contenteditable="true"]');
+          if (items[index + 1]) items[index + 1].focus();
+        }, 50);
+      }
+      if (e.key === 'Backspace' && text.textContent === '') {
+        e.preventDefault();
+        var t = loadTasks(dayKey);
+        if (t.length > 1) {
+          t.splice(index, 1);
+          saveTask(dayKey, t);
+          renderTimeline();
+          setTimeout(function() {
+            var items = document.querySelectorAll('.week-tasks[data-day="' + dayKey + '"] .task-text[contenteditable="true"]');
+            var target = items[Math.max(0, index - 1)];
+            if (target) target.focus();
+          }, 50);
+        }
+      }
+    });
+    li.appendChild(text);
+
+    var del = document.createElement('span');
+    del.className = 'task-delete';
+    del.textContent = '×';
+    del.onclick = function() {
+      var t = loadTasks(dayKey);
+      t.splice(index, 1);
+      if (t.length === 0) t = [{ text: '', done: false }];
+      saveTask(dayKey, t);
+      renderTimeline();
+    };
+    li.appendChild(del);
+
+    return li;
+  }
+
+  if (document.getElementById('week-timeline-body')) {
+    renderTimeline();
+  }
+})();
+
 </script>
 </body>
 </html>
