@@ -359,6 +359,36 @@
     color: #fff;
     display: flex; align-items: center; gap: 8px;
   }
+  .column-header.cn {
+    background: #fff;
+    color: #333;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .column-header.cn .emoji {
+    margin-right: 4px;
+  }
+  .click-counter-tab {
+    text-align: center;
+    padding: 8px 0 4px;
+    background: #fff;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+  }
+  .click-counter-tab .click-count {
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+  }
+  .click-counter-tab .click-count strong {
+    color: #ff3b30;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 3px;
+  }
   @keyframes breatheFloat {
     0%, 100% {
       transform: translateY(0);
@@ -852,17 +882,22 @@
 
     <!-- ============ 国内 ============ -->
     <div class="column">
-
+      <div class="column-header cn">
+        <span class="emoji">🇨🇳</span>
+        国内招聘
+      </div>
       <div class="column-body">
 
+        <!-- 点击计数器（51JOB正上方居中） -->
+        <div class="click-counter-tab">
+          <span class="click-count breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
+        </div>
+
         <!-- 平台切换 -->
-        <div class="platform-tabs-wrap">
-          <div class="click-count-tab breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</div>
-          <div class="platform-tabs">
-            <button class="ptab active" data-pf="liepin" style="background:#ff6b35;">猎聘</button>
-            <button class="ptab" data-pf="51job" style="background:#2d8cf0;">51JOB</button>
-            <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
-          </div>
+        <div class="platform-tabs">
+          <button class="ptab active" data-pf="liepin" style="background:#ff6b35;">猎聘</button>
+          <button class="ptab" data-pf="51job" style="background:#2d8cf0;">51JOB</button>
+          <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
         </div>
 
                                         <!-- 第1梯队 -->
