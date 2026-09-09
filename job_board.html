@@ -365,6 +365,7 @@
     border: 1px solid #e8e8e8;
     border-bottom: none;
     padding: 10px 16px;
+    text-align: center;
   }
   .column-header.cn .header-top {
     display: flex;
@@ -378,23 +379,23 @@
     color: #333;
     white-space: nowrap;
   }
-  .column-header.cn .click-count-wrap {
+  .click-counter-wrap {
     text-align: center;
-    margin-top: 6px;
+    padding: 6px 0;
   }
-  .column-header.cn .click-count {
+  .click-counter-wrap .click-count {
     font-size: 14px;
     color: #ff6b35;
     font-weight: 600;
     display: inline-block;
   }
-  .column-header.cn .click-count strong {
+  .click-counter-wrap .click-count strong {
     color: #ff6b35;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     margin: 0 4px;
     display: inline-block;
-    min-width: 24px;
+    min-width: 26px;
     text-align: center;
   }
   @keyframes breatheFloat {
@@ -548,23 +549,27 @@
     font-weight: 400;
   }
   .week-day {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
   }
   .week-day-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
+    flex-shrink: 0;
+    min-width: 85px;
+    padding-top: 3px;
   }
   .week-day-name {
     font-size: 13px;
     font-weight: 600;
     color: #ff6b35;
-    min-width: 36px;
+    display: block;
   }
   .week-day-date {
     font-size: 11px;
     color: #bbb;
+    display: block;
+    margin-top: 2px;
   }
   .week-day-today .week-day-name {
     color: #ff3b30;
@@ -594,48 +599,32 @@
     padding: 4px 0 4px 6px;
     position: relative;
   }
-  /* 去掉左侧时间轴圆点，只剩复选框 */
   .week-tasks {
-    border-left: none;
-    padding-left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
   }
+  .week-task-item {
+    padding: 2px 0;
+  }
+  .week-task-item.done .task-text {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  /* 去掉复选框，用文字划线表示完成 */
   .task-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .task-checkbox:hover {
-    border-color: #ff6b35;
-  }
-  .task-checkbox.checked {
-    background: #34c759;
-    border-color: #34c759;
-  }
-  .task-checkbox.checked::after {
-    content: "✓";
-    color: #fff;
-    font-size: 12px;
-    font-weight: bold;
-    line-height: 1;
+    display: none;
   }
   .task-text {
-    flex: 1;
     font-size: 13px;
     color: #333;
     line-height: 1.5;
     outline: none;
     min-height: 20px;
     word-break: break-word;
+    cursor: text;
   }
   .task-text[contenteditable="true"]:empty::before {
     content: "添加事项...";
@@ -665,11 +654,12 @@
   .task-delete {
     opacity: 0;
     font-size: 12px;
-    color: #ccc;
+    color: #ddd;
     cursor: pointer;
     padding: 0 4px;
+    float: right;
     transition: opacity 0.2s;
-    flex-shrink: 0;
+    line-height: 1.5;
   }
   .week-task-item:hover .task-delete {
     opacity: 1;
@@ -893,6 +883,11 @@
 
       </div>
       <div class="column-body">
+
+        <!-- 点击计数器（51JOB正上方） -->
+        <div class="click-counter-wrap">
+          <span class="click-count breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
+        </div>
 
         <!-- 平台切换 -->
         <div class="platform-tabs">
@@ -2230,10 +2225,7 @@ document.querySelectorAll('.column').forEach(function(column) {
     li.className = 'week-task-item' + (task.done ? ' done' : '');
     li.setAttribute('data-id', task.id);
 
-    var checkbox = document.createElement('div');
-    checkbox.className = 'task-checkbox' + (task.done ? ' checked' : '');
-    // 点击事件用事件委托统一处理（见下方）
-    li.appendChild(checkbox);
+    // 无复选框，点击文字切换完成状态
 
     var text = document.createElement('div');
     text.className = 'task-text';
@@ -2312,12 +2304,11 @@ document.querySelectorAll('.column').forEach(function(column) {
   function bindTimelineEvents() {
     var body = document.getElementById('week-timeline-body');
     if (!body) return;
-    body.addEventListener('click', function(e) {
-      var checkbox = e.target.closest('.task-checkbox');
-      if (!checkbox) return;
-      e.stopPropagation();
-      e.preventDefault();
-      var li = checkbox.closest('.week-task-item');
+    // 双击文字切换完成状态（避免和编辑冲突）
+    body.addEventListener('dblclick', function(e) {
+      var textEl = e.target.closest('.task-text');
+      if (!textEl) return;
+      var li = textEl.closest('.week-task-item');
       if (!li) return;
       var ul = li.closest('.week-tasks');
       if (!ul) return;
@@ -2335,13 +2326,10 @@ document.querySelectorAll('.column').forEach(function(column) {
         }
       }
       setDayTasks(dayKey, tasks);
-      // 只切换样式，不重建DOM
       if (newDone) {
         li.classList.add('done');
-        checkbox.classList.add('checked');
       } else {
         li.classList.remove('done');
-        checkbox.classList.remove('checked');
       }
     });
 
