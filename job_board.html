@@ -373,10 +373,8 @@
   }
   .click-counter-tab {
     text-align: center;
-    padding: 8px 0 4px;
-    background: #fff;
-    border-left: 1px solid #e8e8e8;
-    border-right: 1px solid #e8e8e8;
+    padding: 6px 0 4px;
+    line-height: 1.4;
   }
   .click-counter-tab .click-count {
     font-size: 13px;
@@ -439,7 +437,7 @@
   .column-body {
     background: #fff;
     border-radius: 0 0 10px 10px;
-    padding: 16px;
+    padding: 0 16px 16px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
 
@@ -617,17 +615,48 @@
     min-width: 0;
   }
   .week-task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
     padding: 2px 0;
   }
   .week-task-item.done .task-text {
     text-decoration: line-through;
     color: #aaa;
   }
-  /* 去掉复选框，用文字划线表示完成 */
-  .task-checkbox {
-    display: none;
+  .task-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #fff;
+  }
+  .task-check:hover {
+    border-color: #ff6b35;
+  }
+  .week-task-item.done .task-check {
+    background: #34c759;
+    border-color: #34c759;
+  }
+  .week-task-item.done .task-check::after {
+    content: "✓";
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
   }
   .task-text {
+    flex: 1;
+    min-width: 0;
     font-size: 13px;
     color: #333;
     line-height: 1.4;
@@ -664,9 +693,10 @@
     color: #ddd;
     cursor: pointer;
     padding: 0 4px;
-    float: right;
     transition: opacity 0.2s;
-    line-height: 1.5;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
   .week-task-item:hover .task-delete {
     opacity: 1;
