@@ -359,39 +359,6 @@
     color: #fff;
     display: flex; align-items: center; gap: 8px;
   }
-  .column-header.cn {
-    background: #fff;
-    color: #333;
-    border: 1px solid #e8e8e8;
-    border-bottom: none;
-    padding: 10px 16px;
-  }
-  .cn-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    white-space: nowrap;
-  }
-  .cn-header-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #333;
-  }
-  .cn-header-title .emoji {
-    margin-right: 4px;
-  }
-  .column-header.cn .click-count {
-    font-size: 13px;
-    color: #333;
-    font-weight: 600;
-  }
-  .column-header.cn .click-count strong {
-    color: #ff3b30;
-    font-size: 20px;
-    font-weight: 800;
-    margin: 0 3px;
-  }
   @keyframes breatheFloat {
     0%, 100% {
       transform: translateY(0);
@@ -885,19 +852,17 @@
 
     <!-- ============ 国内 ============ -->
     <div class="column">
-      <div class="column-header cn">
-        <div class="cn-header-row">
-          <span class="cn-header-title"><span class="emoji">🇨🇳</span>国内招聘</span>
-          <span class="click-count breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
-        </div>
-      </div>
+
       <div class="column-body">
 
         <!-- 平台切换 -->
-        <div class="platform-tabs">
-          <button class="ptab active" data-pf="liepin" style="background:#ff6b35;">猎聘</button>
-          <button class="ptab" data-pf="51job" style="background:#2d8cf0;">51JOB</button>
-          <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
+        <div class="platform-tabs-wrap">
+          <div class="click-count-tab breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</div>
+          <div class="platform-tabs">
+            <button class="ptab active" data-pf="liepin" style="background:#ff6b35;">猎聘</button>
+            <button class="ptab" data-pf="51job" style="background:#2d8cf0;">51JOB</button>
+            <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
+          </div>
         </div>
 
                                         <!-- 第1梯队 -->
