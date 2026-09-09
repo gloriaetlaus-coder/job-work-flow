@@ -367,9 +367,32 @@
     padding: 10px 16px;
     font-size: 15px;
     font-weight: 700;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .column-header.cn .header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
   }
   .column-header.cn .emoji {
-    margin-right: 4px;
+    margin-right: 0;
+  }
+  .column-header.cn .click-count {
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .column-header.cn .click-count strong {
+    color: #ff3b30;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 3px;
   }
   .click-counter-tab {
     text-align: center;
@@ -913,15 +936,10 @@
     <!-- ============ 国内 ============ -->
     <div class="column">
       <div class="column-header cn">
-        <span class="emoji">🇨🇳</span>
-        国内招聘
+        <span class="header-title"><span class="emoji">🇨🇳</span> 国内招聘</span>
+        <span class="click-count breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
       </div>
       <div class="column-body">
-
-        <!-- 点击计数器（51JOB正上方居中） -->
-        <div class="click-counter-tab">
-          <span class="click-count breathe-float">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
-        </div>
 
         <!-- 平台切换 -->
         <div class="platform-tabs">
