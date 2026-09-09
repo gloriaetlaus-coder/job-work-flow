@@ -359,7 +359,47 @@
     color: #fff;
     display: flex; align-items: center; gap: 8px;
   }
-  .column-header.cn { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .column-header.cn {
+    background: #fff;
+    color: #333;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+    padding: 12px 16px 8px;
+  }
+  .column-header.cn .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .column-header.cn .header-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+  }
+  .column-header.cn .click-count {
+    font-size: 12px;
+    color: #999;
+  }
+  .column-header.cn .click-count strong {
+    color: #ff6b35;
+    font-size: 14px;
+    margin: 0 2px;
+  }
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b35, #ff8c5a);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
   .column-header.en { background: linear-gradient(135deg, #0a66c2, #084d94); }
   .column-header .emoji { font-size: 16px; }
 
@@ -841,10 +881,39 @@
           <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
         </div>
 
-        <!-- 第1梯队 -->
+                <!-- 第1梯队 -->
         <div class="tier tier-1">
           <div class="tier-title">
             <span class="tier-badge">1</span>
+            出海 · 海外/跨境/国际
+            <span class="tier-desc">dream job</span>
+          </div>
+          <div class="tags">
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=海外客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" target="_blank">海外客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外运营" data-boss="https://www.zhipin.com/web/geek/job?query=海外运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外运营&city=020" target="_blank">海外运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外商务&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外商务" data-boss="https://www.zhipin.com/web/geek/job?query=海外商务&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外商务&city=020" target="_blank">海外商务</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外市场&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外市场" data-boss="https://www.zhipin.com/web/geek/job?query=海外市场&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外市场&city=020" target="_blank">海外市场</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外项目&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外项目" data-boss="https://www.zhipin.com/web/geek/job?query=海外项目&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外项目&city=020" target="_blank">海外项目</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客服&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客服" data-boss="https://www.zhipin.com/web/geek/job?query=海外客服&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客服&city=020" target="_blank">海外客服</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=跨境运营" data-boss="https://www.zhipin.com/web/geek/job?query=跨境运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" target="_blank">跨境运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" target="_blank">国际客户专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外业务拓展" data-boss="https://www.zhipin.com/web/geek/job?query=海外业务拓展&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" target="_blank">海外业务拓展</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外售前&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外售前" data-boss="https://www.zhipin.com/web/geek/job?query=海外售前&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外售前&city=020" target="_blank">海外售前</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" target="_blank">国际客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" target="_blank">国际客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=全球客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" target="_blank">全球客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" target="_blank">亚太区客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" target="_blank">亚太区客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际销售&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际销售" data-boss="https://www.zhipin.com/web/geek/job?query=国际销售&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际销售&city=020" target="_blank">国际销售</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=全球解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" target="_blank">全球解决方案顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" target="_blank">国际客户经理</a>
+          </div>
+        </div>
+
+        <!-- 第2梯队 -->
+        <div class="tier tier-2">
+          <div class="tier-title">
+            <span class="tier-badge">2</span>
             核心目标 · AI & SaaS 客户成功/运营
             <span class="tier-desc">优先投</span>
           </div>
@@ -854,45 +923,19 @@
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" target="_blank">AI解决方案顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" target="_blank">AI实施顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" target="_blank">SaaS客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" target="_blank">SaaS实施顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" target="_blank">SaaS产品运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" target="_blank">SaaS实施顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" target="_blank">客户成功专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功顾问" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" target="_blank">客户成功顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户运营&city=020" target="_blank">客户运营</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=解决方案助理" data-boss="https://www.zhipin.com/web/geek/job?query=解决方案助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" target="_blank">解决方案助理</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=售前顾问" data-boss="https://www.zhipin.com/web/geek/job?query=售前顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" target="_blank">售前顾问</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=交付运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=交付运营" data-boss="https://www.zhipin.com/web/geek/job?query=交付运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=交付运营&city=020" target="_blank">交付运营</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=低代码实施" data-boss="https://www.zhipin.com/web/geek/job?query=低代码实施&city=101020100" href="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" target="_blank">低代码实施</a>
               <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=无代码搭建" data-boss="https://www.zhipin.com/web/geek/job?query=无代码搭建&city=101020100" href="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" target="_blank">无代码搭建</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=产品运营&city=020" target="_blank">产品运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品经理" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品经理&city=020" target="_blank">AI产品经理</a>
-          </div>
-        </div>
-
-        <!-- 第2梯队 -->
-        <div class="tier tier-2">
-          <div class="tier-title">
-            <span class="tier-badge">2</span>
-            备选方向 · 泛 To B 客户/项目/运营
-            <span class="tier-desc">补充投</span>
-          </div>
-          <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户经理&city=020" target="_blank">B端客户经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=大客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=大客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=大客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=大客户经理&city=020" target="_blank">大客户经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户关系经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户关系经理" data-boss="https://www.zhipin.com/web/geek/job?query=客户关系经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户关系经理&city=020" target="_blank">客户关系经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功经理" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功经理&city=020" target="_blank">客户成功经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目协调员" data-boss="https://www.zhipin.com/web/geek/job?query=项目协调员&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" target="_blank">项目协调员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目统筹&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目统筹" data-boss="https://www.zhipin.com/web/geek/job?query=项目统筹&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目统筹&city=020" target="_blank">项目统筹</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道经理" data-boss="https://www.zhipin.com/web/geek/job?query=渠道经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道经理&city=020" target="_blank">渠道经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道合作伙伴经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道合作伙伴经理" data-boss="https://www.zhipin.com/web/geek/job?query=渠道合作伙伴经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道合作伙伴经理&city=020" target="_blank">渠道合作伙伴经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=商务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务专员&city=020" target="_blank">商务专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务运营" data-boss="https://www.zhipin.com/web/geek/job?query=商务运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务运营&city=020" target="_blank">商务运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户服务主管&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户服务主管" data-boss="https://www.zhipin.com/web/geek/job?query=客户服务主管&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户服务主管&city=020" target="_blank">客户服务主管</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户运营" data-boss="https://www.zhipin.com/web/geek/job?query=用户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户运营&city=020" target="_blank">用户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户研究助理" data-boss="https://www.zhipin.com/web/geek/job?query=用户研究助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" target="_blank">用户研究助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识工程师" data-boss="https://www.zhipin.com/web/geek/job?query=知识工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" target="_blank">知识工程师</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识库管理" data-boss="https://www.zhipin.com/web/geek/job?query=知识库管理&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" target="_blank">知识库管理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用企划" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用企划&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" target="_blank">AI应用企划</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI提示词工程师" data-boss="https://www.zhipin.com/web/geek/job?query=AI提示词工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" target="_blank">AI提示词工程师</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" target="_blank">AI产品专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" target="_blank">AI应用专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=产品运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=产品运营专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" target="_blank">产品运营专员</a>
           </div>
         </div>
 
@@ -900,18 +943,31 @@
         <div class="tier tier-3">
           <div class="tier-title">
             <span class="tier-badge">3</span>
-            Remote · 远程岗位
-            <span class="tier-desc">额外机会</span>
+            备选方向 · 泛 To B 客户/项目/运营
+            <span class="tier-desc">补充投</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户成功&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" target="_blank">远程客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目协调" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目协调&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" target="_blank">远程项目协调</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" target="_blank">远程客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程运营专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" target="_blank">远程运营专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户服务" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户服务&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" target="_blank">远程客户服务</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目助理&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" target="_blank">远程项目助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=线上客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=线上客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" target="_blank">线上客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户对接&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户对接" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户对接&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户对接&city=000" target="_blank">远程客户对接</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户代表" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户代表&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" target="_blank">B端客户代表</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" target="_blank">B端客户专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户关系专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户关系专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" target="_blank">客户关系专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户维护专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户维护专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" target="_blank">客户维护专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=企业客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=企业客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" target="_blank">企业客户顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户对接专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户对接专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" target="_blank">客户对接专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=大客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=大客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" target="_blank">大客户专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目协调员" data-boss="https://www.zhipin.com/web/geek/job?query=项目协调员&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" target="_blank">项目协调员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目执行" data-boss="https://www.zhipin.com/web/geek/job?query=项目执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目执行&city=020" target="_blank">项目执行</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=项目助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目助理&city=020" target="_blank">项目助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道执行" data-boss="https://www.zhipin.com/web/geek/job?query=渠道执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" target="_blank">渠道执行</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=商务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务专员&city=020" target="_blank">商务专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务运营" data-boss="https://www.zhipin.com/web/geek/job?query=商务运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务运营&city=020" target="_blank">商务运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户服务专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户服务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" target="_blank">客户服务专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户运营" data-boss="https://www.zhipin.com/web/geek/job?query=用户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户运营&city=020" target="_blank">用户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户研究助理" data-boss="https://www.zhipin.com/web/geek/job?query=用户研究助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" target="_blank">用户研究助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识工程师" data-boss="https://www.zhipin.com/web/geek/job?query=知识工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" target="_blank">知识工程师</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识库管理" data-boss="https://www.zhipin.com/web/geek/job?query=知识库管理&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" target="_blank">知识库管理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用企划" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用企划&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" target="_blank">AI应用企划</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI提示词工程师" data-boss="https://www.zhipin.com/web/geek/job?query=AI提示词工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" target="_blank">AI提示词工程师</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" target="_blank">SaaS客户顾问</a>
           </div>
         </div>
 
@@ -919,20 +975,19 @@
         <div class="tier tier-4">
           <div class="tier-title">
             <span class="tier-badge">4</span>
-            出海 · 海外/跨境/国际
-            <span class="tier-desc">拓展机会</span>
+            Remote · 远程岗位
+            <span class="tier-desc">wfh</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外运营" data-boss="https://www.zhipin.com/web/geek/job?query=海外运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外运营&city=020" target="_blank">海外运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=海外客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" target="_blank">海外客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外市场&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外市场" data-boss="https://www.zhipin.com/web/geek/job?query=海外市场&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外市场&city=020" target="_blank">海外市场</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外商务&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外商务" data-boss="https://www.zhipin.com/web/geek/job?query=海外商务&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外商务&city=020" target="_blank">海外商务</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外销售&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外销售" data-boss="https://www.zhipin.com/web/geek/job?query=海外销售&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外销售&city=020" target="_blank">海外销售</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外项目&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外项目" data-boss="https://www.zhipin.com/web/geek/job?query=海外项目&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外项目&city=020" target="_blank">海外项目</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客服&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客服" data-boss="https://www.zhipin.com/web/geek/job?query=海外客服&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客服&city=020" target="_blank">海外客服</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=跨境运营" data-boss="https://www.zhipin.com/web/geek/job?query=跨境运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" target="_blank">跨境运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" target="_blank">国际客户经理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外业务拓展" data-boss="https://www.zhipin.com/web/geek/job?query=海外业务拓展&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" target="_blank">海外业务拓展</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户成功&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" target="_blank">远程客户成功</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目协调" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目协调&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" target="_blank">远程项目协调</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" target="_blank">远程客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户服务" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户服务&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" target="_blank">远程客户服务</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程运营专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" target="_blank">远程运营专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目助理&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" target="_blank">远程项目助理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=线上客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=线上客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" target="_blank">线上客户运营</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户支持" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户支持&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" target="_blank">远程客户支持</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程商务专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" target="_blank">远程商务专员</a>
           </div>
         </div>
 
@@ -971,30 +1026,32 @@
           <button class="ptab en-ptab" data-pf="glassdoor" style="background:#0caa41;">Glassdoor · 可选外企</button>
         </div>
 
-        <!-- 第1梯队 -->
+                <!-- 第1梯队 -->
         <div class="tier tier-1">
           <div class="tier-title">
             <span class="tier-badge">1</span>
-            核心目标 · AI & SaaS Customer Success/Ops
-            <span class="tier-desc">优先投</span>
+            出海 · Global/Overseas
+            <span class="tier-desc">dream job</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Customer Success</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Product Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Solutions Consultant</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Implementation+Specialist+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Implementation Specialist</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Customer+Success+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Customer Success</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Implementation+Specialist+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Implementation</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Product+Operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Product Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Success+Associate+-insurance+-sales+-real+estate&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Associate-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Success Associate</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Solutions Consultant</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Pre-sales+Consultant+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Pre-sales-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Pre-sales Consultant</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Product Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Delivery+Operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Delivery-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Delivery Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=No-Code%20Builder%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=No-Code+Builder+-developer&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/No-Code-Builder-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=No-Code%20Builder%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">No-Code Builder</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Low-Code%20Solution%20Architect%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Low-Code+Solution+Architect+-developer&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Low-Code-Solution-Architect-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Low-Code%20Solution%20Architect%20NOT%20developer&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Low-Code Solution Architect</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Account Manager</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Business%20Development%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Business+Development+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Business-Development-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Business%20Development%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Business Development</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Marketing%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Marketing+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Marketing-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Marketing%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Marketing</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Project%20Management%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Project+Management+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Project-Management-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Project%20Management%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Project Management</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Customer%20Service%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Customer+Service+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Customer-Service-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Customer%20Service%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Customer Service</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Cross-border+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Cross-border-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Cross-border Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=International+Account+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Account-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Account Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Business%20Development%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Business+Development+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Business-Development-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Business%20Development%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Business Development</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Pre-sales%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Overseas+Pre-sales+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Pre-sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Pre-sales%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Pre-sales</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=International+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=International+Customer+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Global+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=APAC%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=APAC+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/APAC-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=APAC%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">APAC Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=APAC%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=APAC+Customer+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/APAC-Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=APAC%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">APAC Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=International+Sales+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Sales</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Global+Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Solutions Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=International+Account+Manager+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Account Manager</a>
           </div>
         </div>
 
@@ -1002,22 +1059,28 @@
         <div class="tier tier-2">
           <div class="tier-title">
             <span class="tier-badge">2</span>
-            备选方向 · B2B Customer/Project/Ops
-            <span class="tier-desc">补充投</span>
+            核心目标 · AI & SaaS Customer Success/Ops
+            <span class="tier-desc">优先投</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=B2B+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/B2B-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">B2B Account Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Key+Account+Manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Key-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Manager%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Key Account Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Partner%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Client+Partner+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Partner-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Partner%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Client Partner</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Relations%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Relations+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Relations-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Relations%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Relations Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Project+Coordinator+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Project Coordinator</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Program%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Program+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Program-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Program%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Program Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Channel%20Partner%20Manager%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Channel+Partner+Manager+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Channel-Partner-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Channel%20Partner%20Manager%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Channel Partner Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Analyst%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Analyst+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Analyst-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Analyst%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Analyst</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Experience%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Experience+Manager+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Experience-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Experience%20Manager%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Experience Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=User%20Research%20Assistant&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=User+Research+Assistant&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/User-Research-Assistant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=User%20Research%20Assistant&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">User Research Assistant</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Behavioral%20Product%20Analyst&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Behavioral+Product+Analyst&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Behavioral-Product-Analyst-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Behavioral%20Product%20Analyst&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Behavioral Product Analyst</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Product Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Solutions+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Solutions-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Solutions%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Solutions Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Implementation+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Implementation%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Implementation Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Customer+Success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Product+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Product Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Implementation+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Implementation%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Implementation Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Success+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Success Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Success+Advisor+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Advisor-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Success Advisor</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Solutions+Assistant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Solutions-Assistant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Solutions%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Solutions Assistant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Pre-sales+Consultant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Pre-sales-Consultant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Pre-sales%20Consultant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Pre-sales Consultant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Delivery+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Delivery-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Delivery%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Delivery Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Low-code%20Implementation%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Low-code+Implementation+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Low-code-Implementation-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Low-code%20Implementation%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Low-code Implementation</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=No-code%20Builder%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=No-code+Builder+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/No-code-Builder-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=No-code%20Builder%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">No-code Builder</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Product+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Product-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Product%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Product Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Application%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Application+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Application-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Application%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Application Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Product+Operations+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Product-Operations-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Product Operations Specialist</a>
           </div>
         </div>
 
@@ -1025,20 +1088,31 @@
         <div class="tier tier-3">
           <div class="tier-title">
             <span class="tier-badge">3</span>
-            Remote · 远程岗位
-            <span class="tier-desc">额外机会</span>
+            备选方向 · B2B Customer/Project/Ops
+            <span class="tier-desc">补充投</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20NOT%20insurance%20NOT%20sales%20NOT%20real%20estate&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+success+AI+remote+-insurance+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20NOT%20insurance%20NOT%20sales%20NOT%20real%20estate&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Success (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Success%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=client+success+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Success%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Client Success (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=AI+customer+success+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Customer%20Success%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">AI Customer Success (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=project+coordinator+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Project Coordinator (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+operations+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Operations (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Implementation%20Specialist%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=implementation+specialist+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Implementation-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Implementation%20Specialist%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Implementation Specialist (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Onboarding%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+onboarding+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Onboarding-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Onboarding%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Onboarding (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Operations%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=operations+coordinator+remote+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Operations-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Operations%20Coordinator%20NOT%20sales&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Operations Coordinator (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=customer+success+associate+remote+-insurance+-sales&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Success-Associate-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Success%20Associate%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Customer Success Associate (Remote)</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=product+operations+remote+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Product-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Product%20Operations%20NOT%20sales%20NOT%20insurance&location=Remote&f_TPR=r86400&f_WT=2" target="_blank">Product Operations (Remote)</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=B2B%20Client%20Representative%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=B2B+Client+Representative+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/B2B-Client-Representative-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=B2B%20Client%20Representative%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">B2B Client Representative</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=B2B+Account+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/B2B-Account-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=B2B%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">B2B Account Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Relations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Client+Relations+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Relations-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Relations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Client Relations Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Account%20Maintenance%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Account+Maintenance+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Account-Maintenance-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Account%20Maintenance%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Account Maintenance Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Enterprise%20Client%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Enterprise+Client+Advisor+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Enterprise-Client-Advisor-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Enterprise%20Client%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Enterprise Client Advisor</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Client%20Liaison%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Client+Liaison+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Client-Liaison-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Client%20Liaison%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Client Liaison Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Key+Account+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Key-Account-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Key%20Account%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Key Account Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Project+Coordinator+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Coordinator-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Coordinator%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Project Coordinator</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Execution%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Project+Execution+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Execution-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Execution%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Project Execution</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Project%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Project+Assistant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Project-Assistant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Project%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Project Assistant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Channel%20Execution%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Channel+Execution+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Channel-Execution-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Channel%20Execution%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Channel Execution</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Development%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Development+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Development-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Development%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Development Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Business+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Business-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Business%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Business Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Customer%20Service%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Customer+Service+Specialist+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Customer-Service-Specialist-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Customer%20Service%20Specialist%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Customer Service Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=User%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=User+Operations+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/User-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=User%20Operations%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">User Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=UX%20Research%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=UX+Research+Assistant+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/UX-Research-Assistant-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=UX%20Research%20Assistant%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">UX Research Assistant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Knowledge%20Engineer%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Knowledge+Engineer+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Knowledge-Engineer-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Knowledge%20Engineer%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Knowledge Engineer</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Knowledge%20Base%20Management%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=Knowledge+Base+Management+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Knowledge-Base-Management-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Knowledge%20Base%20Management%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Knowledge Base Management</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Application%20Planning%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Application+Planning+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Application-Planning-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Application%20Planning%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Application Planning</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=AI%20Prompt%20Engineer%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=AI+Prompt+Engineer+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/AI-Prompt-Engineer-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=AI%20Prompt%20Engineer%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">AI Prompt Engineer</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Client%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=SaaS+Client+Advisor+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/SaaS-Client-Advisor-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=SaaS%20Client%20Advisor%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">SaaS Client Advisor</a>
           </div>
         </div>
 
@@ -1046,23 +1120,23 @@
         <div class="tier tier-4">
           <div class="tier-title">
             <span class="tier-badge">4</span>
-            出海 · Overseas/Cross-border/International
-            <span class="tier-desc">拓展机会</span>
+            Remote · 远程岗位
+            <span class="tier-desc">wfh</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=overseas+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Overseas-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Overseas%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Overseas Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=global+customer+success+-sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Customer-Success-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Customer Success</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=international+account+manager+-insurance+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Account-Manager-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Account%20Manager%20NOT%20insurance%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Account Manager</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=cross-border+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Cross-border-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Cross-border%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Cross-border Operations</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Global%20Business%20Development%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=global+business+development+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Global-Business-Development-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Global%20Business%20Development%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Global Business Development</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=international+sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/International-Sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=International%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">International Sales</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Export%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=export+sales+-insurance&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Export-Sales-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Export%20Sales%20NOT%20insurance&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Export Sales</a>
-              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Regional%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" data-indeed="https://www.indeed.com/jobs?q=regional+operations+-sales&l=Shanghai&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Regional-Operations-jobs-SRCH_KO0.htm" href="https://www.linkedin.com/jobs/search/?keywords=Regional%20Operations%20NOT%20sales&location=Shanghai%2C%20China&f_TPR=r86400" target="_blank">Regional Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Customer+Success+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Customer-Success-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Success%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Customer Success</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Project%20Coordinator%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Project+Coordinator+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Project-Coordinator-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Project%20Coordinator%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Project Coordinator</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Customer+Operations+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Customer-Operations-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Service%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Customer+Service+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Customer-Service-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Service%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Customer Service</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Operations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Operations+Specialist+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Operations-Specialist-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Operations%20Specialist%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Operations Specialist</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Project%20Assistant%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Project+Assistant+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Project-Assistant-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Project%20Assistant%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Project Assistant</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Online%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Online+Customer+Operations+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Online-Customer-Operations-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Online%20Customer%20Operations%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Online Customer Operations</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Support%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Customer+Support+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Customer-Support-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Customer%20Support%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Customer Support</a>
+              <a class="tag-btn" data-linkedin="https://www.linkedin.com/jobs/search/?keywords=Remote%20Business%20Specialist%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" data-indeed="https://www.indeed.com/jobs?q=Remote+Business+Specialist+-sales+-insurance&l=remote&fromage=7" data-glassdoor="https://www.glassdoor.com/Job/Remote-Business-Specialist-jobs-SRCH_KO0.htm?fromAge=7" href="https://www.linkedin.com/jobs/search/?keywords=Remote%20Business%20Specialist%20NOT%20sales%20NOT%20insurance&location=Worldwide&f_TPR=r86400&f_WT=2" target="_blank">Remote Business Specialist</a>
           </div>
         </div>
 
-
-      </div>
+            </div>
     </div>
 
 
@@ -1070,7 +1144,7 @@
     <div class="columns-right">
       <div class="week-timeline">
         <div class="week-timeline-header">
-          <div class="week-timeline-title">📅 本周计划</div>
+          <div class="week-timeline-title">✅ Done list</div>
           <div class="week-timeline-date" id="week-range-date"></div>
         </div>
         <div id="week-timeline-body"></div>
@@ -1691,10 +1765,35 @@ document.querySelectorAll('.tag-btn').forEach(function(tag) {
       tag.style.borderColor = '#0a66c2';
     }
     var key = getTagKey(tag);
+    // 今日点击计数（按天重置）
+    var today = new Date();
+    var todayKey = 'clicks_' + today.getFullYear() + '_' + (today.getMonth()+1) + '_' + today.getDate();
+    var todayClicks = JSON.parse(localStorage.getItem(todayKey) || '[]');
+    if (todayClicks.indexOf(key) === -1) {
+      todayClicks.push(key);
+      localStorage.setItem(todayKey, JSON.stringify(todayClicks));
+    }
+    updateClickCount();
     clickedTags[key] = true;
     try { localStorage.setItem('clickedTags', JSON.stringify(clickedTags)); } catch(e) {}
   });
 });
+
+function updateClickCount() {
+  var today = new Date();
+  var todayKey = 'clicks_' + today.getFullYear() + '_' + (today.getMonth()+1) + '_' + today.getDate();
+  var todayClicks = JSON.parse(localStorage.getItem(todayKey) || '[]');
+  var count = todayClicks.length;
+  var numEl = document.getElementById('click-count-num');
+  var fillEl = document.getElementById('progress-fill');
+  if (numEl) numEl.textContent = count;
+  if (fillEl) {
+    var total = document.querySelectorAll('.tag-btn').length;
+    var pct = total > 0 ? Math.min(100, (count / total) * 100) : 0;
+    fillEl.style.width = pct + '%';
+  }
+}
+document.addEventListener('DOMContentLoaded', updateClickCount);
 
 // 页面加载时恢复已点击状态
 document.querySelectorAll('.tag-btn').forEach(function(tag) {
@@ -1874,9 +1973,10 @@ document.querySelectorAll('.column').forEach(function(column) {
   }
 });
 
-// ===== 周时间轴 - 苹果提醒事项风格 =====
+// ===== Done List - 7天时间轴（永久保存，不按周重置） =====
 (function() {
   var dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+  var STORAGE_KEY = 'done_list_tasks_v2';
 
   function getWeekDates() {
     var now = new Date();
@@ -1894,6 +1994,10 @@ document.querySelectorAll('.column').forEach(function(column) {
     return dates;
   }
 
+  function getDayKey(d) {
+    return d.getFullYear() + '_' + (d.getMonth()+1) + '_' + d.getDate();
+  }
+
   function formatDate(d) {
     var m = d.getMonth() + 1;
     var day = d.getDate();
@@ -1906,28 +2010,33 @@ document.querySelectorAll('.column').forEach(function(column) {
            d1.getDate() === d2.getDate();
   }
 
-  function getWeekKey() {
-    var dates = getWeekDates();
-    var first = dates[0];
-    return 'week_' + first.getFullYear() + '_' + (first.getMonth()+1) + '_' + first.getDate();
+  function genId() {
+    return 't_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
   }
 
-  function loadTasks(dayKey) {
+  function loadAllTasks() {
     try {
-      var data = JSON.parse(localStorage.getItem('timeline_' + getWeekKey()) || '{}');
-      return data[dayKey] || [];
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     } catch(e) {
-      return [];
+      return {};
     }
   }
 
-  function saveTask(dayKey, tasks) {
+  function saveAllTasks(data) {
     try {
-      var key = 'timeline_' + getWeekKey();
-      var data = JSON.parse(localStorage.getItem(key) || '{}');
-      data[dayKey] = tasks;
-      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch(e) {}
+  }
+
+  function getDayTasks(dayKey) {
+    var all = loadAllTasks();
+    return all[dayKey] || [];
+  }
+
+  function setDayTasks(dayKey, tasks) {
+    var all = loadAllTasks();
+    all[dayKey] = tasks;
+    saveAllTasks(all);
   }
 
   function renderTimeline() {
@@ -1945,10 +2054,10 @@ document.querySelectorAll('.column').forEach(function(column) {
 
     for (var i = 0; i < 7; i++) {
       var d = dates[i];
-      var dayKey = 'day' + i;
+      var dayKey = getDayKey(d);
       var isToday = isSameDay(d, today);
-      var tasks = loadTasks(dayKey);
-      if (tasks.length === 0) tasks = [{ text: '', done: false }];
+      var tasks = getDayTasks(dayKey);
+      if (tasks.length === 0) tasks = [{ id: genId(), text: '', done: false }];
 
       var dayEl = document.createElement('div');
       dayEl.className = 'week-day' + (isToday ? ' week-day-today' : '');
@@ -1964,7 +2073,7 @@ document.querySelectorAll('.column').forEach(function(column) {
       ul.setAttribute('data-day', dayKey);
 
       for (var j = 0; j < tasks.length; j++) {
-        ul.appendChild(createTaskEl(tasks[j], dayKey, j));
+        ul.appendChild(createTaskEl(tasks[j], dayKey));
       }
       dayEl.appendChild(ul);
 
@@ -1973,10 +2082,10 @@ document.querySelectorAll('.column').forEach(function(column) {
       addBtn.textContent = '+ 添加事项';
       addBtn.onclick = function(dk) {
         return function() {
-          var newTask = { text: '', done: false };
-          var t = loadTasks(dk);
+          var newTask = { id: genId(), text: '', done: false };
+          var t = getDayTasks(dk);
           t.push(newTask);
-          saveTask(dk, t);
+          setDayTasks(dk, t);
           renderTimeline();
           setTimeout(function() {
             var items = document.querySelectorAll('.week-tasks[data-day="' + dk + '"] .task-text[contenteditable="true"]');
@@ -1991,16 +2100,22 @@ document.querySelectorAll('.column').forEach(function(column) {
     }
   }
 
-  function createTaskEl(task, dayKey, index) {
+  function createTaskEl(task, dayKey) {
     var li = document.createElement('li');
     li.className = 'week-task-item' + (task.done ? ' done' : '');
+    li.setAttribute('data-id', task.id);
 
     var checkbox = document.createElement('div');
     checkbox.className = 'task-checkbox' + (task.done ? ' checked' : '');
     checkbox.onclick = function() {
-      var t = loadTasks(dayKey);
-      t[index].done = !t[index].done;
-      saveTask(dayKey, t);
+      var tasks = getDayTasks(dayKey);
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === task.id) {
+          tasks[i].done = !tasks[i].done;
+          break;
+        }
+      }
+      setDayTasks(dayKey, tasks);
       renderTimeline();
     };
     li.appendChild(checkbox);
@@ -2010,33 +2125,50 @@ document.querySelectorAll('.column').forEach(function(column) {
     text.setAttribute('contenteditable', 'true');
     text.textContent = task.text;
     text.addEventListener('input', function() {
-      var t = loadTasks(dayKey);
-      t[index].text = text.textContent;
-      saveTask(dayKey, t);
+      var tasks = getDayTasks(dayKey);
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === task.id) {
+          tasks[i].text = text.textContent;
+          break;
+        }
+      }
+      setDayTasks(dayKey, tasks);
     });
     text.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         e.preventDefault();
-        var t = loadTasks(dayKey);
-        t.splice(index + 1, 0, { text: '', done: false });
-        saveTask(dayKey, t);
+        var newTask = { id: genId(), text: '', done: false };
+        var tasks = getDayTasks(dayKey);
+        var idx = -1;
+        for (var i = 0; i < tasks.length; i++) {
+          if (tasks[i].id === task.id) { idx = i; break; }
+        }
+        tasks.splice(idx + 1, 0, newTask);
+        setDayTasks(dayKey, tasks);
         renderTimeline();
         setTimeout(function() {
-          var items = document.querySelectorAll('.week-tasks[data-day="' + dayKey + '"] .task-text[contenteditable="true"]');
-          if (items[index + 1]) items[index + 1].focus();
+          var newEl = document.querySelector('.week-tasks[data-day="' + dayKey + '"] .week-task-item[data-id="' + newTask.id + '"] .task-text');
+          if (newEl) newEl.focus();
         }, 50);
       }
       if (e.key === 'Backspace' && text.textContent === '') {
         e.preventDefault();
-        var t = loadTasks(dayKey);
-        if (t.length > 1) {
-          t.splice(index, 1);
-          saveTask(dayKey, t);
+        var tasks = getDayTasks(dayKey);
+        if (tasks.length > 1) {
+          var idx = -1;
+          var prevId = null;
+          for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].id === task.id) { idx = i; break; }
+            prevId = tasks[i].id;
+          }
+          tasks.splice(idx, 1);
+          setDayTasks(dayKey, tasks);
           renderTimeline();
           setTimeout(function() {
-            var items = document.querySelectorAll('.week-tasks[data-day="' + dayKey + '"] .task-text[contenteditable="true"]');
-            var target = items[Math.max(0, index - 1)];
-            if (target) target.focus();
+            if (prevId) {
+              var prevEl = document.querySelector('.week-tasks[data-day="' + dayKey + '"] .week-task-item[data-id="' + prevId + '"] .task-text');
+              if (prevEl) prevEl.focus();
+            }
           }, 50);
         }
       }
@@ -2047,10 +2179,13 @@ document.querySelectorAll('.column').forEach(function(column) {
     del.className = 'task-delete';
     del.textContent = '×';
     del.onclick = function() {
-      var t = loadTasks(dayKey);
-      t.splice(index, 1);
-      if (t.length === 0) t = [{ text: '', done: false }];
-      saveTask(dayKey, t);
+      var tasks = getDayTasks(dayKey);
+      var newTasks = [];
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id !== task.id) newTasks.push(tasks[i]);
+      }
+      if (newTasks.length === 0) newTasks = [{ id: genId(), text: '', done: false }];
+      setDayTasks(dayKey, newTasks);
       renderTimeline();
     };
     li.appendChild(del);
