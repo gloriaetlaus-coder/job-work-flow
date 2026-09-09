@@ -365,19 +365,6 @@
     border: 1px solid #e8e8e8;
     border-bottom: none;
     padding: 10px 16px;
-    text-align: center;
-  }
-  .column-header.cn .header-top {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-  }
-  .column-header.cn .header-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #333;
-    white-space: nowrap;
   }
   .click-counter-wrap {
     text-align: center;
@@ -549,27 +536,30 @@
     font-weight: 400;
   }
   .week-day {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
   }
   .week-day-header {
     flex-shrink: 0;
-    min-width: 85px;
-    padding-top: 3px;
+    width: 70px;
+    padding-top: 2px;
+    line-height: 1.4;
   }
   .week-day-name {
     font-size: 13px;
     font-weight: 600;
     color: #ff6b35;
     display: block;
+    line-height: 1.3;
   }
   .week-day-date {
     font-size: 11px;
     color: #bbb;
     display: block;
-    margin-top: 2px;
+    margin-top: 1px;
+    line-height: 1.3;
   }
   .week-day-today .week-day-name {
     color: #ff3b30;
@@ -620,11 +610,12 @@
   .task-text {
     font-size: 13px;
     color: #333;
-    line-height: 1.5;
+    line-height: 1.4;
     outline: none;
-    min-height: 20px;
+    min-height: 18px;
     word-break: break-word;
     cursor: text;
+    padding: 1px 0;
   }
   .task-text[contenteditable="true"]:empty::before {
     content: "添加事项...";
@@ -2065,10 +2056,11 @@ document.querySelectorAll('.column').forEach(function(column) {
   }
 });
 
-// ===== Done List - 7天时间轴（永久保存，不按周重置） =====
+// ===== Done List - 7天时间轴（永久保存，防抖保存，不重建DOM） =====
 (function() {
   var dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-  var STORAGE_KEY = 'done_list_tasks_v2';
+  var STORAGE_KEY = 'done_list_v3';
+  var saveTimers = {}; // 每个任务的防抖计时器
 
   function getWeekDates() {
     var now = new Date();
@@ -2106,40 +2098,36 @@ document.querySelectorAll('.column').forEach(function(column) {
     return 't_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
   }
 
-  function loadAllTasks() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    } catch(e) {
-      return {};
-    }
+  function loadAll() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch(e) { return {}; }
   }
 
-  function saveAllTasks(data) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch(e) {}
+  function saveAll(data) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    catch(e) {}
   }
 
-  function getDayTasks(dayKey) {
-    var all = loadAllTasks();
+  function getTasks(dayKey) {
+    var all = loadAll();
     return all[dayKey] || [];
   }
 
-  function setDayTasks(dayKey, tasks) {
-    var all = loadAllTasks();
+  function saveTasks(dayKey, tasks) {
+    var all = loadAll();
     all[dayKey] = tasks;
-    saveAllTasks(all);
+    saveAll(all);
   }
 
+  // 迁移旧数据
   function migrateOldData() {
-    // 迁移旧的按周存储格式到新的按日期永久存储格式
     try {
       var allKeys = Object.keys(localStorage);
       for (var k = 0; k < allKeys.length; k++) {
         var key = allKeys[k];
+        // 旧格式：timeline_week_年_月_日
         if (key.indexOf('timeline_week_') === 0) {
           var weekData = JSON.parse(localStorage.getItem(key) || '{}');
-          // 旧格式：key是timeline_week_年_月_日，value是{day0:[...], day1:[...], ...}
           var parts = key.replace('timeline_week_', '').split('_');
           var year = parseInt(parts[0]);
           var month = parseInt(parts[1]) - 1;
@@ -2148,31 +2136,176 @@ document.querySelectorAll('.column').forEach(function(column) {
           for (var i = 0; i < 7; i++) {
             var d = new Date(monday);
             d.setDate(monday.getDate() + i);
-            var dayKey = d.getFullYear() + '_' + (d.getMonth()+1) + '_' + d.getDate();
+            var dayKey = getDayKey(d);
             var oldTasks = weekData['day' + i] || [];
-            if (oldTasks.length > 0 && oldTasks[0].text !== '') {
-              var newTasks = [];
-              for (var j = 0; j < oldTasks.length; j++) {
-                if (oldTasks[j].text && oldTasks[j].text.trim() !== '') {
-                  newTasks.push({
-                    id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                    text: oldTasks[j].text,
-                    done: oldTasks[j].done || false
-                  });
-                }
+            var newTasks = [];
+            for (var j = 0; j < oldTasks.length; j++) {
+              if (oldTasks[j].text && oldTasks[j].text.trim() !== '') {
+                newTasks.push({
+                  id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5) + '_' + j,
+                  text: oldTasks[j].text,
+                  done: oldTasks[j].done || false
+                });
               }
-              if (newTasks.length > 0) {
-                var allNew = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-                if (!allNew[dayKey] || allNew[dayKey].length === 0 || (allNew[dayKey].length === 1 && allNew[dayKey][0].text === '')) {
-                  allNew[dayKey] = newTasks;
-                  localStorage.setItem(STORAGE_KEY, JSON.stringify(allNew));
-                }
+            }
+            if (newTasks.length > 0) {
+              var allNew = loadAll();
+              if (!allNew[dayKey] || allNew[dayKey].length === 0) {
+                allNew[dayKey] = newTasks;
+                saveAll(allNew);
               }
             }
           }
         }
+        // v2格式
+        if (key === 'done_list_tasks_v2') {
+          var v2data = JSON.parse(localStorage.getItem(key) || '{}');
+          var allNew = loadAll();
+          for (var dk in v2data) {
+            if (v2data.hasOwnProperty(dk) && !allNew[dk]) {
+              allNew[dk] = v2data[dk];
+            }
+          }
+          saveAll(allNew);
+        }
       }
     } catch(e) {}
+  }
+
+  // 创建单个任务DOM
+  function createTaskEl(task, dayKey) {
+    var li = document.createElement('li');
+    li.className = 'week-task-item' + (task.done ? ' done' : '');
+    li.setAttribute('data-id', task.id);
+    li.setAttribute('data-day', dayKey);
+
+    var text = document.createElement('div');
+    text.className = 'task-text';
+    text.setAttribute('contenteditable', 'true');
+    text.textContent = task.text;
+
+    // 防抖保存（跟电话话术一样的逻辑）
+    text.addEventListener('input', function() {
+      var taskId = li.getAttribute('data-id');
+      var dk = li.getAttribute('data-day');
+      if (saveTimers[taskId]) clearTimeout(saveTimers[taskId]);
+      saveTimers[taskId] = setTimeout(function() {
+        var tasks = getTasks(dk);
+        for (var i = 0; i < tasks.length; i++) {
+          if (tasks[i].id === taskId) {
+            tasks[i].text = text.textContent;
+            break;
+          }
+        }
+        saveTasks(dk, tasks);
+      }, 300);
+    });
+
+    // 回车新增下一行
+    text.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var dk = li.getAttribute('data-day');
+        var taskId = li.getAttribute('data-id');
+        var newTask = { id: genId(), text: '', done: false };
+        var tasks = getTasks(dk);
+        var idx = -1;
+        for (var i = 0; i < tasks.length; i++) {
+          if (tasks[i].id === taskId) { idx = i; break; }
+        }
+        tasks.splice(idx + 1, 0, newTask);
+        saveTasks(dk, tasks);
+
+        // DOM操作：在当前li后面插入新li，不重建
+        var newLi = createTaskEl(newTask, dk);
+        li.parentNode.insertBefore(newLi, li.nextSibling);
+        setTimeout(function() {
+          var newText = newLi.querySelector('.task-text');
+          if (newText) newText.focus();
+        }, 10);
+      }
+
+      // 退格删除空行
+      if (e.key === 'Backspace' && text.textContent === '') {
+        e.preventDefault();
+        var dk = li.getAttribute('data-day');
+        var taskId = li.getAttribute('data-id');
+        var tasks = getTasks(dk);
+        if (tasks.length > 1) {
+          // 找到上一个元素，聚焦
+          var prevLi = li.previousElementSibling;
+          var newTasks = [];
+          for (var i = 0; i < tasks.length; i++) {
+            if (tasks[i].id !== taskId) newTasks.push(tasks[i]);
+          }
+          saveTasks(dk, newTasks);
+          li.parentNode.removeChild(li);
+          if (prevLi) {
+            var prevText = prevLi.querySelector('.task-text');
+            if (prevText) {
+              prevText.focus();
+              // 光标移到末尾
+              var range = document.createRange();
+              range.selectNodeContents(prevText);
+              range.collapse(false);
+              var sel = window.getSelection();
+              sel.removeAllRanges();
+              sel.addRange(range);
+            }
+          }
+        }
+      }
+    });
+
+    // 双击切换完成状态
+    text.addEventListener('dblclick', function(e) {
+      e.preventDefault();
+      var dk = li.getAttribute('data-day');
+      var taskId = li.getAttribute('data-id');
+      var tasks = getTasks(dk);
+      var newDone = false;
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === taskId) {
+          tasks[i].done = !tasks[i].done;
+          newDone = tasks[i].done;
+          break;
+        }
+      }
+      saveTasks(dk, tasks);
+      if (newDone) {
+        li.classList.add('done');
+      } else {
+        li.classList.remove('done');
+      }
+    });
+
+    li.appendChild(text);
+
+    // 删除按钮
+    var del = document.createElement('span');
+    del.className = 'task-delete';
+    del.textContent = '×';
+    del.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var dk = li.getAttribute('data-day');
+      var taskId = li.getAttribute('data-id');
+      var tasks = getTasks(dk);
+      var newTasks = [];
+      for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id !== taskId) newTasks.push(tasks[i]);
+      }
+      if (newTasks.length === 0) {
+        newTasks = [{ id: genId(), text: '', done: false }];
+        var newLi = createTaskEl(newTasks[0], dk);
+        li.parentNode.replaceChild(newLi, li);
+      } else {
+        li.parentNode.removeChild(li);
+      }
+      saveTasks(dk, newTasks);
+    });
+    li.appendChild(del);
+
+    return li;
   }
 
   function renderTimeline() {
@@ -2193,7 +2326,7 @@ document.querySelectorAll('.column').forEach(function(column) {
       var d = dates[i];
       var dayKey = getDayKey(d);
       var isToday = isSameDay(d, today);
-      var tasks = getDayTasks(dayKey);
+      var tasks = getTasks(dayKey);
       if (tasks.length === 0) tasks = [{ id: genId(), text: '', done: false }];
 
       var dayEl = document.createElement('div');
@@ -2214,154 +2347,12 @@ document.querySelectorAll('.column').forEach(function(column) {
       }
       dayEl.appendChild(ul);
 
-      // 去掉底部"+ 添加事项"按钮，用回车新增即可
-
       body.appendChild(dayEl);
     }
   }
 
-  function createTaskEl(task, dayKey) {
-    var li = document.createElement('li');
-    li.className = 'week-task-item' + (task.done ? ' done' : '');
-    li.setAttribute('data-id', task.id);
-
-    // 无复选框，点击文字切换完成状态
-
-    var text = document.createElement('div');
-    text.className = 'task-text';
-    text.setAttribute('contenteditable', 'true');
-    text.textContent = task.text;
-    text.addEventListener('input', function() {
-      var tasks = getDayTasks(dayKey);
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === task.id) {
-          tasks[i].text = text.textContent;
-          break;
-        }
-      }
-      setDayTasks(dayKey, tasks);
-    });
-    text.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        var newTask = { id: genId(), text: '', done: false };
-        var tasks = getDayTasks(dayKey);
-        var idx = -1;
-        for (var i = 0; i < tasks.length; i++) {
-          if (tasks[i].id === task.id) { idx = i; break; }
-        }
-        tasks.splice(idx + 1, 0, newTask);
-        setDayTasks(dayKey, tasks);
-        renderTimeline();
-        setTimeout(function() {
-          var newEl = document.querySelector('.week-tasks[data-day="' + dayKey + '"] .week-task-item[data-id="' + newTask.id + '"] .task-text');
-          if (newEl) newEl.focus();
-        }, 50);
-      }
-      if (e.key === 'Backspace' && text.textContent === '') {
-        e.preventDefault();
-        var tasks = getDayTasks(dayKey);
-        if (tasks.length > 1) {
-          var idx = -1;
-          var prevId = null;
-          for (var i = 0; i < tasks.length; i++) {
-            if (tasks[i].id === task.id) { idx = i; break; }
-            prevId = tasks[i].id;
-          }
-          tasks.splice(idx, 1);
-          setDayTasks(dayKey, tasks);
-          renderTimeline();
-          setTimeout(function() {
-            if (prevId) {
-              var prevEl = document.querySelector('.week-tasks[data-day="' + dayKey + '"] .week-task-item[data-id="' + prevId + '"] .task-text');
-              if (prevEl) prevEl.focus();
-            }
-          }, 50);
-        }
-      }
-    });
-    li.appendChild(text);
-
-    var del = document.createElement('span');
-    del.className = 'task-delete';
-    del.textContent = '×';
-    del.onclick = function() {
-      var tasks = getDayTasks(dayKey);
-      var newTasks = [];
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id !== task.id) newTasks.push(tasks[i]);
-      }
-      if (newTasks.length === 0) newTasks = [{ id: genId(), text: '', done: false }];
-      setDayTasks(dayKey, newTasks);
-      renderTimeline();
-    };
-    li.appendChild(del);
-
-    return li;
-  }
-
-  // 事件委托：统一处理checkbox点击
-  function bindTimelineEvents() {
-    var body = document.getElementById('week-timeline-body');
-    if (!body) return;
-    // 双击文字切换完成状态（避免和编辑冲突）
-    body.addEventListener('dblclick', function(e) {
-      var textEl = e.target.closest('.task-text');
-      if (!textEl) return;
-      var li = textEl.closest('.week-task-item');
-      if (!li) return;
-      var ul = li.closest('.week-tasks');
-      if (!ul) return;
-      var dayKey = ul.getAttribute('data-day');
-      var taskId = li.getAttribute('data-id');
-      if (!dayKey || !taskId) return;
-
-      var tasks = getDayTasks(dayKey);
-      var newDone = false;
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === taskId) {
-          tasks[i].done = !tasks[i].done;
-          newDone = tasks[i].done;
-          break;
-        }
-      }
-      setDayTasks(dayKey, tasks);
-      if (newDone) {
-        li.classList.add('done');
-      } else {
-        li.classList.remove('done');
-      }
-    });
-
-    // 删除按钮也用事件委托
-    body.addEventListener('click', function(e) {
-      var del = e.target.closest('.task-delete');
-      if (!del) return;
-      e.stopPropagation();
-      var li = del.closest('.week-task-item');
-      if (!li) return;
-      var ul = li.closest('.week-tasks');
-      if (!ul) return;
-      var dayKey = ul.getAttribute('data-day');
-      var taskId = li.getAttribute('data-id');
-      if (!dayKey || !taskId) return;
-
-      var tasks = getDayTasks(dayKey);
-      var newTasks = [];
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id !== taskId) newTasks.push(tasks[i]);
-      }
-      if (newTasks.length === 0) newTasks = [{ id: genId(), text: '', done: false }];
-      setDayTasks(dayKey, newTasks);
-      // 重建DOM（删除操作重建比较简单）
-      renderTimeline();
-      bindTimelineEvents();
-    });
-  }
-
   if (document.getElementById('week-timeline-body')) {
     renderTimeline();
-    bindTimelineEvents();
   }
 })();
 
