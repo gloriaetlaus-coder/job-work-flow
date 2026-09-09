@@ -25,25 +25,29 @@
     text-align: center; color: #888; font-size: 12px; margin-bottom: 20px;
   }
 
-  /* 顶部导航 — 极简风格 */
+  /* 顶部导航 — 悬停伸展，移开压缩成一条线 */
   .top-nav {
     display: flex;
     gap: 0;
     margin-bottom: 28px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: #fff;
     border-radius: 12px;
+    padding: 0;
+    border: 1px solid #e8e8e8;
+    height: 4px;
+    overflow: hidden;
+    transition: height 0.3s ease, padding 0.3s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .top-nav:hover {
+    height: auto;
     padding: 6px;
-    border: 1px solid rgba(0,0,0,0.06);
-    position: sticky;
-    top: 12px;
-    z-index: 100;
   }
   .nav-tab {
     flex: 1;
-    padding: 10px 24px;
-    font-size: 14px;
+    padding: 12px 28px;
+    font-size: 15px;
     font-weight: 500;
     color: #86868b;
     cursor: pointer;
@@ -58,17 +62,26 @@
     white-space: nowrap;
   }
   .nav-tab.active {
-    color: #1d1d1f;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    color: #fff;
+    background: #1d1d1f;
   }
   .nav-tab:hover:not(.active) {
     color: #1d1d1f;
-    background: rgba(0,0,0,0.03);
+    background: #f5f5f7;
   }
-  /* 去掉压缩状态指示器 */
+  /* 压缩状态下的当前页指示条 */
   .nav-collapsed-indicator {
-    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #1d1d1f;
+    border-radius: 12px 12px 0 0;
+    opacity: 1;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .top-nav:hover .nav-collapsed-indicator {
+    opacity: 0;
   }
 
   /* 页面切换 */
