@@ -491,6 +491,15 @@
   .tag-btn:active { transform: scale(0.96); }
 
   /* 已访问的标签 - JS动态设置背景色为当前tab色 */
+
+  .tag-btn .tag-en {
+    font-size: 10px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+  .tag-btn:not(.clicked) .tag-en {
+    color: #999;
+  }
   .tag-btn.clicked {
     color: #fff !important;
     opacity: 1;
@@ -573,20 +582,10 @@
     padding: 4px 0 4px 6px;
     position: relative;
   }
-  .week-task-item::before {
-    content: "";
-    position: absolute;
-    left: -11px;
-    top: 10px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #fff;
-    border: 2px solid #ff6b35;
-  }
-  .week-task-item.done::before {
-    background: #34c759;
-    border-color: #34c759;
+  /* 去掉左侧时间轴圆点，只剩复选框 */
+  .week-tasks {
+    border-left: none;
+    padding-left: 0;
   }
   .task-checkbox {
     width: 16px;
@@ -869,8 +868,13 @@
     <!-- ============ 国内 ============ -->
     <div class="column">
       <div class="column-header cn">
-        <span class="emoji">🇨🇳</span>
-        国内招聘 · 上海
+        <div class="header-top">
+          <span class="header-title"><span class="emoji">🇨🇳</span>国内招聘 · 上海</span>
+          <span class="click-count">今日已点击 <strong id="click-count-num">0</strong> 个关键词</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
       </div>
       <div class="column-body">
 
@@ -881,7 +885,7 @@
           <button class="ptab" data-pf="boss" style="background:#14c57d;">Boss直聘</button>
         </div>
 
-                <!-- 第1梯队 -->
+                        <!-- 第1梯队 -->
         <div class="tier tier-1">
           <div class="tier-title">
             <span class="tier-badge">1</span>
@@ -889,24 +893,24 @@
             <span class="tier-desc">dream job</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=海外客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" target="_blank">海外客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外运营" data-boss="https://www.zhipin.com/web/geek/job?query=海外运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外运营&city=020" target="_blank">海外运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外商务&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外商务" data-boss="https://www.zhipin.com/web/geek/job?query=海外商务&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外商务&city=020" target="_blank">海外商务</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外市场&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外市场" data-boss="https://www.zhipin.com/web/geek/job?query=海外市场&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外市场&city=020" target="_blank">海外市场</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外项目&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外项目" data-boss="https://www.zhipin.com/web/geek/job?query=海外项目&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外项目&city=020" target="_blank">海外项目</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客服&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客服" data-boss="https://www.zhipin.com/web/geek/job?query=海外客服&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客服&city=020" target="_blank">海外客服</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=跨境运营" data-boss="https://www.zhipin.com/web/geek/job?query=跨境运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" target="_blank">跨境运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" target="_blank">国际客户专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外业务拓展" data-boss="https://www.zhipin.com/web/geek/job?query=海外业务拓展&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" target="_blank">海外业务拓展</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外售前&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外售前" data-boss="https://www.zhipin.com/web/geek/job?query=海外售前&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外售前&city=020" target="_blank">海外售前</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" target="_blank">国际客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" target="_blank">国际客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=全球客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" target="_blank">全球客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" target="_blank">亚太区客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" target="_blank">亚太区客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际销售&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际销售" data-boss="https://www.zhipin.com/web/geek/job?query=国际销售&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际销售&city=020" target="_blank">国际销售</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=全球解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" target="_blank">全球解决方案顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" target="_blank">国际客户经理</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=海外客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客户成功&city=020" target="_blank">海外客户成功 <span class="tag-en">/ Overseas Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外运营" data-boss="https://www.zhipin.com/web/geek/job?query=海外运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外运营&city=020" target="_blank">海外运营 <span class="tag-en">/ Overseas Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外商务&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外商务" data-boss="https://www.zhipin.com/web/geek/job?query=海外商务&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外商务&city=020" target="_blank">海外商务 <span class="tag-en">/ Overseas Business</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外市场&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外市场" data-boss="https://www.zhipin.com/web/geek/job?query=海外市场&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外市场&city=020" target="_blank">海外市场 <span class="tag-en">/ Overseas Marketing</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外项目&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外项目" data-boss="https://www.zhipin.com/web/geek/job?query=海外项目&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外项目&city=020" target="_blank">海外项目 <span class="tag-en">/ Overseas Project</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外客服&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外客服" data-boss="https://www.zhipin.com/web/geek/job?query=海外客服&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外客服&city=020" target="_blank">海外客服 <span class="tag-en">/ Overseas Customer Service</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=跨境运营" data-boss="https://www.zhipin.com/web/geek/job?query=跨境运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=跨境运营&city=020" target="_blank">跨境运营 <span class="tag-en">/ Cross-border Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户专员&city=020" target="_blank">国际客户专员 <span class="tag-en">/ International Account Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外业务拓展" data-boss="https://www.zhipin.com/web/geek/job?query=海外业务拓展&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外业务拓展&city=020" target="_blank">海外业务拓展 <span class="tag-en">/ Overseas Business Development</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=海外售前&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=海外售前" data-boss="https://www.zhipin.com/web/geek/job?query=海外售前&city=101020100" href="https://www.liepin.com/zhaopin/?key=海外售前&city=020" target="_blank">海外售前 <span class="tag-en">/ Overseas Pre-sales</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户成功&city=020" target="_blank">国际客户成功 <span class="tag-en">/ International Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户运营&city=020" target="_blank">国际客户运营 <span class="tag-en">/ International Customer Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=全球客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球客户成功&city=020" target="_blank">全球客户成功 <span class="tag-en">/ Global Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户成功&city=020" target="_blank">亚太区客户成功 <span class="tag-en">/ APAC Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=亚太区客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=亚太区客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=亚太区客户运营&city=020" target="_blank">亚太区客户运营 <span class="tag-en">/ APAC Customer Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际销售&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际销售" data-boss="https://www.zhipin.com/web/geek/job?query=国际销售&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际销售&city=020" target="_blank">国际销售 <span class="tag-en">/ International Sales</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=全球解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=全球解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=全球解决方案顾问&city=020" target="_blank">全球解决方案顾问 <span class="tag-en">/ Global Solutions Consultant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=国际客户经理" data-boss="https://www.zhipin.com/web/geek/job?query=国际客户经理&city=101020100" href="https://www.liepin.com/zhaopin/?key=国际客户经理&city=020" target="_blank">国际客户经理 <span class="tag-en">/ International Account Manager</span></a>
           </div>
         </div>
 
@@ -918,24 +922,24 @@
             <span class="tier-desc">优先投</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=AI客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" target="_blank">AI客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" target="_blank">AI产品运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" target="_blank">AI解决方案顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" target="_blank">AI实施顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" target="_blank">SaaS客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" target="_blank">SaaS产品运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" target="_blank">SaaS实施顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" target="_blank">客户成功专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功顾问" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" target="_blank">客户成功顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户运营&city=020" target="_blank">客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=解决方案助理" data-boss="https://www.zhipin.com/web/geek/job?query=解决方案助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" target="_blank">解决方案助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=售前顾问" data-boss="https://www.zhipin.com/web/geek/job?query=售前顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" target="_blank">售前顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=交付运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=交付运营" data-boss="https://www.zhipin.com/web/geek/job?query=交付运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=交付运营&city=020" target="_blank">交付运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=低代码实施" data-boss="https://www.zhipin.com/web/geek/job?query=低代码实施&city=101020100" href="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" target="_blank">低代码实施</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=无代码搭建" data-boss="https://www.zhipin.com/web/geek/job?query=无代码搭建&city=101020100" href="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" target="_blank">无代码搭建</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" target="_blank">AI产品专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" target="_blank">AI应用专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=产品运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=产品运营专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" target="_blank">产品运营专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=AI客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI客户成功&city=020" target="_blank">AI客户成功 <span class="tag-en">/ AI Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品运营&city=020" target="_blank">AI产品运营 <span class="tag-en">/ AI Product Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI解决方案顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI解决方案顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI解决方案顾问&city=020" target="_blank">AI解决方案顾问 <span class="tag-en">/ AI Solutions Consultant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=AI实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI实施顾问&city=020" target="_blank">AI实施顾问 <span class="tag-en">/ AI Implementation Consultant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户成功&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户成功&city=020" target="_blank">SaaS客户成功 <span class="tag-en">/ SaaS Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS产品运营" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS产品运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS产品运营&city=020" target="_blank">SaaS产品运营 <span class="tag-en">/ SaaS Product Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS实施顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS实施顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS实施顾问&city=020" target="_blank">SaaS实施顾问 <span class="tag-en">/ SaaS Implementation Consultant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功专员&city=020" target="_blank">客户成功专员 <span class="tag-en">/ Customer Success Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户成功顾问" data-boss="https://www.zhipin.com/web/geek/job?query=客户成功顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户成功顾问&city=020" target="_blank">客户成功顾问 <span class="tag-en">/ Customer Success Advisor</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=客户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户运营&city=020" target="_blank">客户运营 <span class="tag-en">/ Customer Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=解决方案助理" data-boss="https://www.zhipin.com/web/geek/job?query=解决方案助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=解决方案助理&city=020" target="_blank">解决方案助理 <span class="tag-en">/ Solutions Assistant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=售前顾问" data-boss="https://www.zhipin.com/web/geek/job?query=售前顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=售前顾问&city=020" target="_blank">售前顾问 <span class="tag-en">/ Pre-sales Consultant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=交付运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=交付运营" data-boss="https://www.zhipin.com/web/geek/job?query=交付运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=交付运营&city=020" target="_blank">交付运营 <span class="tag-en">/ Delivery Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=低代码实施" data-boss="https://www.zhipin.com/web/geek/job?query=低代码实施&city=101020100" href="https://www.liepin.com/zhaopin/?key=低代码实施&city=020" target="_blank">低代码实施 <span class="tag-en">/ Low-code Implementation</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=无代码搭建" data-boss="https://www.zhipin.com/web/geek/job?query=无代码搭建&city=101020100" href="https://www.liepin.com/zhaopin/?key=无代码搭建&city=020" target="_blank">无代码搭建 <span class="tag-en">/ No-code Builder</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI产品专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI产品专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI产品专员&city=020" target="_blank">AI产品专员 <span class="tag-en">/ AI Product Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用专员" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用专员&city=020" target="_blank">AI应用专员 <span class="tag-en">/ AI Application Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=产品运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=产品运营专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=产品运营专员&city=020" target="_blank">产品运营专员 <span class="tag-en">/ Product Operations Specialist</span></a>
           </div>
         </div>
 
@@ -947,27 +951,27 @@
             <span class="tier-desc">补充投</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户代表" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户代表&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" target="_blank">B端客户代表</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" target="_blank">B端客户专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户关系专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户关系专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" target="_blank">客户关系专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户维护专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户维护专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" target="_blank">客户维护专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=企业客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=企业客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" target="_blank">企业客户顾问</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户对接专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户对接专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" target="_blank">客户对接专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=大客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=大客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" target="_blank">大客户专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目协调员" data-boss="https://www.zhipin.com/web/geek/job?query=项目协调员&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" target="_blank">项目协调员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目执行" data-boss="https://www.zhipin.com/web/geek/job?query=项目执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目执行&city=020" target="_blank">项目执行</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=项目助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目助理&city=020" target="_blank">项目助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道执行" data-boss="https://www.zhipin.com/web/geek/job?query=渠道执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" target="_blank">渠道执行</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=商务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务专员&city=020" target="_blank">商务专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务运营" data-boss="https://www.zhipin.com/web/geek/job?query=商务运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务运营&city=020" target="_blank">商务运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户服务专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户服务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" target="_blank">客户服务专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户运营" data-boss="https://www.zhipin.com/web/geek/job?query=用户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户运营&city=020" target="_blank">用户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户研究助理" data-boss="https://www.zhipin.com/web/geek/job?query=用户研究助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" target="_blank">用户研究助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识工程师" data-boss="https://www.zhipin.com/web/geek/job?query=知识工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" target="_blank">知识工程师</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识库管理" data-boss="https://www.zhipin.com/web/geek/job?query=知识库管理&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" target="_blank">知识库管理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用企划" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用企划&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" target="_blank">AI应用企划</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI提示词工程师" data-boss="https://www.zhipin.com/web/geek/job?query=AI提示词工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" target="_blank">AI提示词工程师</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" target="_blank">SaaS客户顾问</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户代表" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户代表&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户代表&city=020" target="_blank">B端客户代表 <span class="tag-en">/ B2B Client Representative</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=B端客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=B端客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=B端客户专员&city=020" target="_blank">B端客户专员 <span class="tag-en">/ B2B Account Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户关系专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户关系专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户关系专员&city=020" target="_blank">客户关系专员 <span class="tag-en">/ Client Relations Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户维护专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户维护专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户维护专员&city=020" target="_blank">客户维护专员 <span class="tag-en">/ Account Maintenance Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=企业客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=企业客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=企业客户顾问&city=020" target="_blank">企业客户顾问 <span class="tag-en">/ Enterprise Client Advisor</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户对接专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户对接专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户对接专员&city=020" target="_blank">客户对接专员 <span class="tag-en">/ Client Liaison Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=大客户专员" data-boss="https://www.zhipin.com/web/geek/job?query=大客户专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=大客户专员&city=020" target="_blank">大客户专员 <span class="tag-en">/ Key Account Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目协调员" data-boss="https://www.zhipin.com/web/geek/job?query=项目协调员&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目协调员&city=020" target="_blank">项目协调员 <span class="tag-en">/ Project Coordinator</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目执行" data-boss="https://www.zhipin.com/web/geek/job?query=项目执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目执行&city=020" target="_blank">项目执行 <span class="tag-en">/ Project Execution</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=项目助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=项目助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=项目助理&city=020" target="_blank">项目助理 <span class="tag-en">/ Project Assistant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=渠道执行" data-boss="https://www.zhipin.com/web/geek/job?query=渠道执行&city=101020100" href="https://www.liepin.com/zhaopin/?key=渠道执行&city=020" target="_blank">渠道执行 <span class="tag-en">/ Channel Execution</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=商务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务专员&city=020" target="_blank">商务专员 <span class="tag-en">/ Business Development Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=商务运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=商务运营" data-boss="https://www.zhipin.com/web/geek/job?query=商务运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=商务运营&city=020" target="_blank">商务运营 <span class="tag-en">/ Business Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=客户服务专员" data-boss="https://www.zhipin.com/web/geek/job?query=客户服务专员&city=101020100" href="https://www.liepin.com/zhaopin/?key=客户服务专员&city=020" target="_blank">客户服务专员 <span class="tag-en">/ Customer Service Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户运营&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户运营" data-boss="https://www.zhipin.com/web/geek/job?query=用户运营&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户运营&city=020" target="_blank">用户运营 <span class="tag-en">/ User Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=用户研究助理" data-boss="https://www.zhipin.com/web/geek/job?query=用户研究助理&city=101020100" href="https://www.liepin.com/zhaopin/?key=用户研究助理&city=020" target="_blank">用户研究助理 <span class="tag-en">/ UX Research Assistant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识工程师" data-boss="https://www.zhipin.com/web/geek/job?query=知识工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识工程师&city=020" target="_blank">知识工程师 <span class="tag-en">/ Knowledge Engineer</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=知识库管理" data-boss="https://www.zhipin.com/web/geek/job?query=知识库管理&city=101020100" href="https://www.liepin.com/zhaopin/?key=知识库管理&city=020" target="_blank">知识库管理 <span class="tag-en">/ Knowledge Base Management</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI应用企划" data-boss="https://www.zhipin.com/web/geek/job?query=AI应用企划&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI应用企划&city=020" target="_blank">AI应用企划 <span class="tag-en">/ AI Application Planning</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=AI提示词工程师" data-boss="https://www.zhipin.com/web/geek/job?query=AI提示词工程师&city=101020100" href="https://www.liepin.com/zhaopin/?key=AI提示词工程师&city=020" target="_blank">AI提示词工程师 <span class="tag-en">/ AI Prompt Engineer</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" data-51job="https://we.51job.com/pc/search?jobArea=020000&keyword=SaaS客户顾问" data-boss="https://www.zhipin.com/web/geek/job?query=SaaS客户顾问&city=101020100" href="https://www.liepin.com/zhaopin/?key=SaaS客户顾问&city=020" target="_blank">SaaS客户顾问 <span class="tag-en">/ SaaS Client Advisor</span></a>
           </div>
         </div>
 
@@ -979,15 +983,15 @@
             <span class="tier-desc">wfh</span>
           </div>
           <div class="tags">
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户成功&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" target="_blank">远程客户成功</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目协调" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目协调&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" target="_blank">远程项目协调</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" target="_blank">远程客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户服务" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户服务&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" target="_blank">远程客户服务</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程运营专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" target="_blank">远程运营专员</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目助理&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" target="_blank">远程项目助理</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=线上客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=线上客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" target="_blank">线上客户运营</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户支持" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户支持&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" target="_blank">远程客户支持</a>
-              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程商务专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" target="_blank">远程商务专员</a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户成功" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户成功&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户成功&city=000" target="_blank">远程客户成功 <span class="tag-en">/ Remote Customer Success</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目协调" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目协调&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目协调&city=000" target="_blank">远程项目协调 <span class="tag-en">/ Remote Project Coordinator</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户运营&city=000" target="_blank">远程客户运营 <span class="tag-en">/ Remote Customer Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户服务" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户服务&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户服务&city=000" target="_blank">远程客户服务 <span class="tag-en">/ Remote Customer Service</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程运营专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程运营专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程运营专员&city=000" target="_blank">远程运营专员 <span class="tag-en">/ Remote Operations Specialist</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程项目助理" data-boss="https://www.zhipin.com/web/geek/job?query=远程项目助理&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程项目助理&city=000" target="_blank">远程项目助理 <span class="tag-en">/ Remote Project Assistant</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=线上客户运营" data-boss="https://www.zhipin.com/web/geek/job?query=线上客户运营&city=100010000" href="https://www.liepin.com/zhaopin/?key=线上客户运营&city=000" target="_blank">线上客户运营 <span class="tag-en">/ Online Customer Operations</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程客户支持" data-boss="https://www.zhipin.com/web/geek/job?query=远程客户支持&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程客户支持&city=000" target="_blank">远程客户支持 <span class="tag-en">/ Remote Customer Support</span></a>
+              <a class="tag-btn" data-liepin="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" data-51job="https://we.51job.com/pc/search?jobArea=000000&keyword=远程商务专员" data-boss="https://www.zhipin.com/web/geek/job?query=远程商务专员&city=100010000" href="https://www.liepin.com/zhaopin/?key=远程商务专员&city=000" target="_blank">远程商务专员 <span class="tag-en">/ Remote Business Specialist</span></a>
           </div>
         </div>
 
@@ -2039,7 +2043,52 @@ document.querySelectorAll('.column').forEach(function(column) {
     saveAllTasks(all);
   }
 
+  function migrateOldData() {
+    // 迁移旧的按周存储格式到新的按日期永久存储格式
+    try {
+      var allKeys = Object.keys(localStorage);
+      for (var k = 0; k < allKeys.length; k++) {
+        var key = allKeys[k];
+        if (key.indexOf('timeline_week_') === 0) {
+          var weekData = JSON.parse(localStorage.getItem(key) || '{}');
+          // 旧格式：key是timeline_week_年_月_日，value是{day0:[...], day1:[...], ...}
+          var parts = key.replace('timeline_week_', '').split('_');
+          var year = parseInt(parts[0]);
+          var month = parseInt(parts[1]) - 1;
+          var day = parseInt(parts[2]);
+          var monday = new Date(year, month, day);
+          for (var i = 0; i < 7; i++) {
+            var d = new Date(monday);
+            d.setDate(monday.getDate() + i);
+            var dayKey = d.getFullYear() + '_' + (d.getMonth()+1) + '_' + d.getDate();
+            var oldTasks = weekData['day' + i] || [];
+            if (oldTasks.length > 0 && oldTasks[0].text !== '') {
+              var newTasks = [];
+              for (var j = 0; j < oldTasks.length; j++) {
+                if (oldTasks[j].text && oldTasks[j].text.trim() !== '') {
+                  newTasks.push({
+                    id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                    text: oldTasks[j].text,
+                    done: oldTasks[j].done || false
+                  });
+                }
+              }
+              if (newTasks.length > 0) {
+                var allNew = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                if (!allNew[dayKey] || allNew[dayKey].length === 0 || (allNew[dayKey].length === 1 && allNew[dayKey][0].text === '')) {
+                  allNew[dayKey] = newTasks;
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(allNew));
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch(e) {}
+  }
+
   function renderTimeline() {
+    migrateOldData();
     var dates = getWeekDates();
     var today = new Date();
     var body = document.getElementById('week-timeline-body');
@@ -2077,24 +2126,7 @@ document.querySelectorAll('.column').forEach(function(column) {
       }
       dayEl.appendChild(ul);
 
-      var addBtn = document.createElement('div');
-      addBtn.className = 'task-add-btn';
-      addBtn.textContent = '+ 添加事项';
-      addBtn.onclick = function(dk) {
-        return function() {
-          var newTask = { id: genId(), text: '', done: false };
-          var t = getDayTasks(dk);
-          t.push(newTask);
-          setDayTasks(dk, t);
-          renderTimeline();
-          setTimeout(function() {
-            var items = document.querySelectorAll('.week-tasks[data-day="' + dk + '"] .task-text[contenteditable="true"]');
-            var last = items[items.length - 1];
-            if (last) last.focus();
-          }, 50);
-        };
-      }(dayKey);
-      dayEl.appendChild(addBtn);
+      // 去掉底部"+ 添加事项"按钮，用回车新增即可
 
       body.appendChild(dayEl);
     }
