@@ -576,6 +576,7 @@
 
   /* 周时间轴 - 极简风格 */
   .week-timeline {
+    margin-top: 44px; /* 顶部与左侧平台切换栏顶边齐平（版块起始高度一致） */
     background: #fff;
     border-radius: 18px;
     padding: 20px;
@@ -763,6 +764,9 @@
     .columns {
       grid-template-columns: 1fr;
     }
+    .week-timeline {
+      margin-top: 0; /* 移动端单列堆叠时不偏移 */
+    }
   }
 
   /* 国际平台入口 */
@@ -835,7 +839,7 @@
 
   /* 飞书追踪表入口 - 第5版块 */
   .feishu-tracker {
-    margin-top: 14px;
+    margin-top: 20px;
     border-radius: 10px;
     padding: 14px 16px;
     border: 2px solid #3370ff;
@@ -1156,22 +1160,6 @@
           </div>
         </div>
 
-
-        <!-- 飞书投递追踪表 - 第5版块 -->
-        <div class="feishu-tracker" data-page-node-id="aANuqyVxHcGiUDI08yr8Dl">
-          <div class="feishu-tracker-title" data-page-node-id="9dojCtKj77z6iYXfXiaIOy">
-            <span class="feishu-tracker-badge" data-page-node-id="gAyGq2U2GGqE9wh1GktUlQ">5</span>
-            投递追踪表
-            <span class="tier-desc" data-page-node-id="9EZDeYCm4LwfoxptLxDzox">记录每一次投递</span>
-          </div>
-          <p class="feishu-tracker-desc" data-page-node-id="0x72IGeLWvwNRXzDJH8FCb">在飞书多维表格中追踪投递进度、面试状态和公司反馈</p>
-          <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank" data-page-node-id="khRCwHHRceNCtdHzXCSjwA">
-            <span class="feishu-icon" data-page-node-id="wgaE05nvpIX5jKXDItqBEc">📊</span>
-            打开求职投递追踪表
-            <span class="feishu-arrow" data-page-node-id="mSo5GCZGn68ArNFnXUB0EU">→</span>
-          </a>
-        </div>
-
       </div>
     </div>
 
@@ -1313,6 +1301,21 @@
           <div class="week-timeline-date" id="week-range-date" data-page-node-id="U1WpMVHgO4VFyWqG8FZs8E"></div>
         </div>
         <div id="week-timeline-body" data-page-node-id="Tj8GoJ3Z2SxzzP8nkyF4pA"></div>
+      </div>
+
+      <!-- 飞书投递追踪表 - 第5版块（Done list 下方） -->
+      <div class="feishu-tracker" data-page-node-id="aANuqyVxHcGiUDI08yr8Dl">
+        <div class="feishu-tracker-title" data-page-node-id="9dojCtKj77z6iYXfXiaIOy">
+          <span class="feishu-tracker-badge" data-page-node-id="gAyGq2U2GGqE9wh1GktUlQ">5</span>
+          投递追踪表
+          <span class="tier-desc" data-page-node-id="9EZDeYCm4LwfoxptLxDzox">记录每一次投递</span>
+        </div>
+        <p class="feishu-tracker-desc" data-page-node-id="0x72IGeLWvwNRXzDJH8FCb">在飞书多维表格中追踪投递进度、面试状态和公司反馈</p>
+        <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank" data-page-node-id="khRCwHHRceNCtdHzXCSjwA">
+          <span class="feishu-icon" data-page-node-id="wgaE05nvpIX5jKXDItqBEc">📊</span>
+          打开求职投递追踪表
+          <span class="feishu-arrow" data-page-node-id="mSo5GCZGn68ArNFnXUB0EU">→</span>
+        </a>
       </div>
     </div>
   </div>
