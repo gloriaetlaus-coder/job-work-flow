@@ -11,7 +11,7 @@
     background: #f5f5f7;
     color: #1d1d1f;
     line-height: 1.47059;
-    padding: 24px 20px;
+    padding: 8px 20px 24px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
@@ -29,7 +29,7 @@
   .top-nav {
     display: flex;
     gap: 0;
-    margin-bottom: 28px;
+    margin-bottom: 10px;
     background: #fff;
     border-radius: 12px;
     padding: 0;
@@ -330,7 +330,7 @@
   .platform-tabs {
     display: flex;
     gap: 0;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     padding: 3px;
     background: #e8e8ed;
     border-radius: 9px;
@@ -413,6 +413,119 @@
     display: inline-block;
     animation: breatheFloat 2.5s ease-in-out infinite;
   }
+  .column-header.cn .followup-hint {
+    position: absolute;
+    right: 7.5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #86868b;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    border-bottom: 1px dashed #c7c7cc;
+  }
+  .column-header.cn .followup-hint:hover { color: #1d1d1f; border-bottom-color: #1d1d1f; }
+
+  /* 追问话术弹窗 */
+  .fu-modal-mask {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .fu-modal-mask.open { display: flex; }
+  .fu-modal {
+    background: #f5f5f7;
+    border-radius: 16px;
+    width: 640px;
+    max-width: 100%;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .fu-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5ea;
+    flex-shrink: 0;
+  }
+  .fu-modal-title { font-size: 16px; font-weight: 700; color: #1d1d1f; flex: 1; }
+  .fu-modal-close {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f2;
+    color: #86868b;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fu-modal-close:hover { background: #e5e5ea; color: #1d1d1f; }
+  .fu-modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fu-modal-desc { font-size: 12px; color: #86868b; }
+  .fu-script {
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fu-script-label { font-size: 13px; font-weight: 600; color: #1d1d1f; }
+  .fu-script-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1d1d1f;
+    background: #f5f5f7;
+    border: 1px solid #e5e5ea;
+    border-radius: 8px;
+    padding: 10px 12px;
+    outline: none;
+    min-height: 60px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .fu-script-text:focus { border-color: #1d1d1f; background: #fff; }
+  .fu-script-actions { display: flex; justify-content: flex-end; }
+  .fu-copy-btn {
+    background: none;
+    border: 1px solid #d2d2d7;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #1d1d1f;
+    cursor: pointer;
+    min-height: 32px;
+    font-family: inherit;
+  }
+  .fu-copy-btn:hover { border-color: #1d1d1f; }
+  .fu-copy-btn.copied { border-color: #34c759; color: #1a7f37; }
+  @media (max-width: 768px) {
+    .fu-modal { max-height: 94vh; border-radius: 16px 16px 0 0; align-self: flex-end; width: 100%; }
+    .fu-modal-mask { padding: 0; align-items: flex-end; }
+  }
+  @media (max-width: 640px) {
+    .column-header.cn .followup-hint { position: static; margin-left: 8px; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; }
+  }
   .click-counter-tab {
     text-align: center;
     padding: 6px 0 4px;
@@ -479,7 +592,7 @@
   .column-body {
     background: #fff;
     border-radius: 18px;
-    padding: 20px;
+    padding: 14px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
     border: 1px solid rgba(0,0,0,0.04);
   }
@@ -487,12 +600,14 @@
   /* 梯队 - 极简白风格 */
   .tier {
     border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
     background: #fafafa;
     border: 1px solid rgba(0,0,0,0.04);
   }
   .tier:last-child { margin-bottom: 0; }
+  /* 国内第2板块（核心目标）底端与右侧蓝色投递追踪表底端对齐（+22px） */
+  .tier.tier-2[data-page-node-id="S3xeWqDqLzYG9r9NO4l4IB"] { padding-bottom: 34px; }
 
   .tier-title {
     font-size: 14px; font-weight: 600;
@@ -545,7 +660,7 @@
   }
 
   /* 标签 - 极简胶囊风格 */
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
   .tag-btn {
     display: inline-block;
     padding: 5px 14px;
@@ -605,6 +720,394 @@
     font-size: 12px;
     color: #86868b;
     font-weight: 400;
+  }
+  .week-range-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .week-toggle-btn {
+    width: 22px; height: 22px;
+    border: 1px solid #e0e0e3;
+    border-radius: 6px;
+    background: #fff;
+    color: #86868b;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .week-toggle-btn:hover { border-color: #1d1d1f; color: #1d1d1f; }
+  .week-toggle-btn.active { background: #1d1d1f; color: #fff; border-color: #1d1d1f; }
+
+  /* 邮件投递记录 - 第6版块 */
+  .mail-tracker { border-color: #34c759; background: linear-gradient(135deg, #34c75910, #4cd96408); }
+  .mail-tracker .feishu-tracker-title { color: #1a7f37; }
+  .mail-tracker .feishu-tracker-badge { background: #34c759; }
+  .mail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e6f4ea;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .mail-item-main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mail-item-title {
+    font-weight: 600;
+    color: #1d1d1f;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mail-item-title:hover { color: #34c759; }
+  .mail-item-company { font-size: 11px; color: #86868b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mail-status {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: #fff4e5;
+    color: #b8860b;
+    white-space: nowrap;
+  }
+  .mail-status.sent { background: #e8f7ee; color: #1a7f37; }
+  .mail-status.backup { background: #f0f0f2; color: #86868b; }
+
+  /* 邮件投递记录 - 入口卡片绿色按钮（与蓝色卡片 feishu-link 同尺寸） */
+  .mail-tracker .feishu-link.mail-link-cta {
+    background: linear-gradient(135deg, #34c759, #4cd964);
+    color: #fff;
+  }
+
+  /* 官网/邮件投递 - 独立页面（与话术/黑名单页面同级的 page-view） */
+  .mail-page-container {
+    max-width: 1400px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 18px;
+    padding: 10px 14px;
+  }
+  .mail-page-header {
+    display: block;
+    padding-bottom: 0;
+    margin-bottom: 6px;
+  }
+  .mail-page-header-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mail-page-header .feishu-tracker-badge { background: #34c759; }
+  .mail-page-title { font-size: 18px; font-weight: 700; color: #1d1d1f; flex: 1; }
+  .mail-page-desc { font-size: 12px; color: #86868b; margin: 8px 0 0; text-align: center; }
+  .mail-modal-form {
+    background: #f5f5f7;
+    border: 1px solid #e6f4ea;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mail-modal-form input,
+  .mail-modal-form select {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d2d2d7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 16px;
+    font-family: inherit;
+    background: #fff;
+    color: #1d1d1f;
+  }
+  .mail-modal-form input:focus,
+  .mail-modal-form select:focus { outline: none; border-color: #34c759; }
+  .mail-form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a7f37;
+  }
+  .mail-form-row {
+    display: grid;
+    grid-template-columns: 150px 110px 1fr;
+    gap: 10px;
+  }
+  .mail-modal-form input[type="date"] {
+    min-height: 44px;
+  }
+  .mail-backup-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 8px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #86868b;
+    cursor: pointer;
+    font-family: inherit;
+    min-height: 36px;
+  }
+  .mail-backup-toggle:hover { color: #1d1d1f; }
+  .mail-backup-toggle .bk-arrow { font-size: 10px; transition: transform 0.15s; }
+  .mail-backup-toggle.open .bk-arrow { transform: rotate(90deg); }
+  .mail-backup-list { display: flex; flex-direction: column; gap: 6px; }
+  .mail-backup-list.collapsed { display: none; }
+  .mail-co-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 8px;
+    align-items: start;
+  }
+  .mail-co-card {
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .mail-co-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f2;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+  .mail-co-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #1d1d1f;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .co-region {
+    font-size: 11px;
+    font-weight: 600;
+    color: #86868b;
+    background: #f5f5f7;
+    border-radius: 8px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+  .mail-co-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    min-height: 28px;
+    flex-shrink: 0;
+  }
+  .mail-co-status.st-todo { background: #fff4e5; color: #b8860b; }
+  .mail-co-status.st-done { background: #e8f7ee; color: #1a7f37; }
+  /* 职位区：固定高度=最高卡内容（职位行+备选职位行），与 IMA 卡对齐，无多余空白 */
+  .co-pos-zone {
+    height: 44px;
+    overflow: hidden;
+    flex-shrink: 0;
+    padding-right: 2px;
+  }
+  .co-pos { font-size: 12.5px; color: #1d1d1f; line-height: 1.6; word-break: break-word; }
+  .co-pos .co-pos-dot { color: #34c759; font-weight: 700; margin-right: 4px; }
+  .co-pos a { color: #0066cc; text-decoration: none; }
+  .co-pos a:hover { text-decoration: underline; }
+  .co-pos.co-pos-backup { color: #86868b; font-size: 12px; }
+  .co-pos.co-pos-backup .co-pos-dot { color: #b0b0b5; }
+  .co-backup-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 2px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #86868b;
+    cursor: pointer;
+    font-family: inherit;
+    min-height: 22px;
+  }
+  .co-backup-toggle:hover { color: #1d1d1f; }
+  .co-backup-toggle .bk-arrow { font-size: 9px; }
+  /* 信息区（邮箱/联系人/说明）：固定高度=最长内容4行，禁止滚动条，不浪费空间 */
+  .co-meta {
+    height: 84px;
+    overflow: hidden;
+    flex-shrink: 0;
+    padding-right: 2px;
+  }
+  .mail-co-row { font-size: 12.5px; color: #1d1d1f; line-height: 1.6; word-break: break-word; }
+  .mail-co-row .co-k { color: #86868b; flex-shrink: 0; }
+  .mail-co-row a { color: #0066cc; text-decoration: none; }
+  .mail-co-row a:hover { text-decoration: underline; }
+  .co-note-input {
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e5e5ea;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    font-family: inherit;
+    background: #fafafa;
+    color: #1d1d1f;
+    min-height: 36px;
+    flex-shrink: 0;
+  }
+  .co-note-input:focus { outline: none; border-color: #34c759; background: #fff; }
+  .mail-form-submit {
+    align-self: flex-end;
+    background: #34c759;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    font-family: inherit;
+  }
+  .mail-form-submit:hover { background: #2fa84e; }
+  .mail-modal-empty {
+    text-align: center;
+    color: #86868b;
+    font-size: 13px;
+    padding: 30px 0;
+  }
+  .mail-record {
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .mail-record-main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .mail-record-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1d1d1f;
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .mail-record-title:hover { color: #1a7f37; }
+  .mail-record-company { font-size: 12px; color: #86868b; word-break: break-word; }
+  .mail-record-hint { font-size: 11px; color: #b0b0b5; }
+  .mail-record-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .mail-record-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    min-height: 28px;
+  }
+  .mail-record-status.st-pending { background: #fff4e5; color: #b8860b; }
+  .mail-record-status.st-sent { background: #e8f7ee; color: #1a7f37; }
+  .mail-record-status.st-backup { background: #f0f0f2; color: #86868b; }
+  .mail-record-del {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: none;
+    background: #f0f0f2;
+    color: #86868b;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mail-record-del:hover { background: #ffe5e5; color: #d70015; }
+  .mail-backup-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #86868b;
+    margin: 12px 0 4px;
+  }
+  .mail-backup-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #f5f5f7;
+    font-size: 12px;
+    color: #1d1d1f;
+  }
+  .mail-backup-row .bk-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mail-backup-row .bk-tag { font-size: 11px; color: #86868b; flex-shrink: 0; }
+  .mail-backup-row .mail-record-del { width: 24px; height: 24px; font-size: 12px; flex-shrink: 0; }
+  .mail-page-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e5ea;
+  }
+  .mail-page-footer .feishu-link { margin: 0; }
+  .mail-export-btn {
+    background: none;
+    border: 1px solid #d2d2d7;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #1d1d1f;
+    cursor: pointer;
+    min-height: 44px;
+    font-family: inherit;
+  }
+  .mail-export-btn:hover { border-color: #1d1d1f; }
+
+  @media (max-width: 768px) {
+    .mail-form-row { grid-template-columns: 1fr; }
+    .mail-page-container { padding: 16px; }
+    .mail-page-footer { flex-direction: column; }
+    .mail-page-footer .mail-export-btn { width: 100%; }
   }
   .week-day {
     margin-bottom: 8px;
@@ -941,9 +1444,10 @@
   <!-- 顶部导航 -->
   <div class="top-nav" data-page-node-id="BLL4WKFGMh0v9d6ydteC5b">
     <span class="nav-collapsed-indicator" data-page-node-id="FmKjSuHXpj2VmXztnMQkew"></span>
-    <button class="nav-tab active" data-page="job" data-page-node-id="E4UlokyBx7wRX4BkGjrQHv">🎯 职位搜索看板</button>
-    <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话沟通话术</button>
-    <button class="nav-tab" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs">🚫 黑名单公司</button>
+    <button class="nav-tab active" data-page="job" data-page-node-id="E4UlokyBx7wRX4BkGjrQHv">🎯 职位看板</button>
+    <button class="nav-tab" data-page="mail">📧 邮件投递</button>
+    <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话沟通</button>
+    <button class="nav-tab" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs">🚫 可疑公司</button>
   </div>
 
   <!-- ============ 职位看板页面 ============ -->
@@ -958,6 +1462,7 @@
       <div class="column-header cn" data-page-node-id="DoSqcTxeofbKHk4NNFXkh3">
         <span class="header-title" data-page-node-id="jeFMTeiZ2LDAmtozxF1FJ7"><span class="emoji" data-page-node-id="6rt4XDPXRZx6QjoVbFBF5B">🇨🇳</span> 国内招聘</span>
         <span class="click-count" data-page-node-id="xAi7VCB06H5m5zv09wqZ8M">今日已点击 <strong id="click-count-num" data-page-node-id="WrehkmPtGJhDleWRFbRNky">0</strong> 个关键词</span>
+        <button class="followup-hint" id="followup-hint" type="button" title="点击查看追问话术">投递后7天追问已投心仪岗位</button>
       </div>
       <div class="column-body" data-page-node-id="1y8pANXfD4pzOABBDj9nn8">
 
@@ -1298,9 +1803,27 @@
       <div class="week-timeline" data-page-node-id="XxcN5wzz96d7pKPbSLmktK">
         <div class="week-timeline-header" data-page-node-id="8JZqrvh2AI4UeTKPrT1Yur">
           <div class="week-timeline-title" data-page-node-id="wPLol2jlXIHIThzE4XKVWM">✅ Done list</div>
-          <div class="week-timeline-date" id="week-range-date" data-page-node-id="U1WpMVHgO4VFyWqG8FZs8E"></div>
+          <div class="week-range-wrap">
+            <span class="week-timeline-date" id="week-range-date" data-page-node-id="U1WpMVHgO4VFyWqG8FZs8E"></span>
+            <button id="week-toggle" class="week-toggle-btn" title="切换本周/上周清单">▾</button>
+          </div>
         </div>
         <div id="week-timeline-body" data-page-node-id="Tj8GoJ3Z2SxzzP8nkyF4pA"></div>
+      </div>
+
+      <!-- 官网/邮件投递 - 第6版块（投递追踪表上方）· 入口卡片，与蓝色追踪表同构 -->
+      <div class="feishu-tracker mail-tracker" id="mail-entry-card">
+        <div class="feishu-tracker-title">
+          <span class="feishu-tracker-badge">6</span>
+          官网/邮件投递
+          <span class="tier-desc">邮件求职专属入口</span>
+        </div>
+        <p class="feishu-tracker-desc">按公司整理的官网与邮件投递职位，一键打开邮件草稿</p>
+        <a class="feishu-link mail-link-cta" id="mail-entry-open" href="javascript:void(0);">
+          <span class="feishu-icon">📧</span>
+          进入官网/邮件投递
+          <span class="feishu-arrow">→</span>
+        </a>
       </div>
 
       <!-- 飞书投递追踪表 - 第5版块（Done list 下方） -->
@@ -1472,9 +1995,9 @@
         <span class="fmt-color-swatch" style="background:#9933FF" data-color="#9933FF" title="紫" data-page-node-id="zUB2fhgefUaaCpkluM6Cna"></span>
         <span class="fmt-color-swatch" style="background:#FF0099" data-color="#FF0099" title="粉" data-page-node-id="qA73FUKO9xu2yaBjjBJxhk"></span>
         <span class="fmt-color-swatch" style="background:#333333" data-color="#333333" title="黑" data-page-node-id="BuLUQ1Kt9mhySk2nwvwT8t"></span>
-        <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit" title="清除颜色" data-page-node-id="oqBNPaOQuj2SKtVP0isQex">✕</span>
+        <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit" title="撤回颜色" data-page-node-id="oqBNPaOQuj2SKtVP0isQex"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M6.2 3.8 L2.6 7.4 L6.2 11" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.6 7.4 H9.2 A3.6 3.6 0 0 1 12.8 11 V12.2" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg></span>
         <span class="fmt-divider" data-page-node-id="SfCOkIYtppDtdzvNAw7DSs"></span>
-        <button class="fmt-btn" data-cmd="removeFormat" title="清除格式" data-page-node-id="d2nF7uwGqDoum4lBz4ghJP">清除</button>
+        <button class="fmt-btn" data-cmd="removeFormat" title="恢复（清除格式）" data-page-node-id="d2nF7uwGqDoum4lBz4ghJP"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M9.8 3.8 L13.4 7.4 L9.8 11" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.4 7.4 H6.8 A3.6 3.6 0 0 0 3.2 11 V12.2" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       </div>
 
       <div class="script-columns" data-page-node-id="kkyacgUocpkofYLGDVkO4k">
@@ -1809,8 +2332,27 @@ document.querySelectorAll('.nav-tab').forEach(function(btn) {
     btn.classList.add('active');
     document.querySelectorAll('.page-view').forEach(function(v) { v.classList.remove('active'); });
     document.getElementById('page-' + page).classList.add('active');
+    // 记住当前页：刷新后仍停留在原页面
+    try { localStorage.setItem('wb_current_page', page); } catch (e) {}
   });
 });
+
+// 刷新后恢复上次停留的页面（等 DOM 全部加载完再执行，因为邮件页在脚本之后定义）
+(function() {
+  function restorePage() {
+    var savedPage = null;
+    try { savedPage = localStorage.getItem('wb_current_page'); } catch (e) {}
+    if (savedPage && savedPage !== 'job') {
+      var savedTab = document.querySelector('.nav-tab[data-page="' + savedPage + '"]');
+      if (savedTab) savedTab.click();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restorePage);
+  } else {
+    restorePage();
+  }
+})();
 
 // 灰度方案：4个梯队从深到浅
 var colorSchemes = {
@@ -2163,13 +2705,14 @@ document.querySelectorAll('.column').forEach(function(column) {
   var dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
   var STORAGE_KEY = 'done_list_v3';
   var saveTimers = {}; // 每个任务的防抖计时器
+  var weekOffset = 0; // 0=本周, 1=上周
 
   function getWeekDates() {
     var now = new Date();
     var day = now.getDay();
     var diff = day === 0 ? 6 : day - 1;
     var monday = new Date(now);
-    monday.setDate(now.getDate() - diff);
+    monday.setDate(now.getDate() - diff - weekOffset * 7);
     monday.setHours(0, 0, 0, 0);
     var dates = [];
     for (var i = 0; i < 7; i++) {
@@ -2431,7 +2974,7 @@ document.querySelectorAll('.column').forEach(function(column) {
     if (!body) return;
 
     if (dateRange) {
-      dateRange.textContent = formatDate(dates[0]) + ' - ' + formatDate(dates[6]);
+      dateRange.textContent = (weekOffset === 1 ? '上周 · ' : '') + formatDate(dates[0]) + ' - ' + formatDate(dates[6]);
     }
 
     body.innerHTML = '';
@@ -2482,8 +3025,427 @@ document.querySelectorAll('.column').forEach(function(column) {
   if (document.getElementById('week-timeline-body')) {
     renderTimeline();
   }
+
+  // 本周/上周清单切换（下拉小箭头）
+  var weekToggle = document.getElementById('week-toggle');
+  if (weekToggle) {
+    weekToggle.addEventListener('click', function() {
+      weekOffset = weekOffset === 0 ? 1 : 0;
+      weekToggle.textContent = weekOffset === 1 ? '▴' : '▾';
+      weekToggle.classList.toggle('active', weekOffset === 1);
+      weekToggle.title = weekOffset === 1 ? '返回本周清单' : '查看上周清单';
+      renderTimeline();
+    });
+  }
 })();
 
 </script>
+    <div class="page-view" id="page-mail">
+      <div class="mail-page-container">
+        <div class="mail-page-header">
+          <div class="mail-page-header-top">
+            <span class="feishu-tracker-badge">6</span>
+            <div class="mail-page-title">📧 官网/邮件投递</div>
+          </div>
+          <p class="mail-page-desc" style="display:none;">按公司整理的官网/邮件投递清单：点邮箱直接打开预填主题的邮件；点「待发」切换为「已发」；每张卡片底部备注可直接填写，自动保存 <span id="mail-save-indicator" style="font-weight:600;color:#1a7f37;"></span></p>
+        </div>
+        <div class="mail-co-grid" id="mail-co-grid"></div>
+      </div>
+    </div>
+    <div class="fu-modal-mask" id="fu-modal-mask">
+      <div class="fu-modal">
+        <div class="fu-modal-header">
+          <div class="fu-modal-title">📨 追问话术</div>
+          <button class="fu-modal-close" id="fu-modal-close" type="button" title="关闭">✕</button>
+        </div>
+        <div class="fu-modal-body">
+          <p class="fu-modal-desc">话术可直接点击修改，修改后自动保存（换设备不同步，建议重要修改后导出留意）。点「复制」直接复制全文。</p>
+          <div class="fu-script">
+            <div class="fu-script-label">① 轻量追问 · 刚投递后几天</div>
+            <div class="fu-script-text" id="fu-script-1" contenteditable="true"></div>
+            <div class="fu-script-actions"><button class="fu-copy-btn" type="button" data-target="fu-script-1">复制</button></div>
+          </div>
+          <div class="fu-script">
+            <div class="fu-script-label">② 查进度 · 投递后数天</div>
+            <div class="fu-script-text" id="fu-script-2" contenteditable="true"></div>
+            <div class="fu-script-actions"><button class="fu-copy-btn" type="button" data-target="fu-script-2">复制</button></div>
+          </div>
+          <div class="fu-script">
+            <div class="fu-script-label">③ 一周跟进 · 带业务钩子</div>
+            <div class="fu-script-text" id="fu-script-3" contenteditable="true"></div>
+            <div class="fu-script-actions"><button class="fu-copy-btn" type="button" data-target="fu-script-3">复制</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function() {
+      var CO_KEY = 'wb_mail_companies_v2';
+      var SAVE_IND_TIMER = null;
+      // 按公司分组：每家公司一张卡片，字段格式统一
+      var DEFAULT_COMPANIES = [
+        {
+          name: '中国欧盟商会 European Chamber · IMA Asia',
+          region: '官网申请',
+          status: 'todo',
+          email: '',
+          contact: '',
+          desc: 'IMA Asia 的职位在欧盟商会网站发布，建议直接通过页面申请（页面有申请按钮/表单），同时可尝试找公司官网的 HR 邮箱',
+          note: '主投：9/14 早上待投',
+          positions: [
+            { title: 'Client Service Associate, China', text: '欧盟商会职位页', url: 'https://www.europeanchamber.com.cn/en/job-vacancies/4785/Client_Service_Associate_China' },
+            { title: 'Marketing Assistant - Internship', backup: true },
+            { title: 'Client Service Manager, China', backup: true },
+            { title: 'Membership & Events Assistant (Internship)', backup: true },
+            { title: 'Policy and Communications Coordinator/Manager', backup: true },
+            { title: 'International Business Advisory Sr. Associate', backup: true }
+          ]
+        },
+        {
+          name: 'UBC Sauder 商学院',
+          region: '邮件申请',
+          status: 'todo',
+          email: 'amethyst.chen@sauder.ubc.ca',
+          contact: 'Amethyst Chen',
+          desc: '邮件申请，需要发简历和求职信（职位详情：在 AmCham 页面搜索 "Marketing & Recruitment Officer"，点 "Click here for the job details"）',
+          note: '',
+          positions: [
+            { title: 'Marketing & Recruitment Officer' }
+          ]
+        },
+        {
+          name: 'Acadia Advisory Group',
+          region: '邮件申请',
+          status: 'todo',
+          email: 'jenny.chen@acadiaadvisory.com',
+          contact: 'Jenny Chen',
+          desc: '邮件申请，发简历 + 求职信（职位详情：在 AmCham 页面搜索 "Content Marketing Consultant"）',
+          note: '',
+          positions: [
+            { title: 'Content Marketing Consultant' }
+          ]
+        },
+        {
+          name: 'MSA Asia',
+          region: '官网申请',
+          status: 'todo',
+          email: 'brian.blomer@msadvisory.com',
+          contact: 'Brian Blomer',
+          desc: '',
+          note: '',
+          positions: [
+            { title: '(Assistant) Manager – Account Management', text: '英国商会职位页', url: 'https://britishchamber.cn/career/assistant-manager-account-management/' },
+            { title: 'Senior Associate – Account Management', text: '英国商会详情页', url: 'https://britishchamber.cn/career/senior-associate-account-management/' }
+          ]
+        },
+        {
+          name: 'AHK 德国商会',
+          region: '邮件申请',
+          status: 'todo',
+          email: 'career@china.ahk.de',
+          contact: '郑佳如（人力资源专员）',
+          desc: '统一投递邮箱，邮件标题注明申请的职位名称（职位详情：官网招聘页往下滑找"法务专员"）',
+          note: '',
+          positions: [
+            { title: '法务专员', text: 'AHK 官网招聘页', url: 'https://china.ahk.de/zh/careers' }
+          ]
+        },
+        {
+          name: 'Brunswick 博然思维',
+          region: '邮件申请',
+          status: 'todo',
+          email: 'nbehringer@brunswickgroup.com',
+          contact: 'N. Behringer',
+          desc: '全球顶尖公关咨询公司，此邮箱为 AmCham 页面上列的申请邮箱（职位来源：AmCham Shanghai 招聘页）',
+          note: '',
+          positions: [
+            { title: 'Executive' }
+          ]
+        },
+        {
+          name: 'Intralink',
+          region: '外地邮件',
+          status: 'todo',
+          email: 'enquiries_china@intralinkgroup.com',
+          contact: '',
+          desc: 'AmCham 页面上列的申请邮箱',
+          note: '',
+          positions: [
+            { title: 'Project Manager/Coordinator' }
+          ]
+        }
+      ];
+
+      function escapeHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function loadCompanies() {
+        try {
+          var raw = localStorage.getItem(CO_KEY);
+          if (raw) {
+            var arr = JSON.parse(raw);
+            if (Array.isArray(arr) && arr.length > 0) {
+              // 旧数据迁移：标签统一（去掉「 · 主投」等附加段，与其他卡一致）
+              arr.forEach(function(c) {
+                if (c && typeof c.region === 'string' && c.region.indexOf(' · ') > -1) {
+                  c.region = c.region.split(' · ')[0];
+                }
+              });
+              // 一次性迁移：标签按投递方式统一（只执行一次，不覆盖之后的手动修改）
+              try {
+                if (!localStorage.getItem('wb_region_fix_v1')) {
+                  var REGION_FIX = {
+                    '中国欧盟商会': '官网申请',
+                    'AHK 德国商会': '邮件申请',
+                    'Brunswick': '邮件申请',
+                    'Intralink': '外地邮件'
+                  };
+                  arr.forEach(function(c) {
+                    if (!c || !c.name) return;
+                    for (var k in REGION_FIX) {
+                      if (String(c.name).indexOf(k) === 0) { c.region = REGION_FIX[k]; break; }
+                    }
+                  });
+                  localStorage.setItem(CO_KEY, JSON.stringify(arr));
+                  localStorage.setItem('wb_region_fix_v1', '1');
+                }
+              } catch (e) {}
+              return arr;
+            }
+          }
+        } catch (e) {}
+        localStorage.setItem(CO_KEY, JSON.stringify(DEFAULT_COMPANIES));
+        return JSON.parse(JSON.stringify(DEFAULT_COMPANIES));
+      }
+      function saveCompanies(list) {
+        localStorage.setItem(CO_KEY, JSON.stringify(list));
+      }
+      function flashSaved() {
+        var ind = document.getElementById('mail-save-indicator');
+        if (!ind) return;
+        ind.textContent = '✓ 已自动保存';
+        clearTimeout(SAVE_IND_TIMER);
+        SAVE_IND_TIMER = setTimeout(function() { ind.textContent = ''; }, 1500);
+      }
+
+      var coBackupsOpen = false; // 备选职位默认折叠
+
+      function posLine(p) {
+        var h = '<div class="co-pos' + (p.backup ? ' co-pos-backup' : '') + '">' +
+          '<span class="co-pos-dot">' + (p.backup ? '·' : '●') + '</span>' + escapeHtml(p.title);
+        if (p.url) {
+          h += ' — <a href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.text || '职位详情') + '</a>';
+        }
+        return h + '</div>';
+      }
+
+      function renderCompanies() {
+        var box = document.getElementById('mail-co-grid');
+        if (!box) return;
+        var list = loadCompanies();
+        box.innerHTML = '';
+        list.forEach(function(c, idx) {
+          var card = document.createElement('div');
+          card.className = 'mail-co-card';
+          var html =
+            '<div class="mail-co-head">' +
+              '<span class="mail-co-title">' + escapeHtml(c.name) + '</span>' +
+              (c.region ? '<span class="co-region">' + escapeHtml(c.region) + '</span>' : '') +
+              '<button class="mail-co-status ' + (c.status === 'done' ? 'st-done' : 'st-todo') + '" type="button" data-co="' + idx + '">' +
+                (c.status === 'done' ? '已发' : '待发') + '</button>' +
+            '</div>';
+          // 职位区（固定高度，备选折叠）
+          var mains = [], backups = [];
+          (c.positions || []).forEach(function(p) {
+            if (p.backup) backups.push(p); else mains.push(p);
+          });
+          html += '<div class="co-pos-zone">';
+          mains.forEach(function(p) { html += posLine(p); });
+          if (backups.length > 0) {
+            html += '<button class="co-backup-toggle" type="button" data-co="' + idx + '">' +
+              '<span class="bk-arrow">▶</span> 备选职位（' + backups.length + '）</button>';
+            if (coBackupsOpen) {
+              backups.forEach(function(p) { html += posLine(p); });
+            }
+          }
+          html += '</div>';
+          // 信息区（固定高度）
+          html += '<div class="co-meta">';
+          if (c.email) {
+            var mailto = 'mailto:' + c.email + '?subject=' + encodeURIComponent('Application for ' + ((c.positions && c.positions[0]) ? c.positions[0].title : c.name));
+            html += '<div class="mail-co-row"><span class="co-k">申请邮箱：</span><a href="' + mailto + '">' + escapeHtml(c.email) + '</a></div>';
+          }
+          if (c.contact) {
+            html += '<div class="mail-co-row"><span class="co-k">联系人：</span>' + escapeHtml(c.contact) + '</div>';
+          }
+          if (c.desc) {
+            html += '<div class="mail-co-row"><span class="co-k">说明：</span>' + escapeHtml(c.desc) + '</div>';
+          }
+          html += '</div>';
+          html += '<input class="co-note-input" type="text" data-co="' + idx + '" value="' + escapeHtml(c.note || '') + '" placeholder="备注（写在这里，自动保存）">';
+          card.innerHTML = html;
+          box.appendChild(card);
+        });
+      }
+
+      // 状态切换 / 备选折叠 / 备注自动保存（事件委托，重渲染不丢）
+      var grid = document.getElementById('mail-co-grid');
+      if (grid) {
+        grid.addEventListener('click', function(e) {
+          var bkToggle = e.target.closest ? e.target.closest('.co-backup-toggle') : null;
+          if (bkToggle) {
+            coBackupsOpen = !coBackupsOpen;
+            renderCompanies();
+            return;
+          }
+          var btn = e.target.closest ? e.target.closest('.mail-co-status') : null;
+          if (!btn) return;
+          var list = loadCompanies();
+          var idx = parseInt(btn.getAttribute('data-co'), 10);
+          if (list[idx]) {
+            list[idx].status = list[idx].status === 'done' ? 'todo' : 'done';
+            saveCompanies(list);
+            renderCompanies();
+          }
+        });
+        grid.addEventListener('input', function(e) {
+          var input = e.target.closest ? e.target.closest('.co-note-input') : null;
+          if (!input) return;
+          var list = loadCompanies();
+          var idx = parseInt(input.getAttribute('data-co'), 10);
+          if (list[idx]) {
+            list[idx].note = input.value;
+            saveCompanies(list);
+            flashSaved();
+          }
+        });
+      }
+
+      // 入口卡片按钮 → 切换到官网/邮件投递页面（与导航 tab 同机制）
+      var openBtn = document.getElementById('mail-entry-open');
+      var mailTab = document.querySelector('.nav-tab[data-page="mail"]');
+      if (openBtn && mailTab) {
+        openBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          renderCompanies();
+          mailTab.click();
+          window.scrollTo(0, 0);
+        });
+      }
+      // 通过顶部导航切到本页时，也刷新列表
+      if (mailTab) {
+        mailTab.addEventListener('click', function() {
+          renderCompanies();
+        });
+      }
+
+      // 初始化
+      renderCompanies();
+    })();
+
+
+    // 追问话术弹窗：可编辑 + 自动保存（localStorage 永久保存）
+    (function() {
+      var FU_KEY = 'wb_followup_scripts_v1';
+      var FU_DEFAULTS = [
+        '您好，上次投递了 XX 岗位，担心简历信息不够直观，如果目前还在看人，方便的话想再争取一次沟通机会，谢谢。',
+        '您好，我是 [日期] 投递 XX 岗位的 [名字]。想了解一下目前进度，如果还在推进中，我很愿意进一步沟通；如果已经关闭了，也谢谢您的时间',
+        '您好，我是 [日期] 投递 XX 岗位的 [名字]。一周过去，想冒昧跟进一下。同时，我最近整理了一份关于 [与该岗位相关的某个业务点] 的简短思考，如果您那边还在推进，希望能有机会和您聊聊。感谢您的时间。'
+      ];
+
+      function loadScripts() {
+        try {
+          var raw = localStorage.getItem(FU_KEY);
+          if (raw) {
+            var arr = JSON.parse(raw);
+            if (Array.isArray(arr) && arr.length === FU_DEFAULTS.length) return arr;
+          }
+        } catch (e) {}
+        return FU_DEFAULTS.slice();
+      }
+
+      var saveTimer = null;
+      function saveScripts() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(function() {
+          var texts = [];
+          for (var i = 1; i <= 3; i++) {
+            var el = document.getElementById('fu-script-' + i);
+            texts.push(el ? el.innerText : '');
+          }
+          localStorage.setItem(FU_KEY, JSON.stringify(texts));
+        }, 400);
+      }
+
+      var mask = document.getElementById('fu-modal-mask');
+      var hint = document.getElementById('followup-hint');
+
+      // 首次打开时填充内容（已保存的用保存版）
+      function fillScripts() {
+        var texts = loadScripts();
+        for (var i = 1; i <= 3; i++) {
+          var el = document.getElementById('fu-script-' + i);
+          if (el && !el.dataset.filled) {
+            el.innerText = texts[i - 1];
+            el.dataset.filled = '1';
+          }
+        }
+      }
+
+      if (hint && mask) {
+        hint.addEventListener('click', function() {
+          fillScripts();
+          mask.classList.add('open');
+        });
+      }
+      var closeBtn = document.getElementById('fu-modal-close');
+      if (closeBtn && mask) {
+        closeBtn.addEventListener('click', function() { mask.classList.remove('open'); });
+      }
+      if (mask) {
+        mask.addEventListener('click', function(e) {
+          if (e.target === mask) mask.classList.remove('open');
+        });
+      }
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mask && mask.classList.contains('open')) mask.classList.remove('open');
+      });
+
+      // 输入即自动保存
+      for (var n = 1; n <= 3; n++) {
+        (function(idx) {
+          var el = document.getElementById('fu-script-' + idx);
+          if (el) el.addEventListener('input', saveScripts);
+        })(n);
+      }
+
+      // 复制按钮
+      var copyBtns = document.querySelectorAll('.fu-copy-btn');
+      for (var c = 0; c < copyBtns.length; c++) {
+        copyBtns[c].addEventListener('click', function() {
+          var btn = this;
+          var el = document.getElementById(btn.getAttribute('data-target'));
+          if (!el) return;
+          var text = el.innerText;
+          function done() {
+            btn.textContent = '已复制 ✓';
+            btn.classList.add('copied');
+            setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('copied'); }, 1500);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            done();
+          }
+        });
+      }
+    })();
+    </script>
 </body>
 </html>
