@@ -3555,21 +3555,21 @@ document.querySelectorAll('.column').forEach(function(column) {
         return h + '</div>';
       }
 
-      // 三态状态定义：loading ⏳（进行中）→ done ✅（已投）→ todo ❌（未投/不投）
+      // 三态状态定义：点击推进链 打勾 ✅（已投）→ 沙漏 ⏳（进行中）→ 打叉 ❌（未投/放弃）
       var STATUS_META = {
-        loading: { cls: 'st-loading', icon: '⏳', tip: '进行中（点击改为打勾）' },
-        done:    { cls: 'st-done',    icon: '✅', tip: '已投（点击改为打叉）' },
-        todo:    { cls: 'st-todo',    icon: '❌', tip: '未投（点击改为进行中）' }
+        done:    { cls: 'st-done',    icon: '✅', tip: '已投（点击改为进行中⏳）' },
+        loading: { cls: 'st-loading', icon: '⏳', tip: '进行中（点击改为打叉❌）' },
+        todo:    { cls: 'st-todo',    icon: '❌', tip: '未投（点击改为打勾✅）' }
       };
-      // 排序权重：⏳ 最上 → ✅ 中间 → ❌ 沉底（无法识别的旧状态按 ❌ 处理）
-      var STATUS_RANK = { loading: 0, done: 1, todo: 2 };
+      // 排序权重：⏳进行中最上 → ❌未投居中 → ✅已投沉到最底（无法识别的旧状态按 ❌ 处理）
+      var STATUS_RANK = { loading: 0, todo: 1, done: 2 };
       function statusKey(c) {
         var s = c && c.status;
         return STATUS_META[s] ? s : 'todo';
       }
       function statusRank(c) {
         var r = STATUS_RANK[statusKey(c)];
-        return r === undefined ? 2 : r;
+        return r === undefined ? 1 : r;
       }
 
       function renderCompanies() {
@@ -3647,9 +3647,9 @@ document.querySelectorAll('.column').forEach(function(column) {
           var list = loadCompanies();
           var idx = parseInt(btn.getAttribute('data-co'), 10);
           if (list[idx]) {
-            // 三态循环：⏳进行中 → ✅已投 → ❌未投 → ⏳进行中
+            // 点击推进链：✅已投 → ⏳进行中 → ❌未投 → ✅已投
             var curSt = statusKey(list[idx]);
-            list[idx].status = curSt === 'loading' ? 'done' : (curSt === 'done' ? 'todo' : 'loading');
+            list[idx].status = curSt === 'done' ? 'loading' : (curSt === 'loading' ? 'todo' : 'done');
             saveCompanies(list);
             renderCompanies();
           }
