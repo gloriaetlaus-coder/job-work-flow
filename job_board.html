@@ -1035,6 +1035,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .mail-co-title a.co-site-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: #c7c7cc;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .mail-co-title a.co-site-link:hover {
+    color: #0066cc;
+    text-decoration-color: #0066cc;
+  }
   .co-region {
     font-size: 11px;
     font-weight: 600;
@@ -3353,6 +3364,7 @@ document.querySelectorAll('.column').forEach(function(column) {
       var DEFAULT_COMPANIES = [
         {
           name: '中国欧盟商会 European Chamber · IMA Asia',
+          site: 'https://www.europeanchamber.com.cn/',
           region: '官网申请',
           status: 'todo',
           email: '',
@@ -3361,15 +3373,16 @@ document.querySelectorAll('.column').forEach(function(column) {
           note: '主投：9/14 早上待投',
           positions: [
             { title: 'Client Service Associate, China', text: '欧盟商会职位页', url: 'https://www.europeanchamber.com.cn/en/job-vacancies/4785/Client_Service_Associate_China' },
-            { title: 'Marketing Assistant - Internship', backup: true },
-            { title: 'Client Service Manager, China', backup: true },
-            { title: 'Membership & Events Assistant (Internship)', backup: true },
-            { title: 'Policy and Communications Coordinator/Manager', backup: true },
-            { title: 'International Business Advisory Sr. Associate', backup: true }
+            { title: 'Marketing Assistant - Internship', backup: true, text: '官网职位列表', url: 'https://www.europeanchamber.com.cn/en/job-vacancies' },
+            { title: 'Client Service Manager, China', backup: true, text: '官网职位列表', url: 'https://www.europeanchamber.com.cn/en/job-vacancies' },
+            { title: 'Membership & Events Assistant (Internship)', backup: true, text: '官网职位列表', url: 'https://www.europeanchamber.com.cn/en/job-vacancies' },
+            { title: 'Policy and Communications Coordinator/Manager', backup: true, text: '官网职位列表', url: 'https://www.europeanchamber.com.cn/en/job-vacancies' },
+            { title: 'International Business Advisory Sr. Associate', backup: true, text: '官网职位列表', url: 'https://www.europeanchamber.com.cn/en/job-vacancies' }
           ]
         },
         {
           name: 'UBC Sauder 商学院',
+          site: 'https://www.sauder.ubc.ca/',
           region: '邮件申请',
           status: 'todo',
           email: 'amethyst.chen@sauder.ubc.ca',
@@ -3377,11 +3390,12 @@ document.querySelectorAll('.column').forEach(function(column) {
           desc: '邮件申请，需要发简历和求职信（职位详情：在 AmCham 页面搜索 "Marketing & Recruitment Officer"，点 "Click here for the job details"）',
           note: '',
           positions: [
-            { title: 'Marketing & Recruitment Officer' }
+            { title: 'Marketing & Recruitment Officer', text: 'Sauder 官网招聘页', url: 'https://www.sauder.ubc.ca/careers' }
           ]
         },
         {
           name: 'Acadia Advisory Group',
+          site: 'https://www.acadiaadvisory.com/',
           region: '邮件申请',
           status: 'todo',
           email: 'jenny.chen@acadiaadvisory.com',
@@ -3389,11 +3403,12 @@ document.querySelectorAll('.column').forEach(function(column) {
           desc: '邮件申请，发简历 + 求职信（职位详情：在 AmCham 页面搜索 "Content Marketing Consultant"）',
           note: '',
           positions: [
-            { title: 'Content Marketing Consultant' }
+            { title: 'Content Marketing Consultant', text: 'Acadia 官网招聘页', url: 'https://www.acadiaadvisory.com/careers' }
           ]
         },
         {
           name: 'MSA Asia',
+          site: 'https://msadvisory.com/',
           region: '官网申请',
           status: 'todo',
           email: 'brian.blomer@msadvisory.com',
@@ -3407,6 +3422,7 @@ document.querySelectorAll('.column').forEach(function(column) {
         },
         {
           name: 'AHK 德国商会',
+          site: 'https://china.ahk.de/',
           region: '邮件申请',
           status: 'todo',
           email: 'career@china.ahk.de',
@@ -3419,6 +3435,7 @@ document.querySelectorAll('.column').forEach(function(column) {
         },
         {
           name: 'Brunswick 博然思维',
+          site: 'https://www.brunswickgroup.com/',
           region: '邮件申请',
           status: 'todo',
           email: 'nbehringer@brunswickgroup.com',
@@ -3426,11 +3443,12 @@ document.querySelectorAll('.column').forEach(function(column) {
           desc: '全球顶尖公关咨询公司，此邮箱为 AmCham 页面上列的申请邮箱（职位来源：AmCham Shanghai 招聘页）',
           note: '',
           positions: [
-            { title: 'Executive' }
+            { title: 'Executive', text: 'Brunswick 官方招聘页', url: 'https://job-boards.greenhouse.io/brunswickgroup' }
           ]
         },
         {
           name: 'Intralink',
+          site: 'https://www.intralinkgroup.com/',
           region: '外地邮件',
           status: 'todo',
           email: 'enquiries_china@intralinkgroup.com',
@@ -3438,7 +3456,7 @@ document.querySelectorAll('.column').forEach(function(column) {
           desc: 'AmCham 页面上列的申请邮箱',
           note: '',
           positions: [
-            { title: 'Project Manager/Coordinator' }
+            { title: 'Project Manager/Coordinator', text: 'Intralink 职位页', url: 'https://www.intralinkgroup.com/-careers-project-manager-china' }
           ]
         }
       ];
@@ -3477,6 +3495,28 @@ document.querySelectorAll('.column').forEach(function(column) {
                   localStorage.setItem('wb_region_fix_v1', '1');
                 }
               } catch (e) {}
+              // 补全迁移：为已存数据补上官网链接（site）和职位链接（按职位名匹配默认值）
+              arr.forEach(function(c) {
+                if (!c || !c.name) return;
+                var def = null;
+                for (var i = 0; i < DEFAULT_COMPANIES.length; i++) {
+                  if (DEFAULT_COMPANIES[i].name === c.name) { def = DEFAULT_COMPANIES[i]; break; }
+                }
+                if (!def) return;
+                if (!c.site && def.site) c.site = def.site;
+                if (Array.isArray(c.positions) && Array.isArray(def.positions)) {
+                  c.positions.forEach(function(p) {
+                    for (var j = 0; j < def.positions.length; j++) {
+                      var dp = def.positions[j];
+                      if (dp.title === p.title) {
+                        if (!p.url && dp.url) p.url = dp.url;
+                        if (!p.text && dp.text) p.text = dp.text;
+                        break;
+                      }
+                    }
+                  });
+                }
+              });
               return arr;
             }
           }
@@ -3516,7 +3556,11 @@ document.querySelectorAll('.column').forEach(function(column) {
           card.className = 'mail-co-card';
           var html =
             '<div class="mail-co-head">' +
-              '<span class="mail-co-title">' + escapeHtml(c.name) + '</span>' +
+              '<span class="mail-co-title">' +
+                (c.site
+                  ? '<a class="co-site-link" href="' + escapeHtml(c.site) + '" target="_blank" rel="noopener" title="打开官网">' + escapeHtml(c.name) + '</a>'
+                  : escapeHtml(c.name)) +
+              '</span>' +
               (c.region ? '<span class="co-region">' + escapeHtml(c.region) + '</span>' : '') +
               '<button class="mail-co-status ' + (c.status === 'done' ? 'st-done' : 'st-todo') + '" type="button" data-co="' + idx + '">' +
                 (c.status === 'done' ? '已发' : '待发') + '</button>' +
