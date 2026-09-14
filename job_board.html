@@ -3625,15 +3625,15 @@ document.querySelectorAll('.column').forEach(function(column) {
         loading: { cls: 'st-loading', icon: '⏳', tip: '进行中（点击改为打叉❌）' },
         todo:    { cls: 'st-todo',    icon: '❌', tip: '未投（点击改为打勾✅）' }
       };
-      // 排序权重：⏳进行中最上 → ❌未投居中 → ✅已投沉到最底（无法识别的旧状态按 ❌ 处理）
-      var STATUS_RANK = { loading: 0, todo: 1, done: 2 };
+      // 排序权重：⏳进行中最上 → ✅已投居中 → ❌未投沉到最底（无法识别的旧状态按 ❌ 处理）
+      var STATUS_RANK = { loading: 0, done: 1, todo: 2 };
       function statusKey(c) {
         var s = c && c.status;
         return STATUS_META[s] ? s : 'todo';
       }
       function statusRank(c) {
         var r = STATUS_RANK[statusKey(c)];
-        return r === undefined ? 1 : r;
+        return r === undefined ? 2 : r;
       }
 
       function renderCompanies() {
