@@ -1071,6 +1071,65 @@
   .mail-co-status.st-todo { background: transparent; }
   .mail-co-status.st-done { background: transparent; }
   .mail-co-status.st-loading { background: transparent; }
+  /* 状态下拉：图标 + 展开箭头 */
+  .co-status-ctl { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+  .co-status-caret {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #86868b;
+    font-size: 10px;
+    line-height: 1;
+    padding: 6px 3px;
+    border-radius: 6px;
+    font-family: inherit;
+  }
+  .co-status-caret:hover { background: #f0f0f2; color: #1d1d1f; }
+  /* 状态下拉菜单（fixed 定位，不受卡片裁切） */
+  .co-status-menu {
+    position: fixed;
+    z-index: 300;
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 10px;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.14);
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    min-width: 132px;
+  }
+  .co-status-menu[hidden] { display: none; }
+  .co-status-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    color: #1d1d1f;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 7px;
+    min-height: 36px;
+    white-space: nowrap;
+  }
+  .co-status-opt:hover { background: #f5f5f7; }
+  .co-status-opt .opt-ico { font-size: 15px; line-height: 1; }
+  .co-status-opt.current { background: #eef7f0; font-weight: 700; }
+  .co-status-opt.current::after { content: '✓'; margin-left: auto; color: #1a7f37; font-weight: 700; }
+  /* 状态切换后：卡片滑动 + 高亮提示（让用户看清哪张卡移到了哪里） */
+  @keyframes cardMovedPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(52,199,89,0.50); border-color: #34c759; }
+    60%  { box-shadow: 0 0 0 9px rgba(52,199,89,0); border-color: #34c759; }
+    100% { box-shadow: 0 0 0 0 rgba(52,199,89,0); border-color: #e5e5ea; }
+  }
+  .mail-co-card.card-moved {
+    animation: cardMovedPulse 1.5s ease-out;
+    border-color: #34c759;
+    background: #fbfefc;
+  }
   /* 职位区：固定高度=最高卡内容（职位行+备选职位行），与 IMA 卡对齐，无多余空白 */
   .co-pos-zone {
     height: 44px;
@@ -3337,6 +3396,11 @@ document.querySelectorAll('.column').forEach(function(column) {
           <p class="mail-page-desc" style="display:none;">按公司整理的官网/邮件投递清单：点邮箱直接打开预填主题的邮件；点「待发」切换为「已发」；每张卡片底部备注可直接填写，自动保存 <span id="mail-save-indicator" style="font-weight:600;color:#1a7f37;"></span></p>
         </div>
         <div class="mail-co-grid" id="mail-co-grid"></div>
+        <div class="co-status-menu" id="co-status-menu" hidden>
+          <button class="co-status-opt" type="button" data-set="loading"><span class="opt-ico">⏳</span>进行中</button>
+          <button class="co-status-opt" type="button" data-set="todo"><span class="opt-ico">❌</span>未投（打叉）</button>
+          <button class="co-status-opt" type="button" data-set="done"><span class="opt-ico">✅</span>已投（打勾）</button>
+        </div>
       </div>
     </div>
     <div class="fu-modal-mask" id="fu-modal-mask">
@@ -3587,6 +3651,7 @@ document.querySelectorAll('.column').forEach(function(column) {
           var sm = STATUS_META[st];
           var card = document.createElement('div');
           card.className = 'mail-co-card';
+          card.setAttribute('data-co', idx);
           var html =
             '<div class="mail-co-head">' +
               '<span class="mail-co-title">' +
@@ -3595,8 +3660,11 @@ document.querySelectorAll('.column').forEach(function(column) {
                   : escapeHtml(c.name)) +
               '</span>' +
               (c.region ? '<span class="co-region">' + escapeHtml(c.region) + '</span>' : '') +
-              '<button class="mail-co-status ' + sm.cls + '" type="button" data-co="' + idx + '" title="' + sm.tip + '">' +
-                sm.icon + '</button>' +
+              '<span class="co-status-ctl">' +
+                '<button class="mail-co-status ' + sm.cls + '" type="button" data-co="' + idx + '" title="' + sm.tip + '">' +
+                  sm.icon + '</button>' +
+                '<button class="co-status-caret" type="button" data-co="' + idx + '" title="下拉选择状态">▼</button>' +
+              '</span>' +
             '</div>';
           // 职位区（固定高度，备选折叠）
           var mains = [], backups = [];
@@ -3632,6 +3700,73 @@ document.querySelectorAll('.column').forEach(function(column) {
         });
       }
 
+      // —— 卡片位置快照（状态切换后做"原位置→新位置"的滑动动画）——
+      function captureCardTops() {
+        var map = {};
+        document.querySelectorAll('.mail-co-card').forEach(function(c) {
+          var r = c.getBoundingClientRect();
+          map[c.getAttribute('data-co')] = r.top + window.scrollY;
+        });
+        return map;
+      }
+      // 切换后：所有卡从旧位置平滑滑到新位置，目标卡额外高亮闪烁
+      function playMoveFeedback(oldTops, targetIdx) {
+        document.querySelectorAll('.mail-co-card').forEach(function(c) {
+          var oldTop = oldTops[c.getAttribute('data-co')];
+          if (oldTop === undefined) return;
+          var newTop = c.getBoundingClientRect().top + window.scrollY;
+          var dy = oldTop - newTop;
+          if (Math.abs(dy) < 2) return;
+          c.style.zIndex = '5';
+          var anim = c.animate(
+            [{ transform: 'translateY(' + dy + 'px)' }, { transform: 'translateY(0)' }],
+            { duration: 560, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+          );
+          anim.onfinish = function() { c.style.zIndex = ''; };
+        });
+        var target = document.querySelector('.mail-co-card[data-co="' + targetIdx + '"]');
+        if (target) {
+          target.classList.add('card-moved');
+          setTimeout(function() { target.classList.remove('card-moved'); }, 1600);
+          try { target.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (err) { target.scrollIntoView(); }
+        }
+      }
+      // —— 状态下拉菜单 ——
+      var statusMenu = document.getElementById('co-status-menu');
+      function closeStatusMenu() {
+        if (statusMenu) { statusMenu.hidden = true; statusMenu.removeAttribute('data-co'); }
+      }
+      function openStatusMenu(caretBtn) {
+        if (!statusMenu) return;
+        var idx = parseInt(caretBtn.getAttribute('data-co'), 10);
+        var list = loadCompanies();
+        var cur = list[idx] ? statusKey(list[idx]) : 'todo';
+        statusMenu.setAttribute('data-co', idx);
+        statusMenu.querySelectorAll('.co-status-opt').forEach(function(opt) {
+          opt.classList.toggle('current', opt.getAttribute('data-set') === cur);
+        });
+        statusMenu.hidden = false;
+        var r = caretBtn.getBoundingClientRect();
+        var mw = statusMenu.offsetWidth, mh = statusMenu.offsetHeight;
+        var left = Math.min(r.right - mw, window.innerWidth - mw - 8);
+        if (left < 8) left = 8;
+        var top = r.bottom + 6;
+        if (top + mh > window.innerHeight - 8) top = r.top - mh - 6;
+        statusMenu.style.left = left + 'px';
+        statusMenu.style.top = top + 'px';
+      }
+      // 应用状态（带滑动 + 高亮反馈）
+      function applyStatus(idx, nextSt) {
+        var list = loadCompanies();
+        if (!list[idx]) return;
+        if (statusKey(list[idx]) === nextSt) return;
+        var oldTops = captureCardTops();
+        list[idx].status = nextSt;
+        saveCompanies(list);
+        renderCompanies();
+        playMoveFeedback(oldTops, idx);
+      }
+
       // 状态切换 / 备选折叠 / 备注自动保存（事件委托，重渲染不丢）
       var grid = document.getElementById('mail-co-grid');
       if (grid) {
@@ -3642,18 +3777,41 @@ document.querySelectorAll('.column').forEach(function(column) {
             renderCompanies();
             return;
           }
+          // 下拉箭头 → 打开状态下拉菜单
+          var caret = e.target.closest ? e.target.closest('.co-status-caret') : null;
+          if (caret) {
+            openStatusMenu(caret);
+            return;
+          }
           var btn = e.target.closest ? e.target.closest('.mail-co-status') : null;
           if (!btn) return;
-          var list = loadCompanies();
+          closeStatusMenu();
           var idx = parseInt(btn.getAttribute('data-co'), 10);
+          var list = loadCompanies();
           if (list[idx]) {
             // 点击推进链：✅已投 → ⏳进行中 → ❌未投 → ✅已投
             var curSt = statusKey(list[idx]);
-            list[idx].status = curSt === 'done' ? 'loading' : (curSt === 'loading' ? 'todo' : 'done');
-            saveCompanies(list);
-            renderCompanies();
+            applyStatus(idx, curSt === 'done' ? 'loading' : (curSt === 'loading' ? 'todo' : 'done'));
           }
         });
+        // 下拉菜单选项
+        if (statusMenu) {
+          statusMenu.addEventListener('click', function(e) {
+            var opt = e.target.closest ? e.target.closest('.co-status-opt') : null;
+            if (!opt) return;
+            var idx = parseInt(statusMenu.getAttribute('data-co'), 10);
+            var set = opt.getAttribute('data-set');
+            closeStatusMenu();
+            applyStatus(idx, set);
+          });
+          document.addEventListener('click', function(e) {
+            if (!statusMenu || statusMenu.hidden) return;
+            if (e.target.closest && (e.target.closest('#co-status-menu') || e.target.closest('.co-status-caret'))) return;
+            closeStatusMenu();
+          });
+          document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeStatusMenu(); });
+          window.addEventListener('scroll', function() { closeStatusMenu(); }, true);
+        }
         grid.addEventListener('input', function(e) {
           var input = e.target.closest ? e.target.closest('.co-note-input') : null;
           if (!input) return;
