@@ -1070,6 +1070,7 @@
   .mail-co-status:hover { background: #f0f0f2; }
   .mail-co-status.st-todo { background: transparent; }
   .mail-co-status.st-done { background: transparent; }
+  .mail-co-status.st-loading { background: transparent; }
   /* 职位区：固定高度=最高卡内容（职位行+备选职位行），与 IMA 卡对齐，无多余空白 */
   .co-pos-zone {
     height: 44px;
@@ -1123,6 +1124,7 @@
     border-radius: 8px;
     padding: 8px 10px;
     font-size: 12.5px;
+    font-weight: 600;
     font-family: inherit;
     background: #fafafa;
     color: #1d1d1f;
@@ -1130,10 +1132,11 @@
     flex-shrink: 0;
   }
   .co-note-input:focus { outline: none; border-color: #34c759; background: #fff; }
-  /* 备注文字颜色跟随卡片状态：✅绿色 / ❌红色 */
+  /* 备注文字颜色跟随卡片状态：✅绿色 / ❌红色 / ⏳琥珀色；文字统一加粗 */
   .co-note-input.note-done { color: #1a7f37; }
   .co-note-input.note-todo { color: #c9302c; }
-  .co-note-input::placeholder { color: #b0b0b5; opacity: 1; }
+  .co-note-input.note-loading { color: #b8860b; }
+  .co-note-input::placeholder { color: #b0b0b5; opacity: 1; font-weight: 400; }
   .mail-form-submit {
     align-self: flex-end;
     background: #34c759;
@@ -3552,17 +3555,36 @@ document.querySelectorAll('.column').forEach(function(column) {
         return h + '</div>';
       }
 
+      // 三态状态定义：loading ⏳（进行中）→ done ✅（已投）→ todo ❌（未投/不投）
+      var STATUS_META = {
+        loading: { cls: 'st-loading', icon: '⏳', tip: '进行中（点击改为打勾）' },
+        done:    { cls: 'st-done',    icon: '✅', tip: '已投（点击改为打叉）' },
+        todo:    { cls: 'st-todo',    icon: '❌', tip: '未投（点击改为进行中）' }
+      };
+      // 排序权重：⏳ 最上 → ✅ 中间 → ❌ 沉底（无法识别的旧状态按 ❌ 处理）
+      var STATUS_RANK = { loading: 0, done: 1, todo: 2 };
+      function statusKey(c) {
+        var s = c && c.status;
+        return STATUS_META[s] ? s : 'todo';
+      }
+      function statusRank(c) {
+        var r = STATUS_RANK[statusKey(c)];
+        return r === undefined ? 2 : r;
+      }
+
       function renderCompanies() {
         var box = document.getElementById('mail-co-grid');
         if (!box) return;
         var list = loadCompanies();
         box.innerHTML = '';
-        // 打✅的排前面，打❌的自动沉到最后（同组内保持原顺序）
+        // 排序：⏳进行中最上 → ✅已投中间 → ❌未投沉底（同组内保持原顺序）
         var view = list.map(function(c, idx) { return { c: c, idx: idx }; })
-          .sort(function(a, b) { return (b.c.status === 'done' ? 1 : 0) - (a.c.status === 'done' ? 1 : 0); });
+          .sort(function(a, b) { return statusRank(a.c) - statusRank(b.c); });
         view.forEach(function(item) {
           var c = item.c;
           var idx = item.idx;
+          var st = statusKey(c);
+          var sm = STATUS_META[st];
           var card = document.createElement('div');
           card.className = 'mail-co-card';
           var html =
@@ -3573,8 +3595,8 @@ document.querySelectorAll('.column').forEach(function(column) {
                   : escapeHtml(c.name)) +
               '</span>' +
               (c.region ? '<span class="co-region">' + escapeHtml(c.region) + '</span>' : '') +
-              '<button class="mail-co-status ' + (c.status === 'done' ? 'st-done' : 'st-todo') + '" type="button" data-co="' + idx + '" title="' + (c.status === 'done' ? '已发（点击改为打叉）' : '未发（点击改为打勾）') + '">' +
-                (c.status === 'done' ? '✅' : '❌') + '</button>' +
+              '<button class="mail-co-status ' + sm.cls + '" type="button" data-co="' + idx + '" title="' + sm.tip + '">' +
+                sm.icon + '</button>' +
             '</div>';
           // 职位区（固定高度，备选折叠）
           var mains = [], backups = [];
@@ -3604,7 +3626,7 @@ document.querySelectorAll('.column').forEach(function(column) {
             html += '<div class="mail-co-row"><span class="co-k">说明：</span>' + escapeHtml(c.desc) + '</div>';
           }
           html += '</div>';
-          html += '<input class="co-note-input ' + (c.status === 'done' ? 'note-done' : 'note-todo') + '" type="text" data-co="' + idx + '" value="' + escapeHtml(c.note || '') + '" placeholder="备注（写在这里，自动保存）">';
+          html += '<input class="co-note-input note-' + st + '" type="text" data-co="' + idx + '" value="' + escapeHtml(c.note || '') + '" placeholder="备注（写在这里，自动保存）">';
           card.innerHTML = html;
           box.appendChild(card);
         });
@@ -3625,7 +3647,9 @@ document.querySelectorAll('.column').forEach(function(column) {
           var list = loadCompanies();
           var idx = parseInt(btn.getAttribute('data-co'), 10);
           if (list[idx]) {
-            list[idx].status = list[idx].status === 'done' ? 'todo' : 'done';
+            // 三态循环：⏳进行中 → ✅已投 → ❌未投 → ⏳进行中
+            var curSt = statusKey(list[idx]);
+            list[idx].status = curSt === 'loading' ? 'done' : (curSt === 'done' ? 'todo' : 'loading');
             saveCompanies(list);
             renderCompanies();
           }
