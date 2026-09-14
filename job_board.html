@@ -796,6 +796,128 @@
     color: #fff;
   }
 
+  /* 面试提问 - 独立页面 */
+  .itv-container {
+    max-width: 1400px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: 18px;
+    padding: 12px 14px;
+  }
+  .itv-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .itv-badge {
+    background: #34c759;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 7px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+  .itv-title { font-size: 17px; font-weight: 700; color: #1d1d1f; }
+  .itv-sub { font-size: 12.5px; color: #86868b; }
+  .itv-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a7f37;
+    margin: 8px 0 8px;
+  }
+  .itv-group::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    background: #34c759;
+  }
+  .itv-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 8px;
+    align-items: stretch;
+  }
+  .itv-card {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .itv-q-head { display: flex; align-items: flex-start; gap: 8px; }
+  .itv-num {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border-radius: 6px;
+    background: #f0f9f2;
+    color: #1a7f37;
+    font-size: 11.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .itv-q {
+    flex: 1;
+    min-width: 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #1d1d1f;
+    word-break: break-word;
+  }
+  .itv-q:focus { outline: none; }
+  .itv-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+  .itv-tag {
+    flex: 1;
+    min-width: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #b8860b;
+    background: #fff4e5;
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
+  .itv-copy {
+    flex-shrink: 0;
+    min-height: 30px;
+    padding: 5px 12px;
+    border: 1px solid #e5e5ea;
+    border-radius: 8px;
+    background: #fff;
+    color: #1d1d1f;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .itv-copy:hover { background: #f5f5f7; }
+  .itv-copy.done { color: #1a7f37; border-color: #b7e3c5; background: #f0f9f2; }
+  @media (max-width: 768px) {
+    .itv-list { grid-template-columns: 1fr; }
+    .itv-container { padding: 10px 12px; border-radius: 14px; }
+  }
+
   /* 官网/邮件投递 - 独立页面（与话术/黑名单页面同级的 page-view） */
   .mail-page-container {
     max-width: 1400px;
@@ -1447,6 +1569,7 @@
     <button class="nav-tab active" data-page="job" data-page-node-id="E4UlokyBx7wRX4BkGjrQHv">🎯 职位看板</button>
     <button class="nav-tab" data-page="mail">📧 邮件投递</button>
     <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话沟通</button>
+    <button class="nav-tab" data-page="interview">💡 面试提问</button>
     <button class="nav-tab" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs">🚫 可疑公司</button>
   </div>
 
@@ -2183,6 +2306,145 @@
       </div>
     </div>
   </div><!-- /page-script -->
+
+  <!-- ============ 面试提问页面 ============ -->
+  <div class="page-view" id="page-interview">
+    <div class="itv-container">
+      <div class="itv-header">
+        <span class="itv-badge">面试提问</span>
+        <span class="itv-title">💡 该怎么跟 HR 聊？</span>
+        <span class="itv-sub">后续面试时问</span>
+      </div>
+      <div class="itv-group">电商类岗位</div>
+      <div class="itv-list" id="itv-list"></div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    var ITV_KEY = 'wb_interview_questions_v1';
+    // 面试提问（可点击修改，自动保存；「说明」为这道题想问出来的信息）
+    var DEFAULT_QUESTIONS = [
+      {
+        q: '团队目前负责几个品牌/店铺？我是独立负责一个品牌，还是作为团队一员配合执行？',
+        tag: '判断活多不多'
+      },
+      {
+        q: '这个岗位的 KPI 主要看什么？是广告 ROI、还是店铺销售额？绩效工资占总薪资的多少？',
+        tag: '判断收入风险'
+      },
+      {
+        q: '公司说偶尔加班，请问旺季大概是什么节奏？有没有调休或者加班补贴？',
+        tag: '判断加班烈度，看对方回不回避'
+      },
+      {
+        q: '请问这个岗位需要承担新客户的开发指标吗？还是主要服务已经签约的品牌客户？',
+        tag: '判断是长期盯 ACOS、CTR、转化率等电商指标，还是只负责品牌方店铺运营和广告投放'
+      }
+    ];
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function loadQuestions() {
+      try {
+        var raw = localStorage.getItem(ITV_KEY);
+        if (raw) {
+          var arr = JSON.parse(raw);
+          if (Array.isArray(arr) && arr.length > 0) return arr;
+        }
+      } catch (e) {}
+      try { localStorage.setItem(ITV_KEY, JSON.stringify(DEFAULT_QUESTIONS)); } catch (e) {}
+      return DEFAULT_QUESTIONS.slice();
+    }
+    function saveQuestions(list) {
+      try { localStorage.setItem(ITV_KEY, JSON.stringify(list)); } catch (e) {}
+    }
+
+    function renderInterview() {
+      var box = document.getElementById('itv-list');
+      if (!box) return;
+      var list = loadQuestions();
+      var html = '';
+      list.forEach(function(item, i) {
+        html +=
+          '<div class="itv-card">' +
+            '<div class="itv-q-head">' +
+              '<span class="itv-num">' + (i + 1) + '</span>' +
+              '<div class="itv-q" contenteditable="true" data-itv="' + i + '">' + escapeHtml(item.q) + '</div>' +
+            '</div>' +
+            '<div class="itv-foot">' +
+              '<span class="itv-tag">' + escapeHtml(item.tag) + '</span>' +
+              '<button class="itv-copy" type="button" data-itv="' + i + '">复制</button>' +
+            '</div>' +
+          '</div>';
+      });
+      box.innerHTML = html;
+    }
+
+    function copyText(text, btn) {
+      function ok() {
+        btn.textContent = '已复制';
+        btn.classList.add('done');
+        setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('done'); }, 1200);
+      }
+      function fallbackCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); ok(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    var itvSaveTimer = null;
+    function bindInterviewEvents() {
+      var box = document.getElementById('itv-list');
+      if (!box) return;
+      box.addEventListener('input', function(e) {
+        var el = e.target.closest ? e.target.closest('.itv-q') : null;
+        if (!el) return;
+        var idx = parseInt(el.getAttribute('data-itv'), 10);
+        var list = loadQuestions();
+        if (!list[idx]) return;
+        list[idx].q = el.textContent.trim();
+        saveQuestions(list);
+        clearTimeout(itvSaveTimer);
+        itvSaveTimer = setTimeout(function() {
+          list[idx].q = el.textContent.trim();
+          saveQuestions(loadQuestions());
+        }, 600);
+      });
+      box.addEventListener('click', function(e) {
+        var btn = e.target.closest ? e.target.closest('.itv-copy') : null;
+        if (!btn) return;
+        var idx = parseInt(btn.getAttribute('data-itv'), 10);
+        var list = loadQuestions();
+        if (!list[idx]) return;
+        copyText(list[idx].q, btn);
+      });
+    }
+
+    function initInterview() {
+      if (!document.getElementById('itv-list')) return;
+      renderInterview();
+      bindInterviewEvents();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initInterview);
+    } else {
+      initInterview();
+    }
+  })();
+  </script>
 
   <!-- ============ 黑名单公司页面 ============ -->
   <div class="page-view" id="page-blacklist" data-page-node-id="Hx3Eezr4x1SOQVbB9BKpeo">
