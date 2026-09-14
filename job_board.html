@@ -1056,18 +1056,20 @@
     flex-shrink: 0;
   }
   .mail-co-status {
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 10px;
+    font-size: 17px;
+    line-height: 1;
+    padding: 3px 6px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    background: transparent;
     font-family: inherit;
     min-height: 28px;
     flex-shrink: 0;
   }
-  .mail-co-status.st-todo { background: #fff4e5; color: #b8860b; }
-  .mail-co-status.st-done { background: #e8f7ee; color: #1a7f37; }
+  .mail-co-status:hover { background: #f0f0f2; }
+  .mail-co-status.st-todo { background: transparent; }
+  .mail-co-status.st-done { background: transparent; }
   /* 职位区：固定高度=最高卡内容（职位行+备选职位行），与 IMA 卡对齐，无多余空白 */
   .co-pos-zone {
     height: 44px;
@@ -1128,6 +1130,10 @@
     flex-shrink: 0;
   }
   .co-note-input:focus { outline: none; border-color: #34c759; background: #fff; }
+  /* 备注文字颜色跟随卡片状态：✅绿色 / ❌红色 */
+  .co-note-input.note-done { color: #1a7f37; }
+  .co-note-input.note-todo { color: #c9302c; }
+  .co-note-input::placeholder { color: #b0b0b5; opacity: 1; }
   .mail-form-submit {
     align-self: flex-end;
     background: #34c759;
@@ -3551,7 +3557,12 @@ document.querySelectorAll('.column').forEach(function(column) {
         if (!box) return;
         var list = loadCompanies();
         box.innerHTML = '';
-        list.forEach(function(c, idx) {
+        // 打✅的排前面，打❌的自动沉到最后（同组内保持原顺序）
+        var view = list.map(function(c, idx) { return { c: c, idx: idx }; })
+          .sort(function(a, b) { return (b.c.status === 'done' ? 1 : 0) - (a.c.status === 'done' ? 1 : 0); });
+        view.forEach(function(item) {
+          var c = item.c;
+          var idx = item.idx;
           var card = document.createElement('div');
           card.className = 'mail-co-card';
           var html =
@@ -3562,8 +3573,8 @@ document.querySelectorAll('.column').forEach(function(column) {
                   : escapeHtml(c.name)) +
               '</span>' +
               (c.region ? '<span class="co-region">' + escapeHtml(c.region) + '</span>' : '') +
-              '<button class="mail-co-status ' + (c.status === 'done' ? 'st-done' : 'st-todo') + '" type="button" data-co="' + idx + '">' +
-                (c.status === 'done' ? '已发' : '待发') + '</button>' +
+              '<button class="mail-co-status ' + (c.status === 'done' ? 'st-done' : 'st-todo') + '" type="button" data-co="' + idx + '" title="' + (c.status === 'done' ? '已发（点击改为打叉）' : '未发（点击改为打勾）') + '">' +
+                (c.status === 'done' ? '✅' : '❌') + '</button>' +
             '</div>';
           // 职位区（固定高度，备选折叠）
           var mains = [], backups = [];
@@ -3593,7 +3604,7 @@ document.querySelectorAll('.column').forEach(function(column) {
             html += '<div class="mail-co-row"><span class="co-k">说明：</span>' + escapeHtml(c.desc) + '</div>';
           }
           html += '</div>';
-          html += '<input class="co-note-input" type="text" data-co="' + idx + '" value="' + escapeHtml(c.note || '') + '" placeholder="备注（写在这里，自动保存）">';
+          html += '<input class="co-note-input ' + (c.status === 'done' ? 'note-done' : 'note-todo') + '" type="text" data-co="' + idx + '" value="' + escapeHtml(c.note || '') + '" placeholder="备注（写在这里，自动保存）">';
           card.innerHTML = html;
           box.appendChild(card);
         });
