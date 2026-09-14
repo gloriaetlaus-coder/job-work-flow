@@ -1064,6 +1064,11 @@
     flex-shrink: 0;
     padding-right: 2px;
   }
+  /* 备选职位展开时：该卡职位区自动撑高显示全部内容 */
+  .co-pos-zone.open {
+    height: auto;
+    overflow: visible;
+  }
   .co-pos { font-size: 12.5px; color: #1d1d1f; line-height: 1.6; word-break: break-word; }
   .co-pos .co-pos-dot { color: #34c759; font-weight: 700; margin-right: 4px; }
   .co-pos a { color: #0066cc; text-decoration: none; }
@@ -3521,7 +3526,7 @@ document.querySelectorAll('.column').forEach(function(column) {
           (c.positions || []).forEach(function(p) {
             if (p.backup) backups.push(p); else mains.push(p);
           });
-          html += '<div class="co-pos-zone">';
+          html += '<div class="co-pos-zone' + (coBackupsOpen ? ' open' : '') + '">';
           mains.forEach(function(p) { html += posLine(p); });
           if (backups.length > 0) {
             html += '<button class="co-backup-toggle" type="button" data-co="' + idx + '">' +
