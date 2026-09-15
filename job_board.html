@@ -760,6 +760,27 @@
   .mail-tracker { border-color: #34c759; background: linear-gradient(135deg, #34c75910, #4cd96408); }
   .mail-tracker .feishu-tracker-title { color: #1a7f37; }
   .mail-tracker .feishu-tracker-badge { background: #34c759; }
+  /* 入口卡（序号+按钮）：去外框，整体放大1.5倍 */
+  .feishu-tracker.bare-entry {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+  .feishu-tracker.bare-entry:hover { box-shadow: none; }
+  .feishu-tracker.bare-entry .feishu-tracker-badge {
+    width: 33px; height: 33px;
+    border-radius: 9px;
+    font-size: 18px;
+  }
+  .feishu-tracker.bare-entry .feishu-tracker-title .feishu-link {
+    height: 33px;
+    min-height: 33px;
+    padding: 0 18px;
+    border-radius: 9px;
+    font-size: 18px;
+  }
+  .feishu-tracker.bare-entry .feishu-icon { font-size: 24px; }
+  .feishu-tracker.bare-entry .feishu-arrow { font-size: 21px; }
   /* 序号旁的入口按钮：高度与序号框(22px)一致 */
   .feishu-tracker .feishu-tracker-title .feishu-link {
     height: 22px;
@@ -2041,7 +2062,7 @@
       </div>
 
       <!-- 官网/邮件投递 - 第6版块（投递追踪表上方）· 入口卡片，与蓝色追踪表同构 -->
-      <div class="feishu-tracker mail-tracker" id="mail-entry-card">
+      <div class="feishu-tracker mail-tracker bare-entry" id="mail-entry-card">
         <div class="feishu-tracker-title" style="margin-bottom:0;">
           <span class="feishu-tracker-badge">5</span>
           <a class="feishu-link mail-link-cta" id="mail-entry-open" href="javascript:void(0);" style="flex:1;">
@@ -2053,7 +2074,7 @@
       </div>
 
       <!-- 飞书投递追踪表 - 第5版块（Done list 下方） -->
-      <div class="feishu-tracker" data-page-node-id="aANuqyVxHcGiUDI08yr8Dl">
+      <div class="feishu-tracker bare-entry" data-page-node-id="aANuqyVxHcGiUDI08yr8Dl">
         <div class="feishu-tracker-title" data-page-node-id="9dojCtKj77z6iYXfXiaIOy" style="margin-bottom:0;">
           <span class="feishu-tracker-badge" data-page-node-id="gAyGq2U2GGqE9wh1GktUlQ">6</span>
           <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank" data-page-node-id="khRCwHHRceNCtdHzXCSjwA" style="flex:1;">
