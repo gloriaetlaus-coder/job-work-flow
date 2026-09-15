@@ -692,12 +692,15 @@
   }
   .tag-btn:active { transform: scale(0.97); }
 
-  /* 已访问的标签 */
+  /* 已访问的标签（很淡的灰色，次日自动清零） */
   .tag-btn.clicked {
-    background: #1d1d1f;
-    border-color: #1d1d1f;
-    color: #fff !important;
-    opacity: 1;
+    background: #f7f7f8;
+    border-color: #ececee;
+    color: #c3c3c8 !important;
+  }
+  .tag-btn.clicked:hover {
+    background: #f1f1f3;
+    border-color: #e0e0e3;
   }
 
   /* 周时间轴 - 极简风格 */
@@ -2798,9 +2801,25 @@ document.querySelectorAll('.ptab').forEach(function(btn) {
   });
 });
 
-// 点击标签后标记为已点击，颜色随tab切换，并持久化到localStorage
+// 点击标签后标记为已点击（淡灰色），持久化到localStorage，次日自动清零
+function tagDayKey() {
+  var d = new Date();
+  return d.getFullYear() + '_' + (d.getMonth() + 1) + '_' + d.getDate();
+}
 var clickedTags = {};
-try { clickedTags = JSON.parse(localStorage.getItem('clickedTags') || '{}'); } catch(e) { clickedTags = {}; }
+try {
+  var rawCT = JSON.parse(localStorage.getItem('clickedTags') || '{}');
+  if (rawCT && rawCT.date === tagDayKey() && rawCT.tags) {
+    clickedTags = rawCT.tags;
+  } else {
+    // 跨天（或旧格式无日期）→ 全部清零，看起来像没点过
+    clickedTags = {};
+    localStorage.setItem('clickedTags', JSON.stringify({ date: tagDayKey(), tags: {} }));
+  }
+} catch(e) { clickedTags = {}; }
+function saveClickedTags() {
+  try { localStorage.setItem('clickedTags', JSON.stringify({ date: tagDayKey(), tags: clickedTags })); } catch(e) {}
+}
 
 function getTagKey(tag) {
   var text = tag.textContent.trim();
@@ -2816,12 +2835,8 @@ function getTagKey(tag) {
   return 'cn::' + pf + '::' + text;
 }
 
-function applyClickedStyle(tag, mainColor) {
+function applyClickedStyle(tag) {
   tag.classList.add('clicked');
-  if (mainColor) {
-    tag.style.background = mainColor;
-    tag.style.borderColor = mainColor;
-  }
 }
 
 // 按当前tab独立恢复/清除本列标签的点亮状态（各tab互不影响）
@@ -2841,21 +2856,7 @@ function refreshColumnClickedState(column, pf) {
 
 document.querySelectorAll('.tag-btn').forEach(function(tag) {
   tag.addEventListener('click', function() {
-    tag.classList.add('clicked');
-    var column = tag.closest('.column');
-    if (column) {
-      var activeTab = column.querySelector('.ptab.active');
-      if (activeTab) {
-        var pf = activeTab.getAttribute('data-pf');
-        var mainColor = colorSchemes[pf] ? colorSchemes[pf][0].badge : '#999';
-        tag.style.background = mainColor;
-        tag.style.borderColor = mainColor;
-      }
-    } else {
-      // 国际平台标签，无tab切换，用默认色
-      tag.style.background = '#0a66c2';
-      tag.style.borderColor = '#0a66c2';
-    }
+    applyClickedStyle(tag);
     var key = getTagKey(tag);
     // 今日点击计数（按天重置）
     var today = new Date();
@@ -2871,7 +2872,7 @@ document.querySelectorAll('.tag-btn').forEach(function(tag) {
     }
     updateClickCount();
     clickedTags[key] = true;
-    try { localStorage.setItem('clickedTags', JSON.stringify(clickedTags)); } catch(e) {}
+    saveClickedTags();
   });
 });
 
