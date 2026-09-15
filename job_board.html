@@ -760,6 +760,14 @@
   .mail-tracker { border-color: #34c759; background: linear-gradient(135deg, #34c75910, #4cd96408); }
   .mail-tracker .feishu-tracker-title { color: #1a7f37; }
   .mail-tracker .feishu-tracker-badge { background: #34c759; }
+  /* 序号旁的入口按钮：高度与序号框(22px)一致 */
+  .feishu-tracker .feishu-tracker-title .feishu-link {
+    height: 22px;
+    min-height: 22px;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
   .mail-list {
     display: flex;
     flex-direction: column;
@@ -2035,7 +2043,7 @@
       <!-- 官网/邮件投递 - 第6版块（投递追踪表上方）· 入口卡片，与蓝色追踪表同构 -->
       <div class="feishu-tracker mail-tracker" id="mail-entry-card">
         <div class="feishu-tracker-title" style="margin-bottom:0;">
-          <span class="feishu-tracker-badge">6</span>
+          <span class="feishu-tracker-badge">5</span>
           <a class="feishu-link mail-link-cta" id="mail-entry-open" href="javascript:void(0);" style="flex:1;">
             <span class="feishu-icon">📧</span>
             进入官网/邮件投递
@@ -2046,15 +2054,14 @@
 
       <!-- 飞书投递追踪表 - 第5版块（Done list 下方） -->
       <div class="feishu-tracker" data-page-node-id="aANuqyVxHcGiUDI08yr8Dl">
-        <div class="feishu-tracker-title" data-page-node-id="9dojCtKj77z6iYXfXiaIOy">
-          <span class="feishu-tracker-badge" data-page-node-id="gAyGq2U2GGqE9wh1GktUlQ">5</span>
-          投递追踪表
+        <div class="feishu-tracker-title" data-page-node-id="9dojCtKj77z6iYXfXiaIOy" style="margin-bottom:0;">
+          <span class="feishu-tracker-badge" data-page-node-id="gAyGq2U2GGqE9wh1GktUlQ">6</span>
+          <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank" data-page-node-id="khRCwHHRceNCtdHzXCSjwA" style="flex:1;">
+            <span class="feishu-icon" data-page-node-id="wgaE05nvpIX5jKXDItqBEc">📊</span>
+            打开求职投递追踪表
+            <span class="feishu-arrow" data-page-node-id="mSo5GCZGn68ArNFnXUB0EU">→</span>
+          </a>
         </div>
-        <a class="feishu-link" href="https://my.feishu.cn/base/CGG4bONZ1aHDTasQDopclyUSn4g?table=tblXuGxji2IN3jDc&view=vewqAhL5gk" target="_blank" data-page-node-id="khRCwHHRceNCtdHzXCSjwA">
-          <span class="feishu-icon" data-page-node-id="wgaE05nvpIX5jKXDItqBEc">📊</span>
-          打开求职投递追踪表
-          <span class="feishu-arrow" data-page-node-id="mSo5GCZGn68ArNFnXUB0EU">→</span>
-        </a>
       </div>
     </div>
   </div>
