@@ -120,6 +120,9 @@
   .sw-bad { color: #b8860b; }
   .sw-bad::before { background: #f5a623; }
   .sw-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     background: #fff;
     border: 1px solid #e5e5ea;
     border-radius: 12px;
@@ -130,6 +133,31 @@
     line-height: 1.7;
     word-break: break-word;
   }
+  .sw-card-text { flex: 1; min-width: 0; outline: none; }
+  .sw-card-text:focus { outline: none; box-shadow: 0 0 0 2px rgba(52,199,89,0.25); border-radius: 6px; }
+  .sw-del {
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: #c7c7cc;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 2px;
+    line-height: 1.7;
+    font-family: inherit;
+  }
+  .sw-del:hover { color: #ff3b30; }
+  .sw-add {
+    border: 1px dashed #c7c7cc;
+    background: none;
+    border-radius: 10px;
+    padding: 6px 14px;
+    color: #86868b;
+    font-size: 12.5px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .sw-add:hover { color: #1d1d1f; border-color: #86868b; }
   @media (max-width: 768px) {
     .sw-grid { grid-template-columns: 1fr; }
   }
@@ -2737,18 +2765,98 @@
       <div class="sw-grid">
         <div class="sw-col">
           <div class="sw-group sw-good">优点</div>
-          <div class="sw-card">学新工具、理解产品逻辑的速度比较快，能快速理解一个新平台、新工具的规则</div>
-          <div class="sw-card">擅长理解和管理客户预期，不会乱承诺，但会持续同步进展和风险，让合作稳定</div>
-          <div class="sw-card">在多方诉求不一致的时候，找到关键卡点，协调资源把事情推下去，而不是只做传话</div>
+          <div id="sw-list-good"></div>
+          <button class="sw-add" type="button" data-swc="good">＋ 新增一条</button>
         </div>
         <div class="sw-col">
           <div class="sw-group sw-bad">缺点</div>
-          <div class="sw-card">过去更多是维护客户，没有独立开发、扛回款指标的经验；不过我理解的销售，就是大量沟通和筛选，我不排斥这个过程。</div>
-          <div class="sw-card">GEO这个产品我没有直接做过，但它的底层是内容优化和品牌传播，这些是我熟悉的领域</div>
+          <div id="sw-list-bad"></div>
+          <button class="sw-add" type="button" data-swc="bad">＋ 新增一条</button>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+  (function() {
+    var SW_KEY = 'wb_strengths_v1';
+    // 我的优缺（可编辑/可增删，localStorage 长期保存）
+    var DEFAULT_SW = {
+      good: [
+        '学新工具、理解产品逻辑的速度比较快，能快速理解一个新平台、新工具的规则',
+        '擅长理解和管理客户预期，不会乱承诺，但会持续同步进展和风险，让合作稳定',
+        '在多方诉求不一致的时候，找到关键卡点，协调资源把事情推下去，而不是只做传话'
+      ],
+      bad: [
+        '过去更多是维护客户，没有独立开发、扛回款指标的经验；不过我理解的销售，就是大量沟通和筛选，我不排斥这个过程。',
+        'GEO这个产品我没有直接做过，但它的底层是内容优化和品牌传播，这些是我熟悉的领域'
+      ]
+    };
+    function loadSW() {
+      try {
+        var r = JSON.parse(localStorage.getItem(SW_KEY));
+        if (r && Array.isArray(r.good) && Array.isArray(r.bad)) return r;
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_SW));
+    }
+    function saveSW(d) { try { localStorage.setItem(SW_KEY, JSON.stringify(d)); } catch (e) {} }
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function renderSW() {
+      var d = loadSW();
+      ['good', 'bad'].forEach(function(k) {
+        var box = document.getElementById('sw-list-' + k);
+        if (!box) return;
+        var html = '';
+        d[k].forEach(function(txt, i) {
+          html +=
+            '<div class="sw-card">' +
+              '<div class="sw-card-text" contenteditable="true" data-swk="' + k + '" data-swi="' + i + '">' + esc(txt) + '</div>' +
+              '<button class="sw-del" type="button" data-swk="' + k + '" data-swi="' + i + '" title="删除这条">✕</button>' +
+            '</div>';
+        });
+        box.innerHTML = html;
+      });
+    }
+    var swContainer = document.querySelector('.sw-container');
+    if (!swContainer) return;
+    var swTimer = null;
+    swContainer.addEventListener('input', function(e) {
+      var t = e.target.closest ? e.target.closest('.sw-card-text') : null;
+      if (!t) return;
+      clearTimeout(swTimer);
+      swTimer = setTimeout(function() {
+        var d = loadSW();
+        var k = t.getAttribute('data-swk');
+        var i = parseInt(t.getAttribute('data-swi'), 10);
+        if (d[k] && d[k][i] !== undefined) { d[k][i] = t.textContent.trim(); saveSW(d); }
+      }, 500);
+    });
+    swContainer.addEventListener('click', function(e) {
+      var del = e.target.closest ? e.target.closest('.sw-del') : null;
+      if (del) {
+        var d = loadSW();
+        var k = del.getAttribute('data-swk');
+        var i = parseInt(del.getAttribute('data-swi'), 10);
+        if (d[k]) { d[k].splice(i, 1); saveSW(d); renderSW(); }
+        return;
+      }
+      var add = e.target.closest ? e.target.closest('.sw-add') : null;
+      if (add) {
+        var k2 = add.getAttribute('data-swc');
+        var d2 = loadSW();
+        d2[k2].push('');
+        saveSW(d2);
+        renderSW();
+        var box = document.getElementById('sw-list-' + k2);
+        var last = box ? box.querySelector('.sw-card:last-child .sw-card-text') : null;
+        if (last) last.focus();
+      }
+    });
+    renderSW();
+  })();
+  </script>
 
   <!-- ============ 黑名单公司页面 ============ -->
   <div class="page-view" id="page-blacklist" data-page-node-id="Hx3Eezr4x1SOQVbB9BKpeo">
