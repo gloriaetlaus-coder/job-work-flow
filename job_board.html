@@ -3212,13 +3212,33 @@ function updateClickCount() {
 }
 document.addEventListener('DOMContentLoaded', updateClickCount);
 
-// 栏目折叠开关：点击标题文字（或国内栏橙色横幅）折叠/展开下方全部内容
+// 栏目折叠开关：点击标题文字（或国内栏橙色横幅）折叠/展开下方全部内容；状态本地保存，刷新不丢
 (function() {
-  function toggleBody(header) {
+  var FOLD_KEY = 'wb_col_fold_v1';
+  function loadFold() {
+    try { return JSON.parse(localStorage.getItem(FOLD_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveFold(k, collapsed) {
+    var s = loadFold();
+    s[k] = collapsed;
+    try { localStorage.setItem(FOLD_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function colKey(header) { return header.classList.contains('cn') ? 'cn' : 'en'; }
+  function toggleBody(header, force) {
     if (!header) return;
     var body = header.parentElement.querySelector('.column-body');
     if (!body) return;
-    body.style.display = body.style.display === 'none' ? '' : 'none';
+    var collapse = (force !== undefined) ? force : (body.style.display !== 'none');
+    body.style.display = collapse ? 'none' : '';
+    saveFold(colKey(header), collapse);
+  }
+  // 恢复上次折叠状态
+  function applySaved() {
+    var saved = loadFold();
+    document.querySelectorAll('.column-header').forEach(function(h) {
+      var body = h.parentElement.querySelector('.column-body');
+      if (body && saved[colKey(h)]) body.style.display = 'none';
+    });
   }
   // 国外等 en 栏：点整行标题文字折叠
   document.querySelectorAll('.column-header.en').forEach(function(h) {
@@ -3233,6 +3253,11 @@ document.addEventListener('DOMContentLoaded', updateClickCount);
   var foldToggle = document.getElementById('cn-fold-toggle');
   if (foldToggle) {
     foldToggle.addEventListener('click', function() { toggleBody(foldToggle.closest('.column-header')); });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applySaved);
+  } else {
+    applySaved();
   }
 })();
 
