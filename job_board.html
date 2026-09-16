@@ -954,6 +954,54 @@
   }
   .itv-copy:hover { background: #f5f5f7; }
   .itv-copy.done { color: #1a7f37; border-color: #b7e3c5; background: #f0f9f2; }
+  /* 面试提问 - 可折叠分类卡（收起时约2cm见方） */
+  .itv-folds { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .itv-fold {
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 14px;
+    overflow: hidden;
+    flex: 0 0 auto;
+  }
+  .itv-fold-head {
+    width: 78px;
+    height: 78px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
+  .itv-fold-name { font-size: 12.5px; font-weight: 700; color: #1a7f37; line-height: 1.3; text-align: center; }
+  .itv-fold-arrow { font-size: 13px; color: #34c759; transition: transform 0.2s; }
+  .itv-fold-hint { display: none; }
+  .itv-fold.open { flex: 1 1 100%; }
+  .itv-fold.open .itv-fold-head {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .itv-fold.open .itv-fold-arrow { transform: rotate(90deg); }
+  .itv-fold.open .itv-fold-hint {
+    display: inline;
+    margin-left: auto;
+    font-size: 12px;
+    color: #86868b;
+    font-weight: 400;
+  }
+  .itv-fold-body { display: none; padding: 0 14px 12px; }
+  .itv-fold.open .itv-fold-body { display: block; }
+  /* 销售类岗位内容 */
+  .itv-sa-q { font-size: 13.5px; font-weight: 700; color: #1d1d1f; line-height: 1.6; word-break: break-word; }
+  .itv-sa-a { font-size: 13px; color: #48484d; line-height: 1.7; margin-top: 6px; word-break: break-word; white-space: pre-wrap; }
+  .itv-sa-intro { font-size: 12.5px; color: #86868b; line-height: 1.6; margin: 2px 0 8px; }
   @media (max-width: 768px) {
     .itv-list { grid-template-columns: 1fr; }
     .itv-container { padding: 10px 12px; border-radius: 14px; }
@@ -2434,8 +2482,27 @@
         <span class="itv-title">💡 该怎么跟 HR 聊？</span>
         <span class="itv-sub">后续面试时问</span>
       </div>
-      <div class="itv-group">电商类岗位</div>
-      <div class="itv-list" id="itv-list"></div>
+      <div class="itv-folds">
+        <div class="itv-fold" id="itv-fold-ecom">
+          <button class="itv-fold-head" type="button" data-fold="ecom">
+            <span class="itv-fold-arrow">▸</span>
+            <span class="itv-fold-name">电商类岗位</span>
+            <span class="itv-fold-hint">展开 · 4 个问题</span>
+          </button>
+          <div class="itv-fold-body">
+            <div class="itv-group">电商类岗位</div>
+            <div class="itv-list" id="itv-list"></div>
+          </div>
+        </div>
+        <div class="itv-fold" id="itv-fold-sales">
+          <button class="itv-fold-head" type="button" data-fold="sales">
+            <span class="itv-fold-arrow">▸</span>
+            <span class="itv-fold-name">销售类岗位</span>
+            <span class="itv-fold-hint">展开 · 8 问 + 反问</span>
+          </button>
+          <div class="itv-fold-body" id="itv-sales-body"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2556,7 +2623,99 @@
       if (!document.getElementById('itv-list')) return;
       renderInterview();
       bindInterviewEvents();
+      renderSales();
     }
+
+    // ===== 销售类岗位（可折叠卡内容）=====
+    var SALES_CATEGORIES = [
+      {
+        cat: '第一类：背景与动机',
+        items: [
+          { q: 'Q1：你之前是做广告媒介的，为什么现在想做销售？', a: '我过去8年一直在B端做客户对接和项目统筹，本质上是在"服务客户"，但我发现我对"前端怎么把客户谈进来"这件事越来越感兴趣。尤其是今年接触AI工具之后，我发现AI营销这个赛道正在快速变化，我想从前端销售切入，真正理解客户在AI时代的新需求。' },
+          { q: 'Q2：你没有销售经验，怎么证明你能做好？', a: '我过去的工作虽然不是销售，但每天都在做"影响客户决策"的事——比如客户预算怎么分配、方案怎么调整、项目风险怎么沟通。这些本质上都是销售里的"需求诊断"和"预期管理"。而且我服务过洲际、依云这类大品牌，我对大客户的决策链条和沟通方式是有体感的。' },
+          { q: 'Q3：你对我们公司/GEO了解多少？', a: '我了解GEO是AI时代的新型品牌优化方式，跟传统SEO不一样，它针对的是AI生成式搜索。用户直接问AI，AI给出答案，品牌要做的就是在AI的答案里被正确提及。我觉得这个方向很有前瞻性，而且和我过去做品牌曝光、内容营销的经验有衔接。' }
+        ]
+      },
+      {
+        cat: '第二类：销售能力与抗压',
+        items: [
+          { q: 'Q4：这个岗位需要自己开发客户，你能接受吗？', a: '可以接受。我过去的工作虽然是交付端，但我对"从零开始建立关系"这件事并不陌生。我之前独立维护过2000多个供应商和KOL资源库，很多也是从零开始建立合作的。我理解销售前期就是需要大量沟通和筛选，我不排斥这个过程。' },
+          { q: 'Q5：如果客户一直拒绝你，你会怎么办？', a: '我不会把拒绝当成针对我个人的。我过去做项目时，客户改需求、推翻方案是常态。我会去复盘：是话术问题、时机问题，还是客户本身就不是目标客户。然后调整策略，继续推进。' },
+          { q: 'Q6：你期望的薪资是多少？', a: '我目前的期望是底薪能覆盖基本生活，提成部分我希望通过业绩来证明。具体数字我可以根据贵司的薪资结构来谈，但我的底线是底薪不能太低，因为前期我需要时间熟悉产品和客户。', note: '注意：不要直接报一个固定数字，把球踢回去，让他先说结构。' }
+        ]
+      },
+      {
+        cat: '第三类：行业理解与学习能力',
+        items: [
+          { q: 'Q7：你之前没做过AI营销，怎么快速上手？', a: '我今年花了很多时间自己实操AI工具，包括用v0、Replit零代码搭网站，也研究过国内外主流的AI产品。我对AI能做什么、不能做什么有第一手的体感。所以学GEO的产品逻辑，我不需要从零开始。而且我过去做媒介时，本身就涉及搜索引擎、信息流、内容营销，这些和GEO的底层逻辑是相通的。' },
+          { q: 'Q8：你对我们客户群体（品牌方、市场部）了解吗？', a: '我过去8年服务的就是品牌方的市场部、运营部，我清楚他们关心什么：曝光、转化、ROI、品牌安全。所以我在跟客户沟通时，能很快理解他们的真实诉求，而不是只推产品。' }
+        ]
+      },
+      {
+        cat: '第四类：反问环节（你一定要问）',
+        intro: '面试最后，面试官会问你"你有什么想问的"。这是你判断这个岗位值不值得去的唯一机会，一定要问：',
+        items: [
+          { q: '这个岗位前3个月的考核指标是什么？是看签约回款，还是看开发量？' },
+          { q: '公司目前给销售团队的线索支持大概占多少？自己开发的占比大概多少？' },
+          { q: '团队里做得好的销售，大概是什么背景？他们用了多久跑通第一单？' },
+          { q: '无责底薪的保障期是多久？之后底薪会怎么调整？' }
+        ]
+      }
+    ];
+    var salesFlat = [];
+    SALES_CATEGORIES.forEach(function(cat) {
+      cat.items.forEach(function(it) { salesFlat.push({ cat: cat.cat, q: it.q, a: it.a || '', note: it.note || '', ask: !it.a }); });
+    });
+
+    function renderSales() {
+      var box = document.getElementById('itv-sales-body');
+      if (!box) return;
+      var html = '';
+      var lastCat = '';
+      salesFlat.forEach(function(it, i) {
+        if (it.cat !== lastCat) {
+          var intro = '';
+          for (var c = 0; c < SALES_CATEGORIES.length; c++) {
+            if (SALES_CATEGORIES[c].cat === it.cat && SALES_CATEGORIES[c].intro) intro = '<p class="itv-sa-intro">' + escapeHtml(SALES_CATEGORIES[c].intro) + '</p>';
+          }
+          html += '<div class="itv-group">' + escapeHtml(it.cat) + '</div>' + intro;
+          lastCat = it.cat;
+        }
+        html +=
+          '<div class="itv-card">' +
+            '<div class="itv-q-head">' +
+              '<span class="itv-num">' + (i + 1) + '</span>' +
+              '<div class="itv-sa-q">' + escapeHtml(it.q) + '</div>' +
+            '</div>' +
+            (it.a ? '<div class="itv-sa-a">' + escapeHtml(it.a) + '</div>' : '') +
+            (it.note ? '<div class="itv-foot"><span class="itv-tag">' + escapeHtml(it.note) + '</span></div>' : '') +
+            '<div class="itv-foot">' +
+              '<span class="itv-tag" style="background:#f0f9f2;color:#1a7f37;">' + (it.ask ? '反问：判断岗位值不值得去' : '参考话术') + '</span>' +
+              '<button class="itv-copy itv-sales-copy" type="button" data-sales="' + i + '">复制</button>' +
+            '</div>' +
+          '</div>';
+      });
+      box.innerHTML = html;
+    }
+
+    // 折叠卡展开/收起 + 销售话术复制
+    function bindFoldEvents() {
+      var folds = document.querySelector('.itv-folds');
+      if (!folds) return;
+      folds.addEventListener('click', function(e) {
+        var head = e.target.closest ? e.target.closest('.itv-fold-head') : null;
+        if (head) {
+          head.parentElement.classList.toggle('open');
+          return;
+        }
+        var btn = e.target.closest ? e.target.closest('.itv-sales-copy') : null;
+        if (btn) {
+          var it = salesFlat[parseInt(btn.getAttribute('data-sales'), 10)];
+          if (it) copyText(it.a || it.q, btn);
+        }
+      });
+    }
+    bindFoldEvents();
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initInterview);
     } else {
