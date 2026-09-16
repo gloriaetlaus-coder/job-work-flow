@@ -503,8 +503,12 @@
   .click-count-banner {
     color: #ff7a00 !important;
     font-weight: 700 !important;
-    font-size: 13.5px !important;
+    font-size: 16.2px !important;
+    cursor: pointer;
+    user-select: none;
   }
+  .click-count-banner .fold-ind { font-size: 13px; margin-left: 4px; display: inline-block; transition: transform 0.2s; }
+  .click-count-banner.collapsed .fold-ind { transform: rotate(-90deg); }
   .column-header.cn .click-count strong {
     color: #1d1d1f;
     font-size: 16px;
@@ -1811,7 +1815,7 @@
     <div class="column" data-page-node-id="OXhJGafQKopRtv6llKY9fD">
       <div class="column-header cn" data-page-node-id="DoSqcTxeofbKHk4NNFXkh3">
         <span class="header-title" data-page-node-id="jeFMTeiZ2LDAmtozxF1FJ7"><span class="emoji" data-page-node-id="6rt4XDPXRZx6QjoVbFBF5B">🇨🇳</span> 国内招聘</span>
-        <span class="click-count click-count-banner" data-page-node-id="xAi7VCB06H5m5zv09wqZ8M">！最近主搜「AI售前/AI运营」！</span>
+        <span class="click-count click-count-banner" id="cn-fold-toggle" data-page-node-id="xAi7VCB06H5m5zv09wqZ8M" title="点击折叠/展开下方全部内容">！最近主搜「AI售前/AI运营」！<span class="fold-ind">▾</span></span>
         <button class="followup-hint" id="followup-hint" type="button" title="点击查看追问话术">投递后7天追问已投心仪岗位</button>
       </div>
       <div class="column-body" data-page-node-id="1y8pANXfD4pzOABBDj9nn8">
@@ -3205,6 +3209,21 @@ function updateClickCount() {
 
 }
 document.addEventListener('DOMContentLoaded', updateClickCount);
+
+// 国内栏折叠开关：点击橙色横幅折叠/展开下方全部内容
+(function() {
+  var foldToggle = document.getElementById('cn-fold-toggle');
+  if (!foldToggle) return;
+  foldToggle.addEventListener('click', function() {
+    var header = foldToggle.closest('.column-header');
+    var col = header ? header.parentElement : null;
+    var body = col ? col.querySelector('.column-body') : null;
+    if (!body) return;
+    var willExpand = body.style.display === 'none';
+    body.style.display = willExpand ? '' : 'none';
+    foldToggle.classList.toggle('collapsed', !willExpand);
+  });
+})();
 
 // 页面加载时恢复已点击状态
 document.querySelectorAll('.tag-btn').forEach(function(tag) {
