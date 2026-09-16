@@ -873,7 +873,7 @@
     font-size: 13px;
     font-weight: 700;
     color: #1a7f37;
-    margin: 8px 0 8px;
+    margin: 6px 0 6px;
   }
   .itv-group::before {
     content: '';
@@ -896,7 +896,7 @@
     background: #fff;
     border: 1px solid #e5e5ea;
     border-radius: 12px;
-    padding: 12px 14px;
+    padding: 9px 12px;
   }
   .itv-q-head { display: flex; align-items: flex-start; gap: 8px; }
   .itv-num {
@@ -927,7 +927,7 @@
     align-items: center;
     gap: 8px;
     margin-top: auto;
-    padding-top: 10px;
+    padding-top: 6px;
   }
   .itv-tag {
     flex: 1;
@@ -974,7 +974,7 @@
   .itv-foot .itv-copy { margin-left: auto; }
   /* 销售类岗位内容 */
   .itv-sa-q { font-size: 13.5px; font-weight: 700; color: #1d1d1f; line-height: 1.6; word-break: break-word; }
-  .itv-sa-a { font-size: 13px; color: #48484d; line-height: 1.7; margin-top: 6px; word-break: break-word; white-space: pre-wrap; }
+  .itv-sa-a { font-size: 13px; color: #48484d; line-height: 1.6; margin-top: 4px; word-break: break-word; white-space: pre-wrap; }
   .itv-sa-intro { font-size: 12.5px; color: #86868b; line-height: 1.6; margin: 2px 0 8px; }
   @media (max-width: 768px) {
     .itv-list { grid-template-columns: 1fr; }
@@ -2520,7 +2520,7 @@
           '<div class="itv-card">' +
             '<div class="itv-q-head">' +
               '<span class="itv-num">' + (i + 1) + '</span>' +
-              '<div class="itv-q" contenteditable="true" data-itv="' + i + '">' + escapeHtml(item.q) + '</div>' +
+              '<div class="itv-sa-q itv-q" contenteditable="true" data-itv="' + i + '">' + escapeHtml(item.q) + '</div>' +
             '</div>' +
             '<div class="itv-foot">' +
               '<span class="itv-tag">' + escapeHtml(item.tag) + '</span>' +
@@ -2615,8 +2615,7 @@
         ]
       },
       {
-        cat: '第四类：反问环节（你一定要问）',
-        intro: '面试最后，面试官会问你"你有什么想问的"。这是你判断这个岗位值不值得去的唯一机会，一定要问：',
+        cat: '第四类：反问环节',
         items: [
           { q: '这个岗位前3个月的考核指标是什么？是看签约回款，还是看开发量？' },
           { q: '公司目前给销售团队的线索支持大概占多少？自己开发的占比大概多少？' },
@@ -2651,8 +2650,8 @@
               '<div class="itv-sa-q">' + escapeHtml(it.q) + '</div>' +
             '</div>' +
             (it.a ? '<div class="itv-sa-a">' + escapeHtml(it.a) + '</div>' : '') +
-            (it.note ? '<div class="itv-foot"><span class="itv-tag">' + escapeHtml(it.note) + '</span></div>' : '') +
             '<div class="itv-foot">' +
+              (it.note ? '<span class="itv-tag">' + escapeHtml(it.note) + '</span>' : '') +
               '<button class="itv-copy itv-sales-copy" type="button" data-sales="' + i + '">复制</button>' +
             '</div>' +
           '</div>';
