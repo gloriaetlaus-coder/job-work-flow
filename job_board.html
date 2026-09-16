@@ -3216,7 +3216,8 @@ function updateClickCount() {
 document.addEventListener('DOMContentLoaded', updateClickCount);
 
 // 栏目折叠开关：点击标题文字（或国内栏橙色横幅）折叠/展开下方全部内容；状态本地保存，刷新不丢
-// 国外栏折叠时，连带最下方的「国际招聘平台 · 额外入口」整块一起折叠
+// 国外栏折叠 = 国外栏 + 「国际招聘平台 · 额外入口」整块（含标题）一起收
+// 国内、国外两栏都折叠时，右侧 Done list / 入口卡栏一并收起，整页只剩两行标题
 (function() {
   var FOLD_KEY = 'wb_col_fold_v1';
   function loadFold() {
@@ -3228,47 +3229,46 @@ document.addEventListener('DOMContentLoaded', updateClickCount);
     try { localStorage.setItem(FOLD_KEY, JSON.stringify(s)); } catch (e) {}
   }
   function setBody(body, collapse) { if (body) body.style.display = collapse ? 'none' : ''; }
-  function getEnBody() {
-    var h = document.querySelector('.column-header.en');
+  function getHeader(cls) {
+    var h = document.querySelector('.column-header.' + cls);
     return h ? h.parentElement.querySelector('.column-body') : null;
   }
-  function getIntlBody() { return document.querySelector('.intl-platforms .intl-body'); }
-  function getCnBody() {
-    var h = document.querySelector('.column-header.cn');
-    return h ? h.parentElement.querySelector('.column-body') : null;
+  function getCnBody() { return getHeader('cn'); }
+  function getEnBody() { return getHeader('en'); }
+  function getIntlBlock() { return document.querySelector('.intl-platforms'); }
+  function getIntlBody() {
+    var b = getIntlBlock();
+    return b ? b.querySelector('.intl-body') : null;
   }
-  function toggleEn() {
-    var enBody = getEnBody();
-    var collapse = enBody ? enBody.style.display !== 'none' : true;
-    setBody(enBody, collapse);
-    setBody(getIntlBody(), collapse);
-    saveFold('en', collapse);
-    saveFold('intl', collapse);
-  }
-  function toggleIntl() {
-    var b = getIntlBody();
-    var collapse = b ? b.style.display !== 'none' : true;
-    setBody(b, collapse);
-    saveFold('intl', collapse);
-  }
-  function toggleCn() {
-    var b = getCnBody();
-    var collapse = b ? b.style.display !== 'none' : true;
-    setBody(b, collapse);
-    saveFold('cn', collapse);
-  }
-  // 恢复上次折叠状态
-  function applySaved() {
+  function getRightCol() { return document.querySelector('.columns-right'); }
+  // 统一布局：右侧栏仅在两栏都展开时显示；国际平台整块跟随国外栏
+  function applyLayout() {
     var saved = loadFold();
     setBody(getCnBody(), !!saved.cn);
     setBody(getEnBody(), !!saved.en);
+    var intlBlock = getIntlBlock();
+    if (intlBlock) intlBlock.style.display = saved.en ? 'none' : '';
     setBody(getIntlBody(), !!saved.intl);
+    var right = getRightCol();
+    if (right) right.style.display = (saved.cn && saved.en) ? 'none' : '';
   }
-  // 国外栏：点整行标题文字 = 国外栏 + 国际招聘平台一起折叠
+  function toggleEn() {
+    saveFold('en', !loadFold().en);
+    applyLayout();
+  }
+  function toggleIntl() {
+    saveFold('intl', !loadFold().intl);
+    applyLayout();
+  }
+  function toggleCn() {
+    saveFold('cn', !loadFold().cn);
+    applyLayout();
+  }
+  // 国外栏：点整行标题文字 = 国外栏 + 国际招聘平台整块一起折叠
   document.querySelectorAll('.column-header.en').forEach(function(h) {
     h.addEventListener('click', toggleEn);
   });
-  // 国际招聘平台：点自己的标题折叠自己
+  // 国际招聘平台：点自己的标题折叠自己（仅在国外栏展开时可见）
   var intlHeader = document.querySelector('.intl-platforms .intl-header');
   if (intlHeader) {
     intlHeader.style.cursor = 'pointer';
@@ -3280,9 +3280,9 @@ document.addEventListener('DOMContentLoaded', updateClickCount);
   var foldToggle = document.getElementById('cn-fold-toggle');
   if (foldToggle) foldToggle.addEventListener('click', toggleCn);
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applySaved);
+    document.addEventListener('DOMContentLoaded', applyLayout);
   } else {
-    applySaved();
+    applyLayout();
   }
 })();
 
