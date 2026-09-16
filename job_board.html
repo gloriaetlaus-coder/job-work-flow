@@ -90,7 +90,7 @@
 
   /* 黑名单页面 */
   .blacklist-container {
-    max-width: 720px;
+    max-width: 1400px;
     margin: 0 auto;
   }
   .blacklist-header {
@@ -104,15 +104,24 @@
   }
   .blacklist-header h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; }
   .blacklist-header p { font-size: 13px; color: #86868b; }
-  .blacklist-body { padding: 20px 16px 40px; background: #fff; border-radius: 0 0 18px 18px;
+  .blacklist-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 10px;
+    align-items: start;
+    padding: 16px 16px 32px;
+    background: #fff;
+    border-radius: 0 0 18px 18px;
     border: 1px solid rgba(0,0,0,0.04); border-top: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
   }
+  .blacklist-body .bl-section-title,
+  .blacklist-body .bl-footer { grid-column: 1 / -1; }
   .bl-card {
     background: #fafafa;
     border-radius: 14px;
-    padding: 16px 18px;
-    margin-bottom: 10px;
+    padding: 12px 14px;
+    margin-bottom: 0;
     border-left: 3px solid #d2d2d7;
   }
   .bl-card.red { border-left-color: #1d1d1f; }
@@ -122,7 +131,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .bl-card h2 { font-size: 15px; font-weight: 600; color: #1d1d1f; }
   .bl-badge {
@@ -135,8 +144,8 @@
   .bl-badge.red { background: #f2f2f7; color: #1d1d1f; }
   .bl-badge.orange { background: #f2f2f7; color: #6e6e73; }
   .bl-badge.yellow { background: #f2f2f7; color: #86868b; }
-  .bl-card p { font-size: 13px; color: #86868b; line-height: 1.7; }
-  .bl-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .bl-card p { font-size: 13px; color: #86868b; line-height: 1.6; }
+  .bl-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
   .bl-tag {
     font-size: 11px;
     padding: 3px 10px;
@@ -147,7 +156,7 @@
   .bl-section-title {
     font-size: 13px;
     color: #86868b;
-    margin: 20px 4px 10px;
+    margin: 4px 4px 4px;
     font-weight: 500;
   }
   .bl-footer {
@@ -265,13 +274,14 @@
   .script-block span[style*="color"] { font-weight: 600; }
 
   /* 话术格式化工具栏 */
-  .script-page-title { font-size: 18px; font-weight: 700; color: #1d1d1f; margin-bottom: 6px; }
+  .script-title-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .script-page-title { font-size: 18px; font-weight: 700; color: #1d1d1f; }
   .script-toolbar {
     display: flex;
     gap: 4px;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 6px;
+    margin-bottom: 0;
     padding: 4px 0;
   }
   .fmt-btn {
@@ -2232,10 +2242,10 @@
   <div class="page-view" id="page-script" data-page-node-id="Vpm6HFuUPsQ9zOhx3yNo5g">
     <div class="script-container" data-page-node-id="YzBzsGJOXUe4qexSNckowW">
 
-      <div class="script-page-title">📞 电话模拟</div>
-
-      <!-- 格式化工具栏 -->
-      <div class="script-toolbar" data-page-node-id="jaPoXE0HCGR8KxaGOycOCj">
+      <div class="script-title-row">
+        <div class="script-page-title">📞 电话模拟</div>
+        <!-- 格式化工具栏 -->
+        <div class="script-toolbar" data-page-node-id="jaPoXE0HCGR8KxaGOycOCj">
         <button class="fmt-btn" data-cmd="bold" title="加粗" data-page-node-id="JXgi5lT3fS2FMwSwXnt0QY"><b data-page-node-id="WNA6vSSWzAntgOup4d9x1f">B</b></button>
         <button class="fmt-btn" data-cmd="underline" title="下划线" data-page-node-id="Kg5DRFz0DapdJMiHeZ7UyF"><u data-page-node-id="lAr2S9TKzk6t9zuzOfWagU">U</u></button>
         <button class="fmt-btn" data-cmd="strikeThrough" title="删除线" data-page-node-id="whJ4LLiu0HS591tmlRANUr"><s data-page-node-id="pJ16b04kuUMxnjCvs6wVkt">S</s></button>
@@ -2255,6 +2265,7 @@
         <span class="fmt-color-swatch" style="background:#fff;border:1px solid #ccc" data-color="inherit" title="撤回颜色" data-page-node-id="oqBNPaOQuj2SKtVP0isQex"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M6.2 3.8 L2.6 7.4 L6.2 11" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.6 7.4 H9.2 A3.6 3.6 0 0 1 12.8 11 V12.2" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg></span>
         <span class="fmt-divider" data-page-node-id="SfCOkIYtppDtdzvNAw7DSs"></span>
         <button class="fmt-btn" data-cmd="removeFormat" title="恢复（清除格式）" data-page-node-id="d2nF7uwGqDoum4lBz4ghJP"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M9.8 3.8 L13.4 7.4 L9.8 11" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.4 7.4 H6.8 A3.6 3.6 0 0 0 3.2 11 V12.2" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        </div>
       </div>
 
       <div class="script-columns" data-page-node-id="kkyacgUocpkofYLGDVkO4k">
@@ -3538,7 +3549,6 @@ document.querySelectorAll('.column').forEach(function(column) {
       <div class="mail-page-container">
         <div class="mail-page-header">
           <div class="mail-page-header-top">
-            <span class="feishu-tracker-badge">5</span>
             <div class="mail-page-title">📧 官网/邮件投递</div>
           </div>
           <p class="mail-page-desc" style="display:none;">按公司整理的官网/邮件投递清单：点邮箱直接打开预填主题的邮件；点「待发」切换为「已发」；每张卡片底部备注可直接填写，自动保存 <span id="mail-save-indicator" style="font-weight:600;color:#1a7f37;"></span></p>
