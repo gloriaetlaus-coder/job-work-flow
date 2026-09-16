@@ -1641,7 +1641,10 @@
     font-size: 16px;
     font-weight: 700;
     display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    user-select: none;
   }
+  .intl-header:hover { filter: brightness(1.08); }
   .intl-badge {
     margin-left: auto;
     font-size: 11px;
@@ -3213,6 +3216,7 @@ function updateClickCount() {
 document.addEventListener('DOMContentLoaded', updateClickCount);
 
 // 栏目折叠开关：点击标题文字（或国内栏橙色横幅）折叠/展开下方全部内容；状态本地保存，刷新不丢
+// 国外栏折叠时，连带最下方的「国际招聘平台 · 额外入口」整块一起折叠
 (function() {
   var FOLD_KEY = 'wb_col_fold_v1';
   function loadFold() {
@@ -3223,37 +3227,58 @@ document.addEventListener('DOMContentLoaded', updateClickCount);
     s[k] = collapsed;
     try { localStorage.setItem(FOLD_KEY, JSON.stringify(s)); } catch (e) {}
   }
-  function colKey(header) { return header.classList.contains('cn') ? 'cn' : 'en'; }
-  function toggleBody(header, force) {
-    if (!header) return;
-    var body = header.parentElement.querySelector('.column-body');
-    if (!body) return;
-    var collapse = (force !== undefined) ? force : (body.style.display !== 'none');
-    body.style.display = collapse ? 'none' : '';
-    saveFold(colKey(header), collapse);
+  function setBody(body, collapse) { if (body) body.style.display = collapse ? 'none' : ''; }
+  function getEnBody() {
+    var h = document.querySelector('.column-header.en');
+    return h ? h.parentElement.querySelector('.column-body') : null;
+  }
+  function getIntlBody() { return document.querySelector('.intl-platforms .intl-body'); }
+  function getCnBody() {
+    var h = document.querySelector('.column-header.cn');
+    return h ? h.parentElement.querySelector('.column-body') : null;
+  }
+  function toggleEn() {
+    var enBody = getEnBody();
+    var collapse = enBody ? enBody.style.display !== 'none' : true;
+    setBody(enBody, collapse);
+    setBody(getIntlBody(), collapse);
+    saveFold('en', collapse);
+    saveFold('intl', collapse);
+  }
+  function toggleIntl() {
+    var b = getIntlBody();
+    var collapse = b ? b.style.display !== 'none' : true;
+    setBody(b, collapse);
+    saveFold('intl', collapse);
+  }
+  function toggleCn() {
+    var b = getCnBody();
+    var collapse = b ? b.style.display !== 'none' : true;
+    setBody(b, collapse);
+    saveFold('cn', collapse);
   }
   // 恢复上次折叠状态
   function applySaved() {
     var saved = loadFold();
-    document.querySelectorAll('.column-header').forEach(function(h) {
-      var body = h.parentElement.querySelector('.column-body');
-      if (body && saved[colKey(h)]) body.style.display = 'none';
-    });
+    setBody(getCnBody(), !!saved.cn);
+    setBody(getEnBody(), !!saved.en);
+    setBody(getIntlBody(), !!saved.intl);
   }
-  // 国外等 en 栏：点整行标题文字折叠
+  // 国外栏：点整行标题文字 = 国外栏 + 国际招聘平台一起折叠
   document.querySelectorAll('.column-header.en').forEach(function(h) {
-    h.addEventListener('click', function() { toggleBody(h); });
+    h.addEventListener('click', toggleEn);
   });
-  // 国内栏：点标题文字折叠
+  // 国际招聘平台：点自己的标题折叠自己
+  var intlHeader = document.querySelector('.intl-platforms .intl-header');
+  if (intlHeader) {
+    intlHeader.style.cursor = 'pointer';
+    intlHeader.addEventListener('click', toggleIntl);
+  }
+  // 国内栏：点标题文字或橙色横幅折叠
   var cnTitle = document.querySelector('.column-header.cn .header-title');
-  if (cnTitle) {
-    cnTitle.addEventListener('click', function() { toggleBody(cnTitle.closest('.column-header')); });
-  }
-  // 国内栏：点橙色横幅折叠
+  if (cnTitle) cnTitle.addEventListener('click', toggleCn);
   var foldToggle = document.getElementById('cn-fold-toggle');
-  if (foldToggle) {
-    foldToggle.addEventListener('click', function() { toggleBody(foldToggle.closest('.column-header')); });
-  }
+  if (foldToggle) foldToggle.addEventListener('click', toggleCn);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applySaved);
   } else {
