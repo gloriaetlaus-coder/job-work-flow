@@ -507,8 +507,10 @@
     cursor: pointer;
     user-select: none;
   }
-  .click-count-banner .fold-ind { font-size: 13px; margin-left: 4px; display: inline-block; transition: transform 0.2s; }
-  .click-count-banner.collapsed .fold-ind { transform: rotate(-90deg); }
+  /* 栏目标题文字可点击折叠 */
+  .column-header.en { cursor: pointer; user-select: none; }
+  .column-header.en:hover { opacity: 0.75; }
+  .column-header.cn .header-title { cursor: pointer; user-select: none; }
   .column-header.cn .click-count strong {
     color: #1d1d1f;
     font-size: 16px;
@@ -1815,7 +1817,7 @@
     <div class="column" data-page-node-id="OXhJGafQKopRtv6llKY9fD">
       <div class="column-header cn" data-page-node-id="DoSqcTxeofbKHk4NNFXkh3">
         <span class="header-title" data-page-node-id="jeFMTeiZ2LDAmtozxF1FJ7"><span class="emoji" data-page-node-id="6rt4XDPXRZx6QjoVbFBF5B">🇨🇳</span> 国内招聘</span>
-        <span class="click-count click-count-banner" id="cn-fold-toggle" data-page-node-id="xAi7VCB06H5m5zv09wqZ8M" title="点击折叠/展开下方全部内容">！最近主搜「AI售前/AI运营」！<span class="fold-ind">▾</span></span>
+        <span class="click-count click-count-banner" id="cn-fold-toggle" data-page-node-id="xAi7VCB06H5m5zv09wqZ8M" title="点击折叠/展开下方全部内容">！最近主搜「AI售前/AI运营」！</span>
         <button class="followup-hint" id="followup-hint" type="button" title="点击查看追问话术">投递后7天追问已投心仪岗位</button>
       </div>
       <div class="column-body" data-page-node-id="1y8pANXfD4pzOABBDj9nn8">
@@ -3210,19 +3212,28 @@ function updateClickCount() {
 }
 document.addEventListener('DOMContentLoaded', updateClickCount);
 
-// 国内栏折叠开关：点击橙色横幅折叠/展开下方全部内容
+// 栏目折叠开关：点击标题文字（或国内栏橙色横幅）折叠/展开下方全部内容
 (function() {
-  var foldToggle = document.getElementById('cn-fold-toggle');
-  if (!foldToggle) return;
-  foldToggle.addEventListener('click', function() {
-    var header = foldToggle.closest('.column-header');
-    var col = header ? header.parentElement : null;
-    var body = col ? col.querySelector('.column-body') : null;
+  function toggleBody(header) {
+    if (!header) return;
+    var body = header.parentElement.querySelector('.column-body');
     if (!body) return;
-    var willExpand = body.style.display === 'none';
-    body.style.display = willExpand ? '' : 'none';
-    foldToggle.classList.toggle('collapsed', !willExpand);
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+  }
+  // 国外等 en 栏：点整行标题文字折叠
+  document.querySelectorAll('.column-header.en').forEach(function(h) {
+    h.addEventListener('click', function() { toggleBody(h); });
   });
+  // 国内栏：点标题文字折叠
+  var cnTitle = document.querySelector('.column-header.cn .header-title');
+  if (cnTitle) {
+    cnTitle.addEventListener('click', function() { toggleBody(cnTitle.closest('.column-header')); });
+  }
+  // 国内栏：点橙色横幅折叠
+  var foldToggle = document.getElementById('cn-fold-toggle');
+  if (foldToggle) {
+    foldToggle.addEventListener('click', function() { toggleBody(foldToggle.closest('.column-header')); });
+  }
 })();
 
 // 页面加载时恢复已点击状态
