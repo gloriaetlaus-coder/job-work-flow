@@ -265,6 +265,7 @@
   .script-block span[style*="color"] { font-weight: 600; }
 
   /* 话术格式化工具栏 */
+  .script-page-title { font-size: 18px; font-weight: 700; color: #1d1d1f; margin-bottom: 6px; }
   .script-toolbar {
     display: flex;
     gap: 4px;
@@ -855,17 +856,7 @@
     flex-wrap: wrap;
     margin-bottom: 8px;
   }
-  .itv-badge {
-    background: #34c759;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 7px;
-    padding: 3px 8px;
-    flex-shrink: 0;
-  }
-  .itv-title { font-size: 17px; font-weight: 700; color: #1d1d1f; }
-  .itv-sub { font-size: 12.5px; color: #86868b; }
+  .itv-page-title { font-size: 18px; font-weight: 700; color: #1d1d1f; }
   .itv-group {
     display: flex;
     align-items: center;
@@ -1715,7 +1706,7 @@
     <span class="nav-collapsed-indicator" data-page-node-id="FmKjSuHXpj2VmXztnMQkew"></span>
     <button class="nav-tab active" data-page="job" data-page-node-id="E4UlokyBx7wRX4BkGjrQHv">🎯 职位看板</button>
     <button class="nav-tab" data-page="mail">📧 邮件投递</button>
-    <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话沟通</button>
+    <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话模拟</button>
     <button class="nav-tab" data-page="interview">💡 面试模拟</button>
     <button class="nav-tab" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs">🚫 可疑公司</button>
   </div>
@@ -2237,9 +2228,11 @@
 
   </div><!-- /page-job -->
 
-  <!-- ============ 电话沟通话术页面 ============ -->
+  <!-- ============ 电话模拟话术页面 ============ -->
   <div class="page-view" id="page-script" data-page-node-id="Vpm6HFuUPsQ9zOhx3yNo5g">
     <div class="script-container" data-page-node-id="YzBzsGJOXUe4qexSNckowW">
+
+      <div class="script-page-title">📞 电话模拟</div>
 
       <!-- 格式化工具栏 -->
       <div class="script-toolbar" data-page-node-id="jaPoXE0HCGR8KxaGOycOCj">
@@ -2452,9 +2445,7 @@
   <div class="page-view" id="page-interview">
     <div class="itv-container">
       <div class="itv-header">
-        <span class="itv-badge">面试模拟</span>
-        <span class="itv-title">💡 该怎么跟 HR 聊？</span>
-        <span class="itv-sub">后续面试时问</span>
+        <div class="itv-page-title">💡 面试模拟</div>
         <div class="itv-tabs">
           <button class="itv-tab active" type="button" data-itvtab="ecom">电商</button>
           <button class="itv-tab" type="button" data-itvtab="sales">销售</button>
@@ -2620,7 +2611,9 @@
           { q: '这个岗位前3个月的考核指标是什么？是看签约回款，还是看开发量？' },
           { q: '公司目前给销售团队的线索支持大概占多少？自己开发的占比大概多少？' },
           { q: '团队里做得好的销售，大概是什么背景？他们用了多久跑通第一单？' },
-          { q: '无责底薪的保障期是多久？之后底薪会怎么调整？' }
+          { q: '无责底薪的保障期是多久？之后底薪会怎么调整？' },
+          { q: '这个岗位日常工作里，销售和方案各占多少？比例大概是 7:3 还是 5:5？' },
+          { q: '公司给的线索和自己开发的占比是多少？是80% 靠自己吗' }
         ]
       }
     ];
@@ -2650,16 +2643,13 @@
               '<div class="itv-sa-q">' + escapeHtml(it.q) + '</div>' +
             '</div>' +
             (it.a ? '<div class="itv-sa-a">' + escapeHtml(it.a) + '</div>' : '') +
-            '<div class="itv-foot">' +
-              (it.note ? '<span class="itv-tag">' + escapeHtml(it.note) + '</span>' : '') +
-              '<button class="itv-copy itv-sales-copy" type="button" data-sales="' + i + '">复制</button>' +
-            '</div>' +
+            (it.note ? '<div class="itv-foot"><span class="itv-tag">' + escapeHtml(it.note) + '</span></div>' : '') +
           '</div>';
       });
       box.innerHTML = html;
     }
 
-    // 顶部 电商/销售 标签切换 + 销售话术复制
+    // 顶部 电商/销售 标签切换
     function bindFoldEvents() {
       var tabs = document.querySelectorAll('.itv-tab');
       Array.prototype.forEach.call(tabs, function(t) {
@@ -2672,15 +2662,6 @@
           if (paneEcom) paneEcom.style.display = isEcom ? '' : 'none';
           if (paneSales) paneSales.style.display = isEcom ? 'none' : '';
         });
-      });
-      var folds = document.getElementById('itv-sales-body');
-      if (!folds) return;
-      folds.addEventListener('click', function(e) {
-        var btn = e.target.closest ? e.target.closest('.itv-sales-copy') : null;
-        if (btn) {
-          var it = salesFlat[parseInt(btn.getAttribute('data-sales'), 10)];
-          if (it) copyText(it.a || it.q, btn);
-        }
       });
     }
     bindFoldEvents();
