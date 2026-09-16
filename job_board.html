@@ -65,6 +65,8 @@
     color: #fff;
     background: #1d1d1f;
   }
+  /* 导航最右侧的图标 tab（可疑公司） */
+  .nav-tab-icon { flex: 0 0 auto; padding: 12px 18px; font-size: 17px; }
   .nav-tab:hover:not(.active) {
     color: #1d1d1f;
     background: #f5f5f7;
@@ -88,6 +90,49 @@
   .page-view { display: none; }
   .page-view.active { display: block; }
 
+  /* 黑名单页面 */
+  /* 我的优缺页面 */
+  .sw-container { max-width: 1400px; margin: 0 auto; }
+  .sw-title { font-size: 18px; font-weight: 700; color: #1d1d1f; margin-bottom: 10px; }
+  .sw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .sw-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .sw-group::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+  }
+  .sw-good { color: #1a7f37; }
+  .sw-good::before { background: #34c759; }
+  .sw-bad { color: #b8860b; }
+  .sw-bad::before { background: #f5a623; }
+  .sw-card {
+    background: #fff;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    color: #1d1d1f;
+    line-height: 1.7;
+    word-break: break-word;
+  }
+  @media (max-width: 768px) {
+    .sw-grid { grid-template-columns: 1fr; }
+  }
   /* 黑名单页面 */
   .blacklist-container {
     max-width: 1400px;
@@ -1718,7 +1763,8 @@
     <button class="nav-tab" data-page="mail">📧 邮件投递</button>
     <button class="nav-tab" data-page="script" data-page-node-id="hd3oBfJDADhZmdq3k6RUEG">📞 电话模拟</button>
     <button class="nav-tab" data-page="interview">💡 面试模拟</button>
-    <button class="nav-tab" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs">🚫 可疑公司</button>
+    <button class="nav-tab" data-page="strengths">⭐ 我的优缺</button>
+    <button class="nav-tab nav-tab-icon" data-page="blacklist" data-page-node-id="POOtbFRmDm2x4Gi8HIEKJs" title="可疑公司">🚫</button>
   </div>
 
   <!-- ============ 职位看板页面 ============ -->
@@ -2683,6 +2729,26 @@
     }
   })();
   </script>
+
+  <!-- ============ 我的优缺页面 ============ -->
+  <div class="page-view" id="page-strengths">
+    <div class="sw-container">
+      <div class="sw-title">⭐ 我的优缺</div>
+      <div class="sw-grid">
+        <div class="sw-col">
+          <div class="sw-group sw-good">优点</div>
+          <div class="sw-card">学新工具、理解产品逻辑的速度比较快，能快速理解一个新平台、新工具的规则</div>
+          <div class="sw-card">擅长理解和管理客户预期，不会乱承诺，但会持续同步进展和风险，让合作稳定</div>
+          <div class="sw-card">在多方诉求不一致的时候，找到关键卡点，协调资源把事情推下去，而不是只做传话</div>
+        </div>
+        <div class="sw-col">
+          <div class="sw-group sw-bad">缺点</div>
+          <div class="sw-card">过去更多是维护客户，没有独立开发、扛回款指标的经验；不过我理解的销售，就是大量沟通和筛选，我不排斥这个过程。</div>
+          <div class="sw-card">GEO这个产品我没有直接做过，但它的底层是内容优化和品牌传播，这些是我熟悉的领域</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ 黑名单公司页面 ============ -->
   <div class="page-view" id="page-blacklist" data-page-node-id="Hx3Eezr4x1SOQVbB9BKpeo">
